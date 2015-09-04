@@ -8,7 +8,6 @@ srid := 2163
 db:
 	createdb ${dbname}
 	psql -d ${dbname} -c 'create extension postgis;'
-	psql -d ${dbname} -f project_srs.sql
 	mkdir $@
 
 
@@ -67,3 +66,10 @@ db/S_USA.Activity_StwrdshpCntrctng_PL : src_data
 
 .PHONY: import_data
 import_data : db/S_USA.Activity_HazFuelTrt_PL db/S_USA.Activity_TimberHarvest db/S_USA.Activity_StwrdshpCntrctng_PL db/umt_data db/Statewide_THPS_NTMPS_April2015 db/eco-us-shp db/cb_2014_us_state_500k
+
+pd:
+	mkdir $@
+
+pd/harvest.csv: pd
+	psql -d ${dbname} -f harvested.sql
+	psql -d ${dbname} -c 'copy (select * from harvested) to stdout with csv header' > $@
