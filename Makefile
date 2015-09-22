@@ -5,6 +5,7 @@ ecoReg := http://www.fs.fed.us/rm/ecoregions/downloads/ecoregions-united-states/
 srid := 2163
 
 
+
 db:
 	createdb ${dbname}
 	psql -d ${dbname} -c 'create extension postgis;'
@@ -70,6 +71,15 @@ import_data : db/S_USA.Activity_HazFuelTrt_PL db/S_USA.Activity_TimberHarvest db
 pd:
 	mkdir $@
 
-pd/harvest.csv: pd
-	psql -d ${dbname} -f harvested.sql
-	psql -d ${dbname} -c 'copy (select * from harvested) to stdout with csv header' > $@
+db/fcat_views:
+	psql -d ${dbname} -f fcat_views.sql
+	touch $@
+
+pd/hrv_by_enduse.csv: db/fcat_views
+	psql -d ${dbname} -c 'copy (select * from $(notdir $(basename $@))) to stdout with csv header' > $@
+
+pd/tenyear_harv.csv: db/fcat_views
+		psql -d ${dbname} -c 'copy (select * from $(notdir $(basename $@))) to stdout with csv header' > $@
+
+.PHONY: fcat_out
+fcat_out: db/fcat_views pd/hrv_by_enduse.csv pd/tenyear_harv.csv
