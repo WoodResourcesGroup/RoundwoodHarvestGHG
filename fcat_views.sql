@@ -28,16 +28,16 @@ create or replace view tenyear_harv as
 with foo as (select min(year)+10 mny from umt_harvest)
      select s1.year-10 year_start,
      	    s1.year year_end, 
-     	    ccf2c(avg(s2.private))::numeric(8,2) as priv10y_avg,
-	    ccf2c(stddev(s2.private))::numeric(8,2) as priv10y_stddev, 
-     	    ccf2c(avg(s2.state))::numeric(8,2) as state10y_avg,
-	    ccf2c(stddev(s2.state))::numeric(8,2) as state10y_stddev, 
-     	    ccf2c(avg(s2.tribal))::numeric(8,2) as tribal10y_avg,
-	    ccf2c(stddev(s2.tribal))::numeric(8,2) as tribal10y_stddev,
-     	    ccf2c(avg(s2.blm))::numeric(8,2) as blm10y_avg,
-	    ccf2c(stddev(s2.blm))::numeric(8,2) as blm10y_stddev,
-     	    ccf2c(avg(s2.nationalforests))::numeric(8,2) as nf10y_avg,
-	    ccf2c(stddev(s2.nationalforests))::numeric(8,2) as nf10y_stddev  
+     	    ccf2c(avg(s2.private))::numeric(8,6) as priv10y_avg,
+	    ccf2c(stddev(s2.private))::numeric(8,6) as priv10y_stddev, 
+     	    ccf2c(avg(s2.state))::numeric(8,6) as state10y_avg,
+	    ccf2c(stddev(s2.state))::numeric(8,6) as state10y_stddev, 
+     	    ccf2c(avg(s2.tribal))::numeric(8,6) as tribal10y_avg,
+	    ccf2c(stddev(s2.tribal))::numeric(8,6) as tribal10y_stddev,
+     	    ccf2c(avg(s2.blm))::numeric(8,6) as blm10y_avg,
+	    ccf2c(stddev(s2.blm))::numeric(8,6) as blm10y_stddev,
+     	    ccf2c(avg(s2.nationalforests))::numeric(8,6) as nf10y_avg,
+	    ccf2c(stddev(s2.nationalforests))::numeric(8,6) as nf10y_stddev  
 	    from umt_harvest s1, 
 	    	 umt_harvest s2,
 		 foo
