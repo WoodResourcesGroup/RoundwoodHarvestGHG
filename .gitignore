@@ -1,0 +1,11 @@
+*.pyc
+*~
+bin/*
+include/*
+lib/*
+local/*
+man/*
+\#*
+pip-selfcheck.json
+src_data/*
+db/*
