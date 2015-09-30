@@ -1,7 +1,8 @@
 create or replace function ccf2c(double precision, 
        	  	  	   	spgrav double precision default 0.45, 
 				mc double precision default 0.12) returns double precision
-       as 'select $1 * spgrav * 62.4 * 0.5 * 0.00045359237'
+       as 'select $1 * 0.083 * spgrav * 62.4 * 0.5 * 0.00045359237'
+--     MMBF * mccf/mmbf + specific gravity (mlbs/mccf) * water mlbs/mccf * carbon ratio * mlbs/mmt 
        language sql
        immutable
        returns null on null input;
