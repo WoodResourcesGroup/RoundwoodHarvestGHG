@@ -2,6 +2,7 @@ from sqlalchemy import create_engine as ce
 import pandas as pd
 import sqlite3
 
+
 gUrl = 'https://docs.google.com/spreadsheets/d/{0}/export?gid={1}&format=csv'
 
 dbname = 'fcat'
