@@ -31,6 +31,17 @@ In addition the [CARB's 1994 greenhouse gas emissions inventory](http://www.arb.
 |  0 | Forest and rangeland fires | 2.0194   |
 |  1 | Timber harvest slash       | 0.155267 |
 
+To arrive at an estimate of total annual emissions from buring forest management residuals in CO2 equivalent terms from published CARB estimates we can combine the CO2 emissions reported for 2004 in the LULUC Biodegradable Carbon Emissions and Sinks with black carbon emissions extrapolated from the CARB Criteria Air Pollutant Emissions inventory estimates. The dime discreppancy between the 2004 and 2015 is acknowledged as an irreconcilable source of uncertainty in this estimation among others. This does however reflect that a baseline of substantial emissions from forest management residuals has been reported in CARB emissions inventories and should be recognized as a baseline condition. We find that a rough estimate of CO2e emissions from pile burning annual approaches 1 Mt CO2e.
+
+|    |   Mt CO2e | Source               |
+|---:|----------:|:---------------------|
+|  0 |  0.171152 | CO2 pile buring      |
+|  1 |  0.651688 | CO2e BC pile burning |
+|  2 |  0.82284  | Total Mt CO2e        |
+
+BC emissions in terms of CO2e has not been included in any GHG emissions inventry published by CARB.
+
+
 The [Timber Products Output](http://srsfia2.fs.fed.us/php/tpo_2009/tpo_rpa_int1.php) provides estimates of logging residues produced from commercial roundwood harvest . This data is based on mill surveys and as such does not capture residual slash produced from management activities that do not produce commercial products.  
 
 ## Harvested Wood Products
