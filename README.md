@@ -21,6 +21,7 @@ CARB reports emissions from PM 2.5 in tons/day. Black Carbon emissions can be es
 
 The following plot represents estimates of total BC emissions resulting from combustion of biomass in the CARB CPE emissions categores reflecting woody biomass combustion in wildfire, pile buring and prescribed natural fire.
 
+![BC GHG](/graphics/bc_gwp.png?raw=true)
 
 
 In addition the [CARB's 1994 greenhouse gas emissions inventory](http://www.arb.ca.gov/cc/inventory/archive/tables/net_co2_flux_2007-11-19.pdf) estimates emissions from wildfire and slash burning through 2004. 
