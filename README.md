@@ -1,9 +1,19 @@
-# fcat_biomass
-Development of a biomass framework for the California Forest Climate Action Plan
+# Climate impacts of woody biomass fates: Current practices and opportuinites
 
-## Un-utilized logging residuals
 
-Forest management activities in the state result in a residual stream of logging residuals and slash that are either left in the stand to decompose or piled and burned as directed by relevant environmental protection rules ([California Forest Practice Rules](http://calfire.ca.gov/resource_mgt/downloads/2013_FP_Rulebook_with_Tech_RuleNo1.pdf), Article 7 &sect; 917.2). Combustion or decomposition of this residual material results in emissions of greenhouse gasses as/or criteria air pollutants. The California Air Resources Board has published [criterial air pollutant emissions estimates for 2015](http://www.arb.ca.gov/ei/emissiondata.htm). Particulate matter as reported in the criteria air pollutant emissions inventory contains black carbon which is a strong short lived climate pollutant.
+In addition to sawlogs, forest management activities in the state result in a  stream of logging residuals and slash that are either left in the stand to decompose or piled and burned as directed by relevant environmental protection rules ([California Forest Practice Rules](http://calfire.ca.gov/resource_mgt/downloads/2013_FP_Rulebook_with_Tech_RuleNo1.pdf), Article 7 &sect; 917.2). Combustion or decomposition of this residual material results in emissions of greenhouse gasses as/or criteria air pollutants.
+
+## Estimating slash residual GHG emissions from current forest practices.
+
+Emissions from forest management residuals result from:
+
+1. Anthropogenic buring (prescribed fire, pile buring)
+2. Wildfire
+3. Decomposition
+
+To estimate emissions from these three sources we must rely on estimates from the must current [statewide emissions inventory](http://www.arb.ca.gov/ei/ei.htm)maintained by the California Air Resources Board. The Criterial Air Pollutant (CEP) emissions inventory and the Greenhouse Gas (GHG) emissions inventory are both necessary sources for establishing aggregate annnual climate-forcing emissions. The GHG inventory captures gasses with radiative forcing propeties but does not capture elemantal carbon or black carbon (BC) emissions which have strong radiative forsing properties. While the [Short Lived Climate Pollutant Strategy](https://docs.google.com/uc?id=0B9-9Vlx0SkkFWmxxQ2xtSkNxSlU&export=download) recognizes the importance of forest biomass management it does not publish an emission estimate fro BC.
+
+ The California Air Resources Board has published [criterial air pollutant emissions estimates for 2015](http://www.arb.ca.gov/ei/emissiondata.htm). Particulate matter as reported in the criteria air pollutant emissions inventory contains black carbon which is a strong short lived climate pollutant.
 
 |    |   gwp_20 |   gwp_20_std |   gwp_100 |   gwp_100_std |   gwp_500 |   gwp_500_std | source                          |
 |---:|---------:|-------------:|----------:|--------------:|----------:|--------------:|:--------------------------------|
