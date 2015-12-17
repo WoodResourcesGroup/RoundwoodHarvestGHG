@@ -81,5 +81,8 @@ pd/hrv_by_enduse.csv: db/fcat_views
 pd/tenyear_harv.csv: db/fcat_views
 		psql -d ${dbname} -c 'copy (select * from $(notdir $(basename $@))) to stdout with csv header' > $@
 
+pd/facts_notimber.csv:
+	psql -d ${dbname} -c "copy (select f.subunit, f.facts_id, f.uom, f.date_plann, f.date_accom,f.date_compl, f.nbr_units_, f.nbr_units1, activity, method, equipment  from f_haz f left join usfs_timber t using(facts_id) where t.facts_id is NULL and f.admin_regi = '05') to stdout with csv header" > $@
+
 .PHONY: fcat_out
 fcat_out: db/fcat_views pd/hrv_by_enduse.csv pd/tenyear_harv.csv
