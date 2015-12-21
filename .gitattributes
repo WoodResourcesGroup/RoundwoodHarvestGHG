@@ -1,2 +1,2 @@
 *.gdb filter=lfs diff=lfs merge=lfs -text
-FACTS_Tabular_092115.xlsx filter=lfs diff=lfs merge=lfs -text
+lf/FACTS_Tabular_092115.xlsx filter=lfs diff=lfs merge=lfs -text

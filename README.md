@@ -39,7 +39,11 @@ Emissions from forest biomass burning are published in the most current [statewi
 |  1 |     3200 |       nan    |    900    |        nan    |    nan    |        nan    | CaliforniaAirResourcesBoard2015 |
 [Global warming potential estimates for black carbon from biomass burning]
 
-CARB reports emissions from PM 2.5 in tons/day. Black Carbon emissions can be estimated from PM 2.5 emissions if the ratio of smoldering to flaming combustion is known. Ward et. al. (1989) provide estimates of the ratio of smoldering to flaming combustion for a hand/machine piled burns, prescribed natural fire and wildfire. The following ranges are used in estimating BC emissions from PM2.5 emissions reported by CARB.
+CARB reports emissions from PM 2.5 in tons/day. Black Carbon emissions can be estimated from PM 2.5 emissions if the ratio of smoldering to flaming combustion is known. Ward et. al. (1989) provide estimates of the ratio of smoldering to flaming combustion for a hand/machine piled burns, prescribed natural fire and wildfire. To calculate BC from PM emissions by combustion type I first apply a combustion/smoldering ratio to determine the total PM2.5 produced from each combustion phase.
+
+
+
+The following ranges are used in estimating BC emissions from PM2.5 emissions reported by CARB.
 
 | CARB CPE Cat.           |   BC/t PM 2.5 (high) |   BC/t PM 2.5 (low) | Source                  |
 |:------------------------|---------------------:|--------------------:|:------------------------|
