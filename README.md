@@ -39,21 +39,15 @@ Emissions from forest biomass burning are published in the most current [statewi
 |  1 |     3200 |       nan    |    900    |        nan    |    nan    |        nan    | CaliforniaAirResourcesBoard2015 |
 [Global warming potential estimates for black carbon from biomass burning]
 
-CARB reports emissions from PM 2.5 in tons/day. Black Carbon emissions can be estimated from PM 2.5 emissions if the ratio of smoldering to flaming combustion is known. Ward et. al. (1989) provide estimates of the ratio of smoldering to flaming combustion for a hand/machine piled burns, prescribed natural fire and wildfire. To calculate BC from PM emissions by combustion type I first apply a combustion/smoldering ratio to determine the total PM2.5 produced from each combustion phase.
+CARB reports emissions from PM 2.5 in tons/day. Black Carbon emissions can be estimated from PM 2.5 emissions if the ratio of smoldering to flaming combustion is known. Ward et. al. (1989) provide estimates of the ratio of smoldering to flaming combustion for a hand/machine piled burns, prescribed natural fire and wildfire. To arrive at a rough estimate of BC emissions based on PM2.5 the foowing steps are taken
 
-
-
-The following ranges are used in estimating BC emissions from PM2.5 emissions reported by CARB.
-
-| CARB CPE Cat.           |   BC/t PM 2.5 (high) |   BC/t PM 2.5 (low) | Source                  |
-|:------------------------|---------------------:|--------------------:|:------------------------|
-| FOREST MANAGEMENT       |            0.0064695 |           0.0043405 | piles                   |
-| WILDLAND FIRE USE (WFU) |            0.156683  |           0.06065   | prescribed natural fire |
-| ALL VEGETATION          |            0.198383  |           0.0767915 | wildfire                |
+1. Determine the amount of PM2.5 produced in the flaming and smoldering phases of combustion for each type (piles, wildland fire use, wildfire). Ratios from Ward and Hardy (1989, Table 5) are used.
+2. Define 1000 probability distributions for the percent of PM2.5 comprised of carbonaceous material (TC) and percent of TC comprised of black carbon (BC) give estimates and coefficient of variation estimates provided by Ward and Hardy (1989, tables 2 and 3)
+3. Estimate annual BC emissions based on probability distributions defines in 2.
 
 The following plot represents estimates of total BC emissions resulting from combustion of biomass in the CARB CPE emissions categories reflecting woody biomass combustion in wildfire, pile burning and prescribed natural fire.
 
-![BC GHG](/graphics/bc_gwp.png?raw=true)
+![BC GHG](/graphics/bc_prob_gwp.png?raw=true)
 
 
 In addition the [CARB's 1994 greenhouse gas emissions inventory](http://www.arb.ca.gov/cc/inventory/archive/tables/net_co2_flux_2007-11-19.pdf) estimates emissions from wildfire and slash burning through 2004. 
@@ -67,9 +61,9 @@ To arrive at an estimate of total annual emissions from burning forest managemen
 
 |    |   Mt CO2e | Source               |
 |---:|----------:|:---------------------|
-|  0 |  0.171152 | CO2 pile burning      |
-|  1 |  0.651688 | CO2e BC pile burning |
-|  2 |  0.82284  | Total Mt CO2e        |
+|  0 |  0.17     | CO2 pile burning      |
+|  1 |  0.99     | CO2e BC pile burning |
+|  2 |  1.16     | Total Mt CO2e        |
 
 BC emissions in terms of CO2e has not been included in any GHG emissions inventory published by CARB.
 

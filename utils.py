@@ -1,6 +1,7 @@
 from sqlalchemy import create_engine as ce
 import pandas as pd
 import sqlite3
+import os
 
 
 gUrl = 'https://docs.google.com/spreadsheets/d/{0}/export?gid={1}&format=csv'
@@ -22,3 +23,9 @@ def sqlitedb(dbname):
     return {'fname': fName,
             'cx': conn,
             'crs': curs}
+
+
+def csv2sqlite(dbcon, csvfile):
+    df = pd.read_csv(csvfile)
+    fn = os.path.basename(os.path.splitext(csvfile)[0])
+    df.to_sql(fn, dbcon, if_exists='replace')

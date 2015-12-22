@@ -86,3 +86,9 @@ pd/facts_notimber.csv:
 
 .PHONY: fcat_out
 fcat_out: db/fcat_views pd/hrv_by_enduse.csv pd/tenyear_harv.csv
+
+db/lte_pfirs:
+	unzip lf/pfirs.zip -d lf
+	python -c "import os; import utils as ut; db = ut.sqlitedb('fcat_biomass'); [ut.csv2sqlite(db['cx'], 'lf/'+i) for i in os.listdir('lf/') if os.path.splitext(i)[1] == '.csv']"
+	rm lf/*.csv
+	touch $@
