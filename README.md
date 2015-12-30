@@ -29,6 +29,8 @@ Several key tasks are necessary to address the objective stated above:
 
 ## Estimating CO2 equivalent emissions from forest biomass burning
 
+![process](https://www.lucidchart.com/publicSegments/view/0199fdbb-bc60-4ec7-854c-a4ce2a3c4e66/image.png)
+
 Emissions from forest biomass burning are published in the most current [statewide emissions inventory](http://www.arb.ca.gov/ei/ei.htm) maintained by the California Air Resources Board. The Criteria Air Pollutant (CPE) emissions inventory and the Greenhouse Gas (GHG) emissions inventory are both necessary sources for establishing aggregate annual climate-forcing emissions. The GHG inventory captures gasses with radiative forcing properties but does not capture elemental carbon or black carbon (BC) emissions which have strong radiative forcing properties. While the [Short Lived Climate Pollutant Strategy](https://docs.google.com/uc?id=0B9-9Vlx0SkkFWmxxQ2xtSkNxSlU&export=download) recognizes the importance of forest biomass management it does not publish an emission estimate fro BC.
 
  The California Air Resources Board has published [criteria air pollutant emissions estimates for 2015](http://www.arb.ca.gov/ei/emissiondata.htm). Particulate matter as reported in the criteria air pollutant emissions inventory contains black carbon which is a strong short lived climate pollutant.
@@ -39,7 +41,29 @@ Emissions from forest biomass burning are published in the most current [statewi
 |  1 |     3200 |       nan    |    900    |        nan    |    nan    |        nan    | CaliforniaAirResourcesBoard2015 |
 [Global warming potential estimates for black carbon from biomass burning]
 
-CARB reports emissions from PM 2.5 in tons/day. Black Carbon emissions can be estimated from PM 2.5 emissions if the ratio of smoldering to flaming combustion is known. Ward et. al. (1989) provide estimates of the ratio of smoldering to flaming combustion for a hand/machine piled burns, prescribed natural fire and wildfire. To arrive at a rough estimate of BC emissions based on PM2.5 the foowing steps are taken
+CARB reports emissions from PM 2.5 in tons/day. Black Carbon emissions can be estimated from PM 2.5 emissions if the ratio of smoldering to flaming combustion is known. Ward et. al. (1989) provide estimates of the ratio of smoldering to flaming combustion for a hand/machine piled burns, prescribed natural fire and wildfire. Black Carbon is a fraction of the Total Carbon (TC) component of PM 2.5. Thus BC is related to PM 2.5 by the equation:
+
+BC = (PM2.5 * F * TCf* BCf) + (PM2.5 * S * TCs* BCs)
+
+Where:
+BC = Black Carbon 
+PM2.5 = PM2.5 mass units
+F = Percent of combustion in flaming phase
+TCf = Total Carbon fraction of PM 2.5 for flaming phase
+BCf = Black Carbon fraction of Total Carbon for flaming phase
+S = Percent of combustion in smoldering phase
+TCs = Total Carbon fraction of PM 2.5 for smoldering phase
+BCs = Black Carbon fraction of Total Carbon for smoldering phase
+
+Based on [Ward and Hardy](https://docs.google.com/uc?id=0B9-9Vlx0SkkFaU1ITkFjQnBXUEk&export=download) and [Jenkins et. al., 1996](https://docs.google.com/uc?id=0B9-9Vlx0SkkFN1dQVjFkOXI1eVE&export=download), the following ratios are used here:
+
+| Source                  |   BC/t PM (F, est.) |   TC/t PM (F, CV) |   BC/t TC (F, CV) |   BC/t PM (S, est.) |   TC/t PM (S, CV) |   BC/t TC (S, CV) |
+|:------------------------|------------------------:|----------------------:|------------------:|------------------------:|----------------------:|------------------:|
+| piles                   |               0.046904  |                0.09   |            0.45   |               0.01624   |                  0.01 |             0.49  |
+| prescribed natural fire |               0.0801631 |                0.0733 |            0.5833 |               0.020944  |                  0.08 |             0.29  |
+| wildfire                |               0.0587012 |                0.0867 |            0.4467 |               0.0228641 |                  0.06 |             0.338 |
+
+To arrive at a rough estimate of BC emissions based on PM2.5 the following steps are taken
 
 1. Determine the amount of PM2.5 produced in the flaming and smoldering phases of combustion for each type (piles, wildland fire use, wildfire). Ratios from Ward and Hardy (1989, Table 5) are used.
 2. Define 1000 probability distributions for the percent of PM2.5 comprised of carbonaceous material (TC) and percent of TC comprised of black carbon (BC) give estimates and coefficient of variation estimates provided by Ward and Hardy (1989, tables 2 and 3)
@@ -99,4 +123,5 @@ Data from TPO does not account for forest management activities that do not resu
 <!-- * **Ten-year moving average harvest by by lanowner** (MMBF Scribner) Shows average of harvest and standard deviation for ten year moving windows by ownership category. [link to table](https://github.com/peteWT/fcat_biomass/blob/56770d7d2cd5a38b5f592a45cbcb74d133c7e53f/pd/tenyear_harv.csv) -->
 
 ## References
-1. Ward DE, Hardy CC. Organic and elemental profiles for smoke from prescribed fires. In: Watson JG, editor. International specialty conference of the Air and Waste Management Association [Internet]. San Francisco: Air and Waste Management Association; 1989. Available from: (http://www.frames.gov/documents/smoke/serdp/ward_hardy_1989a.pdf)[http://www.frames.gov/documents/smoke/serdp/ward_hardy_1989a.pdf]
+1. Ward DE, Hardy CC. Organic and elemental profiles for smoke from prescribed fires. In: Watson JG, editor. International specialty conference of the Air and Waste Management Association [Internet]. San Francisco: Air and Waste Management Association; 1989. Available from: [https://docs.google.com/uc?id=0B9-9Vlx0SkkFaU1ITkFjQnBXUEk&export=download](https://docs.google.com/uc?id=0B9-9Vlx0SkkFaU1ITkFjQnBXUEk&export=download)
+2. Jenkins BM, Turn SQ, Williams RB, Goronea M, Abd-el-Fattah H, Mehlschau J, et al. Atmospheric Pollutant Emissions Factors From Open Burning of Agricultural and Forest Biomass By Wind Tunnel Simulations [Internet]. Sacramento, CA; 1996. Available [here](https://docs.google.com/uc?id=0B9-9Vlx0SkkFN1dQVjFkOXI1eVE&export=download) 
