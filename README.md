@@ -14,6 +14,8 @@
 
 In addition to sawlogs, forest management activities in the state result in a  stream of logging residuals and slash that are either left in the stand to decompose or piled and burned as directed by relevant environmental protection rules ([California Forest Practice Rules](http://calfire.ca.gov/resource_mgt/downloads/2013_FP_Rulebook_with_Tech_RuleNo1.pdf), Article 7 &sect; 917.2). Combustion or decomposition of this residual material results in emissions of greenhouse gasses as/or criteria air pollutants.
 
+![system](https://www.lucidchart.com/publicSegments/view/52a1774e-7722-4ebf-8e1a-e8fc6837bfee/image.png)
+
 The objective of this analysis is, broadly stated: 
 
 _To establish an emissions baseline for forest products including unutilized forest management residuals._
