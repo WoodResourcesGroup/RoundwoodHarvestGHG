@@ -4,10 +4,11 @@
 - [Climate impacts of woody biomass fates: Current practices and opportunities](#climate-impacts-of-woody-biomass-fates-current-practices-and-opportunities)
     - [Estimating CO2 equivalent emissions from forest biomass burning](#estimating-co2-equivalent-emissions-from-forest-biomass-burning)
     - [Harvested wood products](#harvested-wood-products)
-        - [-](#-)
+        - [Forest Service Activity Tracking System (FACTS)](#forest-service-activity-tracking-system-facts)
     - [References](#references)
 
 <!-- markdown-toc end -->
+
 # Climate impacts of woody biomass fates: Current practices and opportunities
 
 
@@ -46,14 +47,22 @@ CARB reports emissions from PM 2.5 in tons/day. Black Carbon emissions can be es
 BC = (PM2.5 * F * TCf* BCf) + (PM2.5 * S * TCs* BCs)
 
 Where:
-BC = Black Carbon 
-PM2.5 = PM2.5 mass units
-F = Percent of combustion in flaming phase
-TCf = Total Carbon fraction of PM 2.5 for flaming phase
-BCf = Black Carbon fraction of Total Carbon for flaming phase
-S = Percent of combustion in smoldering phase
-TCs = Total Carbon fraction of PM 2.5 for smoldering phase
-BCs = Black Carbon fraction of Total Carbon for smoldering phase
+
+* BC = Black Carbon 
+
+* PM2.5 = PM2.5 mass units
+
+* F = Percent of combustion in flaming phase
+
+* TCf = Total Carbon fraction of PM 2.5 for flaming phase
+
+* BCf = Black Carbon fraction of Total Carbon for flaming phase
+
+* S = Percent of combustion in smoldering phase
+
+* TCs = Total Carbon fraction of PM 2.5 for smoldering phase
+
+* BCs = Black Carbon fraction of Total Carbon for smoldering phase
 
 Based on [Ward and Hardy](https://docs.google.com/uc?id=0B9-9Vlx0SkkFaU1ITkFjQnBXUEk&export=download) and [Jenkins et. al., 1996](https://docs.google.com/uc?id=0B9-9Vlx0SkkFN1dQVjFkOXI1eVE&export=download), the following ratios are used here:
 
@@ -95,7 +104,7 @@ BC emissions in terms of CO2e has not been included in any GHG emissions invento
 
 The [Timber Products Output](http://srsfia2.fs.fed.us/php/tpo_2009/tpo_rpa_int1.php) provides estimates of logging residues produced from commercial roundwood harvest . This data is based on mill surveys and as such does not capture residual slash produced from management activities that do not produce commercial products.
 
-#### Forest Service Activity Tracking System (FACTS)
+### Forest Service Activity Tracking System (FACTS)
 Data from TPO does not account for forest management activities that do not result in commercial products (timber sales, biomass sales). The USFS [reports](http://data.fs.usda.gov/geodata/edw/datasets.php?dsetParent=Activities) Hazardous Fuels Treatment (HFT) activities as well as Timber Sales (TS) derived from the FACTS database. We use these two data sets to estimate the number of acres treated that did not produce commercial material (sawlogs or biomass) and where burning was not used. The first step is to eliminate all treatments in the HFT data set that included timber sales. We accomplish this by eliminating all rows in the HFT data set that have identical `FACTS_ID` fields in the TS dataset. We further filter the HFT dataset by removing any planned but not executed treatments (`nbr_units1 >0` below -- `nbr_units1` references `NBR_UNITS_ACCOMPLISHED` in the USFS dataset, see metadata for HFT [here](http://data.fs.usda.gov/geodata/edw/edw_resources/meta/S_USA.Activity_HazFuelTrt_PL.xml)), and use text matching in the 'ACTIVITY' and 'METHOD' fields to remove any rows that contain reference to 'burning' or 'fire'. Finally, we remove all rows that that reference 'Biomass' in the method category as it is assumed that this means material was removed for bioenergy.We use a range of 10-35 BDT/acre to convert acres reported in FACTS to volume. The following table presents descriptive statistics for estimates of residual unutilized wood biomass on an annual basis in million cubic feet.
 
 |       |   nf_ncmr |    nf_lr |   opriv_lr |    fi_lr |   opub_lr |
@@ -116,11 +125,6 @@ Data from TPO does not account for forest management activities that do not resu
 - [x] Private lands logging residuals
 
 
-<!-- ## Harvested Wood Products -->
-<!-- Harvested wood products data comes from [McIver *et. al.* (2012)](https://docs.google.com/uc?id=0B9-9Vlx0SkkFMkhFZUN5X2djbms&export=download). The following tables have been created: -->
-
-<!-- * **Harvest end-use by year** (MMBF Scribner) assumes that end use fractions presented in McIver (Figure 6) from 2012 apply historically. This assumtion is likely to underrepresent bioenergy, paper and engineered wood products and overemphasize mulch and soil as California's forest products industry has lost much of its secfondary processing capacity as well as its bioenergy infrastrucutre. [link to table](https://github.com/peteWT/fcat_biomass/blob/56770d7d2cd5a38b5f592a45cbcb74d133c7e53f/pd/hrv_by_enduse.csv) -->
-<!-- * **Ten-year moving average harvest by by lanowner** (MMBF Scribner) Shows average of harvest and standard deviation for ten year moving windows by ownership category. [link to table](https://github.com/peteWT/fcat_biomass/blob/56770d7d2cd5a38b5f592a45cbcb74d133c7e53f/pd/tenyear_harv.csv) -->
 
 ## References
 1. Ward DE, Hardy CC. Organic and elemental profiles for smoke from prescribed fires. In: Watson JG, editor. International specialty conference of the Air and Waste Management Association [Internet]. San Francisco: Air and Waste Management Association; 1989. Available from: [https://docs.google.com/uc?id=0B9-9Vlx0SkkFaU1ITkFjQnBXUEk&export=download](https://docs.google.com/uc?id=0B9-9Vlx0SkkFaU1ITkFjQnBXUEk&export=download)
