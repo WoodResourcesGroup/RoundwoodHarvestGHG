@@ -2,6 +2,11 @@
 
 This web archive contains source code, source code documentation, and detailed description of the context, methods and results from analysis done to support the [Forest Climate Action Plan](http://www.fire.ca.gov/fcat/) and [California Assembly Bill 1504 (2010)](http://leginfo.legislature.ca.gov/faces/billNavClient.xhtml?bill_id=200920100AB1504). This work was done by [Peter Tittmann](http://ucanr.edu/?facultyid=22593), Academic Coordinator at the UC Berkeley Center for Forestry under Cooperative Agreement between the US Forest Service, the California Department of Forestry and Fire Protection and the UC Berkeley Center for Forestry. Dr. John Shelly (Emeritus) is the Primary Investigator on this project.
 
+## TODO
+
+- [ ] Implement Flow Chart calculations
+- [ ] Address MR needs
+- [ ] Calculate DF for biomass on CA electricity grid.
 
 ## Documentation
 
