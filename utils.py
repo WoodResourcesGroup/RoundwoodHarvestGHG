@@ -10,8 +10,11 @@ dbname = 'fcat'
 engine = ce('postgresql:///{0}'.format(dbname), echo=True)
 
 
-def gData(key, gid, hrow=0):
-    data = pd.read_csv(gUrl.format(key, gid), header=hrow)
+def gData(key, gid, hrow=0, indx=None):
+    if not indx:
+        data = pd.read_csv(gUrl.format(key, gid), header=hrow)
+    else:
+        data = pd.read_csv(gUrl.format(key, gid), header=hrow, index_col=indx)
     data.columns = [i.replace(' ', '').lower() for i in data.columns]
     return data
 
