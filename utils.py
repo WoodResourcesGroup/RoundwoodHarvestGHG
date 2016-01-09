@@ -28,10 +28,10 @@ def sqlitedb(dbname):
             'crs': curs}
 
 
-def csv2sqlite(dbcon, csvfile):
+def csv2sqlite(dbcon, csvfile, ex='replace'):
     df = pd.read_csv(csvfile)
     fn = os.path.basename(os.path.splitext(csvfile)[0])
-    df.to_sql(fn, dbcon, if_exists='replace')
+    df.to_sql(fn, dbcon, if_exists=ex)
 
 
 def distFromRange(total, maxr=32, minr=2):

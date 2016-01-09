@@ -1,0 +1,3 @@
+UnitSystem,1
+Group ID/Name,Number of Piles,Pile Type,Pile Shape,W1 (ft),H1 (ft),L1 (ft),W2 (ft),H2 (ft),L2 (ft),% Soil,Packing Ratio(%),Hand Pile Composition,Sp1 Name,Sp1 Wood Density,Sp1 %,Sp2 Name,Sp2 Wood Density,Sp2 %,Pile Quality,% Consumption,Gross Volume (ft^3),Adjusted Volume (ft^3),Pile Biomass (tons),Consumed Fuel (tons),PM (tons),PM10 (tons),PM2.5 (tons),CO (tons),CO2 (tons),CH4 (tons),NMHC (tons)
+"PileGroup1",1,1,Half sphere,,10,,,,,,,1,,,,,,,,,90,2094.3951023932,1007.1690877689,1.3601784573019,1.2241606115717,0.013404558696711,0.009487244739681,0.0082630841281093,0.04650157707147,2.0366433544356,0.0034307101139298,0.0027702754639869
