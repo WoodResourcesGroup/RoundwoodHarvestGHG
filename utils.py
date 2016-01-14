@@ -50,3 +50,42 @@ def sumFromDist(total, maxr=0.32, minr=0.02):
         np.random.normal(av, stdev, 1).clip(min=0)[0]
     t_bdt = np.sum(np.random.normal(av, stdev, np.floor(total)).clip(min=0))
     return (d_frac+t_bdt)
+
+
+def co2eDecomp(biomass):
+    '''
+    estimates ghg emissions from decomposition of biomass in un-burned piles
+    '''
+    cFraction = 0.5
+    cMethane = 0.09
+    cCO2 = 0.61
+    cT = cFraction*biomass
+    ch4co2e = cT * cMethane * 56
+    return ch4co2e + (cCO2 * cT)
+
+
+def pm2bcgwpPiles(pm, gwp=3200):
+    '''converts a PM 2.5 estimate produced
+    from pile burns to an estimate of black carbon.
+    returns tons BC and CO2e
+    '''
+    pctFlaming = 0.9
+    pctSmolder = 0.5
+    tcFest = 0.082
+#   tcFcv = 0.09
+    tcSest = 0.560
+#   tcScv = 0.01
+    ecFest = 0.082
+#   ecFcv = 0.45
+    ecSest = 0.029
+#   ecScv = 0.49
+
+    pmSm = pm*pctSmolder
+    pmF = pm*pctFlaming
+    tcS = tcSest * pmSm
+    tcF = tcFest * pmF
+    tc = tcS + tcF
+    ecS = ecSest*tcS
+    ecF = ecFest*tcF
+    ec = ecS + ecF
+    return ec * gwp
