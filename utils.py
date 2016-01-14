@@ -3,6 +3,7 @@ import pandas as pd
 import sqlite3
 import os
 import numpy as np
+from pint import UnitRegistry as UR
 
 gUrl = 'https://docs.google.com/spreadsheets/d/{0}/export?gid={1}&format=csv'
 
@@ -89,3 +90,4 @@ def pm2bcgwpPiles(pm, gwp=3200):
     ecF = ecFest*tcF
     ec = ecS + ecF
     return ec * gwp
+
