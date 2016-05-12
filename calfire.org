@@ -57,7 +57,7 @@ short-lived climate pollutants (SLCP).
 Quantifying the climate effects of wood products and forest management residuals is
 important to the development of the Forest Climate Plan (FCP)[fn:1] as well
 as efforts underway by the California Board of Forestry and CalFire to
-meet the intent of AB 1504 (2010). To inform these efforts, this
+meet the intent of AB 1504 (2010)[fn:2]. To inform these efforts, this
 report provides estimates of the following :
 
 1. GHG and SLCP emissions produced from the combustion or
@@ -300,18 +300,21 @@ burning annual approaches 1 Mt CO2e.
 BC emissions in terms of CO2e has not been included in any GHG emissions
 inventory published by CARB.
 
-** Climate impact of harvested wood
+** Fate of harvested wood
+Wood harvested from California's forests is used in construction,
+landscaping and consumer products. Residual streams from the production of these wood products are used to generate elctricity and heat and a protion if the residual goes to landfills or is left in the woods as slash. Figure ref:fig:flow_chart reflects the flow of wood from Californias forest to its fate in-use and is the frame of reference for the following analysis.
 
-[[https://www.lucidchart.com/publicSegments/view/52a1774e-7722-4ebf-8e1a-e8fc6837bfee/image.png]]
+#+CAPTION: Data sources \label{fig:flow_chart}
+#+ATTR_LATEX: :width 0.75\textwidth
+[[./graphics/flow_chart.pdf]]
 
+# [[https://www.lucidchart.com/publicSegments/view/52a1774e-7722-4ebf-8e1a-e8fc6837bfee/image.png]]
 
 
 
 *** Wood Displacement Factors
 
-Wood harvested from California's forests is used in construction,
-landscaping and consumer products. In all of its applications, a range
-of other products can be used in place of wood. For example, in
+In all of its applications, a range of other products can be used in place of wood. For example, in
 residential construction, precast concrete and structural steel framing
 are competitive alternatives to wood. The choice of materials used in
 construction has a profound impact on GHG emissions from the
@@ -622,5 +625,7 @@ Table xxx: HWP pools (Thousand Tons of C02e)
 bibliography:fcat.bib
 
 ** Footnotes
+
+[fn:2] [[http://leginfo.legislature.ca.gov/faces/billTextClient.xhtml?bill_id=200920100AB1504][AB-1504]] Forest resources: carbon sequestration.(2009-2010)
 
 [fn:1] The [[http://www.fire.ca.gov/fcat/][Forest Climate Action Team]] (FCAT) was assembled in August of 2014 with the primary purpose of developing a Forest Carbon Plan by the end of 2016. FCAT is comprised of Executive level members from many of the State’s natural resources agencies, state and federal forest land managers, and other key partners directly or indirectly involved in California forestry. FCAT is under the leadership of CAL FIRE, Cal-EPA, and The Natural Resources Agency.
