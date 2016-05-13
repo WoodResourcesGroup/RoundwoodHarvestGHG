@@ -300,17 +300,16 @@ burning annual approaches 1 Mt CO2e.
 BC emissions in terms of CO2e has not been included in any GHG emissions
 inventory published by CARB.
 
+
+
 ** Fate of harvested wood
 Wood harvested from California's forests is used in construction,
-landscaping and consumer products. Residual streams from the production of these wood products are used to generate elctricity and heat and a protion if the residual goes to landfills or is left in the woods as slash. Figure ref:fig:flow_chart reflects the flow of wood from Californias forest to its fate in-use and is the frame of reference for the following analysis.
-
-#+CAPTION: Data sources \label{fig:flow_chart}
-#+ATTR_LATEX: :width 0.75\textwidth
-[[./graphics/flow_chart.pdf]]
+landscaping and consumer products. Residual streams from the
+production of these wood products are used to generate elctricity and
+heat and a protion if the residual goes to landfills or is left in the
+woods as slash. 
 
 # [[https://www.lucidchart.com/publicSegments/view/52a1774e-7722-4ebf-8e1a-e8fc6837bfee/image.png]]
-
-
 
 *** Wood Displacement Factors
 
@@ -320,9 +319,7 @@ are competitive alternatives to wood. The choice of materials used in
 construction has a profound impact on GHG emissions from the
 construction sector. This impact can be expressed as a displacement
 factor (DF). A displacement factor quantifies the amount of emissions
-reduction achieved per unit of wood used. A
-[[https://docs.google.com/uc?id=0B9-9Vlx0SkkFNjVGU0NrTm9HZ3M&export=download][meta
-analysis]] conducted by citep:Sathre2010 compared empirical analysis from 21 international studies and found an
+reduction achieved per unit of wood used. A meta analysis conducted by citep:Sathre2010 compared empirical analysis from 21 international studies and found an
 average emissions reduction of 2.1 tons of carbon (3.9 t CO2e) per ton
 of dry wood used. Studies ranged substantially around the average, the
 authors found that the majority of published displacement factors ranged
@@ -352,19 +349,26 @@ following sources emissions reduction:
 *** Displacement Factors Applied to Timber Products Output
 
 To evaluate the climate impact of harvested wood in California I use
-harvested roundwood estimates from the
-[[http://srsfia2.fs.fed.us/php/tpo_2009/tpo_rpa_int1.php][Timber
-Products Output (TPO)]] database. I use two estimates of the DF applied
+harvested roundwood estimates from the Timber Products Output (TPO)
+database[fn:3]. I use two estimates of the DF applied
 to the harvested wood reported in the TPO based on weather logging
 residuals are used in bioenergy or left in the woods to decompse or
 burn.
-[[https://www.lucidchart.com/publicSegments/view/fb78eea4-7fba-4a78-8e98-25fdd66a3df2/image.png]]
 
-I use displacement factors reported by Sathre and O'Connor
-([[https://docs.google.com/spreadsheets/d/13UQtRfNBSJ81PXxbYSnB2LrjHePNcvhJhrsxRBjHpoY/pubhtml?gid=546564075&single=true][Table
-3]]) applied to the reported volumes from the TPO. The following
-references are used to arrive at a displacement factor for harvested
-roundwood without logging residue utilization.
+Figure ref:fig:flow_chart reflects the flow of wood
+from Californias forest to its fate in-use and is the frame of
+reference for the following analysis. 
+
+#+CAPTION: Wood flows from commercial timber harvest in California \label{fig:flow_chart}
+#+ATTR_LATEX: :width 0.75\textwidth
+[[./graphics/flow_chart.pdf]]
+
+# [[https://www.lucidchart.com/publicSegments/view/fb78eea4-7fba-4a78-8e98-25fdd66a3df2/image.png]]
+
+I use displacement factors reported by cite:Sathre2010 applied to the
+reported volumes from the TPO. The following references are used to
+arrive at a displacement factor for harvested roundwood without
+logging residue utilization. 
 
 | reference                 | displacement factor   |
 |---------------------------+-----------------------|
@@ -374,9 +378,7 @@ roundwood without logging residue utilization.
 | Werner et al. (2005)      | 1.7                   |
 
 I use an average of the DF reported here of *2.625* tCO2e/t finished
-wood product.
-
-For harvested roundwood with logging residue utilization the following
+wood product. For harvested roundwood with logging residue utilization the following
 studies are used.
 
 | reference                   | displacement factor   |
@@ -394,22 +396,19 @@ wood product.
 
 TPO is reported in terms of roundwood harvested for products. The
 displacement factors presented in Sathre and O'Connonr are in terms of
-tons of finished wood products. Therefore we must assume a milling
+tons of carbon in wood products. Therefore we must assume a milling
 efficiency to convert TPO estimates to finished wood products. I assume
 a milling efficiency of 0.5.
 
 Further, TPO is reported in in cubic feet and the DF implies a mass
 unit. To convert cubic meters to a mass unit we use the average wood
 density of harvested volume in California weighted by species. Harvest
-volume by species is reported in McIver and Morgan
-([[https://docs.google.com/spreadsheets/d/138FWlGeW57MKdcz2UkWxtWV4o50SZO8sduB1R6JOFp8/pubhtml?gid=393414465&single=true][Table
-4]]). The resulting weighted average wood density used here is *27.94
+volume by species is reported in citet:Mciver2012. The resulting weighted average wood density used here is *27.94
 lbs/cuft*.
 
 McIver and Morgan report the percent of harvest used as bioenergy
 feedstock. From personal communications with
-[[http://www.bber.umt.edu/staff/mciver.asp][Chelsea McIver]], all
-bioenergy feedstock reported is sourced in-woods (ie, not mill
+[[http://www.bber.umt.edu/staff/mciver.asp][Chelsea McIver]], all bioenergy feedstock reported is sourced in-woods (ie, not mill
 residues).
 
 |     | year   | bioenergy % of harvest   |
@@ -574,6 +573,11 @@ feet.
 Private land non-commercial management residuals - [x] Public lands
 logging residuals - [x] Private lands logging residuals
 
+** Further questions
+
+This analysis is a first step towards a broader analysis of the
+climate impacts of harvested wood in California. The following are key
+questions which follow from this analysis.
 ** References
 
 Ward DE, Hardy CC. Organic and elemental profiles for smoke from
@@ -625,6 +629,8 @@ Table xxx: HWP pools (Thousand Tons of C02e)
 bibliography:fcat.bib
 
 ** Footnotes
+
+[fn:3] Timber Products Output Reporting Tool [[http://srsfia2.fs.fed.us/php/tpo_2009/tpo_rpa_int1.php][http://srsfia2.fs.fed.us/php/tpo_2009/tpo_rpa_int1.php]]
 
 [fn:2] [[http://leginfo.legislature.ca.gov/faces/billTextClient.xhtml?bill_id=200920100AB1504][AB-1504]] Forest resources: carbon sequestration.(2009-2010)
 
