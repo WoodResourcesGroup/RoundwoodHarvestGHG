@@ -22,7 +22,6 @@
 
 
 
-
 \pagebreak
 * California forest management emissions profile
 ** Introduction
@@ -443,8 +442,9 @@ harvest.
 In addition to the TPO, the California Board of Equalization (BOE
 reports historical timber harvest.  Averaged over the years where both
 repositories report data, the BOE is 8% less than TPO (Table ref:tab:tpo_boe). This is
-reasonable considering that there is not financial incentive to
-under-report under the TPO data collection protocol.
+reasonable considering that:
+1. BOE data may under-reported as there may be a financial incentive to reduce tax burden
+2. BOE does not include volume harvested from native American tribal lands in the state
 
 #+NAME:   tab:tpo_boe
 #+BEGIN_SRC sqlite :db fcat_biomass.sqlite :colnames yes :exports results
@@ -454,42 +454,43 @@ select year, state+blm+nat_forest+private as "McIver, et. al. (2012) MMBF", tota
 #+ATTR_LATEX: :environment longtable
 #+CAPTION: Total annual harvest reported by citet:Mciver2012 and California Board of Equalization.
 #+RESULTS: tab:tpo_boe
-| year | Mciver2012 MMBF                  | BOE MMBF | BOE/M&M |
-|------+-----------------+----------+---------|
-| 1978 |          4606.0 |     4491 |    0.98 |
-| 1979 |          4044.0 |     3991 |    0.99 |
-| 1980 |          3478.0 |     3164 |    0.91 |
-| 1981 |          2832.0 |     2672 |    0.94 |
-| 1982 |          2488.0 |     2318 |    0.93 |
-| 1983 |          3638.0 |     3358 |    0.92 |
-| 1984 |          3701.0 |     3546 |    0.96 |
-| 1985 |          4093.0 |     3818 |    0.93 |
-| 1986 |          4416.0 |     4265 |    0.97 |
-| 1987 |          4667.0 |     4500 |    0.96 |
-| 1988 |          4847.0 |     4670 |    0.96 |
-| 1989 |          4699.0 |     4424 |    0.94 |
-| 1990 |          4264.0 |     4021 |    0.94 |
-| 1991 |          3439.0 |     3195 |    0.93 |
-| 1992 |          3192.0 |     2973 |    0.93 |
-| 1993 |          3041.0 |     2871 |    0.94 |
-| 1994 |          2814.0 |     2316 |    0.82 |
-| 1995 |          2520.0 |     2306 |    0.92 |
-| 1996 |          2515.0 |     2273 |     0.9 |
-| 1997 |          2640.0 |     2400 |    0.91 |
-| 1998 |          2420.0 |     2091 |    0.86 |
-| 2000 |          2244.0 |     1966 |    0.88 |
-| 2001 |          1801.0 |     1603 |    0.89 |
-| 2002 |         1691.73 |     1690 |     1.0 |
-| 2003 |         1667.95 |     1663 |     1.0 |
-| 2004 |       1704.0305 |     1706 |     1.0 |
-| 2005 |          1738.5 |     1725 |    0.99 |
-| 2006 |         1960.35 |     1631 |    0.83 |
-| 2007 |          1759.6 |     1626 |    0.92 |
-| 2008 |       1476.0745 |     1372 |    0.93 |
-| 2009 |          911.19 |      805 |    0.88 |
-| 2010 |         1302.38 |     1161 |    0.89 |
-| 2011 |          1432.5 |     1288 |     0.9 |
-| 2012 |          1421.3 |     1307 |    0.92 |
+| year | McIver, et. al. (2012) MMBF | BOE MMBF | BOE/M&M |
+|------+-----------------------------+----------+---------|
+| 1978 |                      4606.0 |     4491 |    0.98 |
+| 1979 |                      4044.0 |     3991 |    0.99 |
+| 1980 |                      3478.0 |     3164 |    0.91 |
+| 1981 |                      2832.0 |     2672 |    0.94 |
+| 1982 |                      2488.0 |     2318 |    0.93 |
+| 1983 |                      3638.0 |     3358 |    0.92 |
+| 1984 |                      3701.0 |     3546 |    0.96 |
+| 1985 |                      4093.0 |     3818 |    0.93 |
+| 1986 |                      4416.0 |     4265 |    0.97 |
+| 1987 |                      4667.0 |     4500 |    0.96 |
+| 1988 |                      4847.0 |     4670 |    0.96 |
+| 1989 |                      4699.0 |     4424 |    0.94 |
+| 1990 |                      4264.0 |     4021 |    0.94 |
+| 1991 |                      3439.0 |     3195 |    0.93 |
+| 1992 |                      3192.0 |     2973 |    0.93 |
+| 1993 |                      3041.0 |     2871 |    0.94 |
+| 1994 |                      2814.0 |     2316 |    0.82 |
+| 1995 |                      2520.0 |     2306 |    0.92 |
+| 1996 |                      2515.0 |     2273 |     0.9 |
+| 1997 |                      2640.0 |     2400 |    0.91 |
+| 1998 |                      2420.0 |     2091 |    0.86 |
+| 1999 |                      2429.0 |     2144 |    0.88 |
+| 2000 |                      2244.0 |     1966 |    0.88 |
+| 2001 |                      1801.0 |     1603 |    0.89 |
+| 2002 |                     1691.73 |     1690 |     1.0 |
+| 2003 |                     1667.95 |     1663 |     1.0 |
+| 2004 |                   1704.0305 |     1706 |     1.0 |
+| 2005 |                      1738.5 |     1725 |    0.99 |
+| 2006 |                     1960.35 |     1631 |    0.83 |
+| 2007 |                      1759.6 |     1626 |    0.92 |
+| 2008 |                   1476.0745 |     1372 |    0.93 |
+| 2009 |                      911.19 |      805 |    0.88 |
+| 2010 |                     1302.38 |     1161 |    0.89 |
+| 2011 |                      1432.5 |     1288 |     0.9 |
+| 2012 |                      1421.3 |     1307 |    0.92 |
 
 The BOE does not report harvest from tribal lands but the TPO does. By
 TPO data, harvest from tribal lands averages 0.74% of the total
@@ -577,16 +578,16 @@ select year, printf("%.2f",state/5.44) "State", printf("%.2f",(blm+nat_forest)/5
 To use the TPO data to estimate emissions reductions using the DF we apply a
 conversion factor of *5.44* MCF/MMBF. This is an approximation as the
 actual sawlog conversion factor varies with the log size which, on
-average on average over time has changed.  
+average over time has changed.  
 
 
 The ratio of harvested volume to which we can apply a displacement
 factor reflecting bioenergy use of logging residuals can be calculated
 based on the ratio of reported consumption of logging residuals in
 bioenergy by citeauthor:Mciver2012 to the total logging residuals reported
-in the TPO. McIver and Morgan report bioenergy consumption from 2000
+in the TPO. citeauthor:Mciver2012 report bioenergy consumption from 2000
 forward. For years previous, we use the average bioenergy consumption
-from 2000 -- 2012. These results assume bioenergy application
+from 2000 -- 2012. These results assume bioenergy consumption
 throughout the reporting years. Bioenergy use of residuals did not
 begin until the late 1970. Further analysis is necessary to modify
 these results to reflect the development of the bioenergy industry.
@@ -601,27 +602,26 @@ harvested roundwood. The results are shown in the following chart.
 [[./graphics/ann_hh_em_reduc.pdf]]
 
 Contribution of the varios ownership categories to the aggregate is
-shown in figure
+shown in Figure ref:em_reduc_own.
 
 #+NAME: em_reduc_own
 #+CAPTION: Historical emissions reductions by ownership for selected years resulting from harvested roundwood using displacement factors from citep:Sathre2010 applied to TPO data.
 [[./graphics/harv_em_reductions.png]]
 
 # [[https://raw.githubusercontent.com/peteWT/fcat_biomass/master/graphics/harv_em_reductions.png]]
+
+
 *** Emissions from un-utilized logging residues
 
 From logging residuals not used in bioenergy, emmisions are produced
-from combustion of the residual material or from decomposition of the
+from combustion of or from biological decomposition of the
 material over time. To calculate the ratio of burned to decompsed
 logging residues I begin with the CARB estimate of PM2.5 produced from
 forest management. #### Estimate biomass from PM2.5 To estimate total
 biomass from PM2.5 I assume 90% consumption of biomass in piles and use
 the relationship of pile tonnage to PM emissions calculated using the
-[[http://depts.washington.edu/nwfire/piles/][Piled Fuels Biomass and
-Emissions Calculator]] provided by the Washington State Department of
-Natural Resources. This calculator is based on the
-[[http://www.fs.fed.us/pnw/fera/research/smoke/consume/index.shtml][Consume]]
-fire behavior model published by the US Forest Service.
+[[http://depts.washington.edu/nwfire/piles/][Piled Fuels Biomass and Emissions Calculator]] provided by the Washington State Department of
+Natural Resources. This calculator is based on the [[http://www.fs.fed.us/pnw/fera/research/smoke/consume/index.shtml][Consume]] fire behavior model published by the US Forest Service.
 
 |     | YEAR   | EICSOUN             | Annual PM 2.5(t)   | Biomass (BDT)   |
 |-----+--------+---------------------+--------------------+-----------------|
@@ -744,6 +744,27 @@ feet.
 | max     | 17.8532    | 22.6      | 49.1        | 72.4      | 4.3        |
 
 
+
+*** Disposition wood harvested in California.
+
+Harvested wood from California's forests is fractionated through harvest and processing and use into several categories for which the time horizon for return of carbon in biomass to the atmosphere can vary widely:
+
++ Logging Residuals :: Tops, limbs and sub-merchantable material produced from harvest activities in the woods
++ Processing (mill) residuals :: Sawdust, shavings, bark and off cuts from primary and secondary manufacturing.
++ Construction debris :: Fraction of finished wood from finished products that is left from construction or integration into its final use.
++ Demolition :: Wood used in construction that has reached the end of its useful life.
+
+Each category has multiple potential fates which can greatly influence the net emissions impact attributable to the initial forest management activity.  The fate of each of these pools is determined by a political and economic system which is highly dynamic. To understand how policy decisions will impact the fate and subsequent climate impact of harvested wood products, a detailed process model is necessary. To provide a rough estimate of the fate of annual round-wood harvest historically, we must use historical volumes and and apply what we know about milling efficiency improvements, logging utilization rates, and construction use efficiency. 
+
+According to citeauthor:Morgan2008 logging residues produced from sawlog harvest can be estimated using a factor of 0.0302 (+/-.0123 @95%CI) times the total cubic sawlog volume delivered to a mill. Unfortunately we cannot say how logging residue production has changed over time in California.  citeauthor:Simmons2014 found that logging utilization has decreased in Idaho from 1965 to 2011 by 80%. For the purposed of this analysis we will assume that similar changes have occurred in California timber harvesting. 
+
+Milling efficiency has increased roughly 14% in California in the period between 1970 and 2006 cite:Keegan2010. For this analysis we assume a continuous improvement such that for years prior to 1970, milling efficiency in year $x$ is calculated as:
+#+BEGIN_LaTeX
+\begin{align*}
+\eta_x = \eta_{1970}-\left(\left(1970-x\right)\left(0.14\left(2006-1970\right)\right)
+\end{align*}
+#+END_LaTeX
+ 
 
 ** Further questions
 
