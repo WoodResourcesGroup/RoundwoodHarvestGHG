@@ -22,6 +22,7 @@
 
 
 
+
 \pagebreak
 * California forest management emissions profile
 ** Introduction
@@ -441,8 +442,7 @@ harvest.
 
 In addition to the TPO, the California Board of Equalization (BOE
 reports historical timber harvest.  Averaged over the years where both
-repositories report data, the BOE is 8% less than TPO (Table ref:tab:tpo_boe). This is
-reasonable considering that:
+sources report data, the BOE is 8% less than TPO (Table ref:tab:tpo_boe). This is reasonable considering that:
 1. BOE data may under-reported as there may be a financial incentive to reduce tax burden
 2. BOE does not include volume harvested from native American tribal lands in the state
 
@@ -643,8 +643,7 @@ burning (CO2, CH4) and from BC:
 | 3   | 2012   | FOREST MANAGEMENT   | 1.35002e+06   | 127349        | 248391       | 1.72576e+06               |
 | 4   | 2015   | FOREST MANAGEMENT   | 1.35081e+06   | 127424        | 248536       | 1.72677e+06               |
 
-**** Emissions from decomposition of un-utilized forest management
-residuals
+**** Emissions from decomposition of un-utilized forest management residuals
 
 Un-utilized residual biomass not consumed in pile burns decomposes over
 time resulting in emission of methane and carbon dioxide. To provide a
@@ -756,15 +755,175 @@ Harvested wood from California's forests is fractionated through harvest and pro
 
 Each category has multiple potential fates which can greatly influence the net emissions impact attributable to the initial forest management activity.  The fate of each of these pools is determined by a political and economic system which is highly dynamic. To understand how policy decisions will impact the fate and subsequent climate impact of harvested wood products, a detailed process model is necessary. To provide a rough estimate of the fate of annual round-wood harvest historically, we must use historical volumes and and apply what we know about milling efficiency improvements, logging utilization rates, and construction use efficiency. 
 
-According to citeauthor:Morgan2008 logging residues produced from sawlog harvest can be estimated using a factor of 0.0302 (+/-.0123 @95%CI) times the total cubic sawlog volume delivered to a mill. Unfortunately we cannot say how logging residue production has changed over time in California.  citeauthor:Simmons2014 found that logging utilization has decreased in Idaho from 1965 to 2011 by 80%. For the purposed of this analysis we will assume that similar changes have occurred in California timber harvesting. 
+ According to citet:Morgan logging residues produced from sawlog harvest can be estimated using a factor of 0.0302 (+/-.0123 @95%CI) times the total cubic sawlog volume delivered to a mill. Unfortunately we cannot say how logging residue production has changed over time in California.  citet:Simmons2014 found that logging utilization has decreased in Idaho from 1990 to 2011 by 72%. For the purposed of this analysis we will assume that similar changes have occurred in California timber harvesting. We then estimate a logging residue production factor for years before 1990 based on the following equation wherein we assume 1990 residue ration for all years prior:
 
-Milling efficiency has increased roughly 14% in California in the period between 1970 and 2006 cite:Keegan2010. For this analysis we assume a continuous improvement such that for years prior to 1970, milling efficiency in year $x$ is calculated as:
-#+BEGIN_LaTeX
-\begin{align*}
-\eta_x = \eta_{1970}-\left(\left(1970-x\right)\left(0.14\left(2006-1970\right)\right)
-\end{align*}
-#+END_LaTeX
+ #+BEGIN_LaTeX
+
+ \begin{align*}
+ V\llap{--}lr_{x} = V\llap{--}rw_{x}\left(\eta_{04}+\left(\eta_{o4}\eta_\Delta\right)\right)\\
+ \text{Where:}\\
+ V\llap{--}rw_{x} = \text{Rundwood volume harvested in year }x\\
+ \eta_{04} = \mathcal{N}(0.0302,0.0123) \text{ ratio of logging residues to roundwood harvested in CA, 2004}\\
+ \eta_\Delta = 0.72 \text{ (percent change in efficiency over time period)}\\
+ \end{align*}
+ #+END_LaTeX
+
+ For logging residue production factors for years between 1990 and 2004 we calculate logging residues as a function of the percent change in logging residual rations estimated for Idaho from citet:Simmons2014 applied to the known logging residual ratio reported by citet:Morgan. To reflect the uncertainty in the estimate provided by citet:Morgan, we calculate the logging residual using a randomly selected value from a normal probability distribution defined by the estimate and upper and lower bounds of the 95% confidence interval provided:
+
+ #+BEGIN_LaTeX
+
+ \begin{align*}
+ V\llap{--}lr_{x} = V\llap{--}rw_{x}\left(\eta_{04}+ \left(\eta_{04}\left(\left(Y_1-x\right)\frac{\eta_\Delta}{Y_\Delta}\right)\right)\right)\\
+ \text{Where:}\\
+ V\llap{--}rw_{x} = \text{Rundwood volume harvested in year }x\\
+ \eta_{04} = \mathcal{N}(0.0302,0.0123) \text{ ratio of logging residues to roundwood harvested in CA, 2004}\\
+ Y_1 = 2004 \text{ (year for which logging residual estimate available for CA)} \\
+ x = \text{year for which logging residues are calculated}\\
+ \eta_\Delta = 0.72 \text{ (percent change in logging residue ratio over time period)}\\
+ Y_\Delta = 21\text{ (number of years over which logging residue ratio decreased)}
+ \end{align*}
+ #+END_LaTeX
+
+ Logging residual volume in years following 2004 are calculated as follows:
+
+ #+BEGIN_LaTeX
+ \begin{align*}
+ V\llap{--}lr_{x} = V\llap{--}rw_{x}\left(\eta_{04}- \left(\eta_{04}\left(\left(x-Y_1\right)\frac{\eta_\Delta}{Y_\Delta}\right)\right)\right)\\
+ \text{Where:}\\
+ V\llap{--}rw_{x} = \text{Rundwood volume harvested in year }x\\
+ \eta_{04} = \mathcal{N}(0.0302,0.0123) \text{ ratio of logging residues to roundwood harvested in CA, 2004}\\
+ Y_1 = 2004 \text{ (year for which logging residual estimate available for CA)} \\
+ x = \text{year for which logging residues are calculated}\\
+ \eta_\Delta = 0.72 \text{ (percent change in logging residue ratio over time period)}\\
+ Y_\Delta = 21\text{ (number of years over which logging residue ratio decreased)}
+ \end{align*}
+ #+END_LaTeX
  
+
+ Milling efficiency has increased roughly 14% in California in the period between 1970 and 2006 citet:Keegan2010. For this analysis we assume a continuous improvement such that for years prior to 1970, milling efficiency in year $x$ is calculated as:
+
+ #+BEGIN_LaTeX
+
+ \begin{align*}
+ V\llap{--}mr_{x} = V\llap{--}rw_{x} \left(\eta_{70}-\left((Y_1-x)\frac{\eta_\Delta}{Y_\Delta}\right\right)\\
+ \text{Where:}\\
+ V\llap{--}rw_{x} = \text{Rundwood volume harvested in year }x\\
+ \eta_{70} = 0.42 \text{ (milling efficiency in 1970)}\\
+ Y_1 = 1970 \text{ (earliest year mill efficiency available for)} \\
+ x = \text{year for which milling residues are calculated}\\
+ \eta_\Delta = 0.06\text{ (increase in milling efficiency from 1970-2011)}\\
+ Y_\Delta = 41\text{ (number of years overwhihc milling efficiency increased)}
+ \end{align*}
+ #+END_LaTeX
+
+For years after 1970, milling efficiency for year $x$ is calculated as:
+
+ #+BEGIN_LaTeX
+ \begin{align*}
+ V\llap{--}mr_{x} = V\llap{--}rw_{x} \left(\eta_{70}+\left((x-Y_1)\frac{\eta_\Delta}{Y_\Delta}\right\right)\\
+ \text{Where:}\\
+ V\llap{--}rw_{x} = \text{Rundwood volume harvested in year }x\\
+ \eta_{70} = 0.42 \text{ (milling efficiency in 1970)}\\
+ Y_1 = 1970 \text{ (earliest year mill efficiency available for)} \\
+ x = \text{year for which milling residues are calculated}\\
+ \eta_\Delta = 0.06\text{ (increase in milling efficiency from 1970-2011)}\\
+ Y_\Delta = 41\text{ (number of years overwhihc milling efficiency increased)}
+ \end{align*}
+ #+END_LaTeX
+
+
+To estimate annualized construction and demolition material, we use ratios of finished wood products to construction debris and demolition debris referenced in citet:McKeever2004. This data is sparse and should be considered unreliable for years other than those for which it is reported in  citeauthor:McKeever2004. 
+
+Construction debris was estimated in 2002 as approximately 15% of total wood used in construction. Demolition debris from wood produced annually from wood grown on California forestland is outside of the scope of this report.
+
+
+Table ref:tab:me_and_lr presents annualized estimates of logging and milling residuals, finished lumber, and construction debris based on BOE roundwood harvest volumes:
+
+#+NAME: tab:me_and_lr
+ #+BEGIN_SRC python :results raw :exports results
+ import sqlite3
+ import numpy as np
+ import pandas as pd
+ from tabulate import tabulate
+
+ con = sqlite3.connect('fcat_biomass.sqlite')
+ convUnits = 5.44 #MCF/MMBF
+
+ def me(yr,vol):
+     me70 = 0.42 
+     me11 = 0.48
+     ann = (me11 - me70)/(2011-1970)
+     if yr <= 1970:
+         return vol * (me70-((1970-yr)*ann))
+     if yr >= 1970:
+         return vol * (me70+((yr-1970)*ann))
+
+ def lr(yr,vol):
+     lr04 = np.random.normal(0.0302,0.0123)
+     # 72% reduction in logging residue production between 1990 and 2011)
+     ann = 0.72/(2011-1990)
+     lr90 = lr04 + (lr04*0.72)
+     lr11 = lr04 - (lr04*((2011-2004)*ann))
+     # if year is before 1990, assume lr from 1990
+     if yr < 1990:
+         return vol * lr90
+     if yr >= 1990 and yr <=2004 :
+         return vol * (lr04 + (lr04*((2004-yr)*ann)))
+     if yr > 2004:
+         return vol * (lr04 - (lr04*((yr-2004)*ann)))
+
+ con.create_function('log_res', 2, lr)
+ con.create_function('mill_res', 2, me)
+ #crs = con.cursor()
+ f = pd.read_sql_query('select year "Year", total_mmbf/{uc} as "Total RW", log_res(year, total_mmbf/{uc}) as "LR", mill_res(year, total_mmbf/{uc}) as "MR", (total_mmbf/{uc})-mill_res(year, total_mmbf/{uc}) "FL",((total_mmbf/{uc})-mill_res(year, total_mmbf/{uc}))*0.15 "CD" from boe'.format(uc=convUnits), con)
+ return(tabulate([list(row) for row in f.values], headers=f.columns.tolist(), tablefmt = 'orgtbl'))
+ #+END_SRC
+
+#+ATTR_LATEX: :environment longtable
+#+CAPTION: Annualized logging and mill residual estimates based on BOE harvest volumes in Million Cubic Feet (MCF). RW:Roundwood harvested, LR: Logging residues, MR: Mill Residues, FL: Finished Lumber, CD: Construction Debris
+ #+RESULTS: tab:me_and_lr
+ | Year | Total RW |      LR |      MR |      FL |      CD |
+ |------+----------+---------+---------+---------+---------|
+ | 1978 |  825.551 | 12.5367 | 356.397 | 469.155 | 70.3732 |
+ | 1979 |   733.64 | 61.1621 | 317.791 | 415.848 | 62.3773 |
+ | 1980 |  581.618 | 31.8535 | 252.791 | 328.827 |  49.324 |
+ | 1981 |  491.176 | 26.7494 | 214.201 | 276.976 | 41.5463 |
+ | 1982 |  426.103 | 20.6512 | 186.446 | 239.657 | 35.9485 |
+ | 1983 |  617.279 | 43.0887 | 271.001 | 346.279 | 51.9418 |
+ | 1984 |  651.838 | 40.6067 | 287.127 | 364.711 | 54.7067 |
+ | 1985 |  701.838 | 4.56444 | 310.178 |  391.66 |  58.749 |
+ | 1986 |  784.007 |  38.797 |  347.64 | 436.367 | 65.4551 |
+ | 1987 |  827.206 | 79.4265 | 368.006 |   459.2 |   68.88 |
+ | 1988 |  858.456 | 43.6605 | 383.164 | 475.291 | 71.2937 |
+ | 1989 |  813.235 | 56.0238 | 364.171 | 449.065 | 67.3597 |
+ | 1990 |  739.154 | 33.4726 | 332.079 | 407.076 | 61.0614 |
+ | 1991 |  587.316 | 10.3265 | 264.722 | 322.594 | 48.3891 |
+ | 1992 |  546.507 | 12.1823 | 247.128 | 299.379 | 44.9069 |
+ | 1993 |  527.757 | 20.6698 | 239.422 | 288.336 | 43.2504 |
+ | 1994 |  425.735 | 17.1318 | 193.761 | 231.974 | 34.7961 |
+ | 1995 |  423.897 | 19.2602 | 193.545 | 230.352 | 34.5528 |
+ | 1996 |  417.831 | 15.1669 | 191.387 | 226.444 | 33.9666 |
+ | 1997 |  441.176 | 16.8076 | 202.726 | 238.451 | 35.7676 |
+ | 1998 |  384.375 | 13.3606 | 177.188 | 207.188 | 31.0781 |
+ | 1999 |  394.118 | 12.2791 | 182.255 | 211.862 | 31.7793 |
+ | 2000 |  361.397 | 19.6179 | 167.653 | 193.744 | 29.0616 |
+ | 2001 |  294.669 | 13.6376 | 137.129 |  157.54 |  23.631 |
+ | 2002 |  310.662 | 10.8658 | 145.026 | 165.636 | 24.8454 |
+ | 2003 |  305.699 | 10.8445 | 143.156 | 162.542 | 24.3813 |
+ | 2004 |  313.603 | 5.15472 | 147.317 | 166.286 | 24.9429 |
+ | 2005 |  317.096 | 10.0915 | 149.422 | 167.674 | 25.1511 |
+ | 2006 |  299.816 | 6.44854 | 141.718 | 158.098 | 23.7147 |
+ | 2007 |  298.897 | 11.0516 | 141.721 | 157.176 | 23.5764 |
+ | 2008 |  252.206 | 2.88876 | 119.952 | 132.254 | 19.8381 |
+ | 2009 |  147.978 | 3.56061 | 70.5963 | 77.3816 | 11.6072 |
+ | 2010 |  213.419 | 2.82181 | 102.129 |  111.29 | 16.6935 |
+ | 2011 |  236.765 | 5.90173 | 113.647 | 123.118 | 18.4676 |
+ | 2012 |  240.257 | 5.86833 | 115.675 | 124.582 | 18.6873 |
+ | 2013 |   302.39 | 9.14176 | 146.032 | 156.358 | 23.4536 |
+ | 2014 |  269.485 | 4.31778 | 130.536 | 138.949 | 20.8424 |
+
+
+
 
 ** Further questions
 
