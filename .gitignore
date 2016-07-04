@@ -9,3 +9,5 @@ man/*
 pip-selfcheck.json
 src_data/*
 db/*
+/.Python
+/calfire.bbl
