@@ -47,9 +47,10 @@ in the stand to decompose or piled and burned as directed by forest
 practice rules ([[http://calfire.ca.gov/resource_mgt/downloads/2013_FP_Rulebook_with_Tech_RuleNo1.pdf][California Forest Practice Rules]], Article 7 §
 917.2). Combustion or decomposition of this residual material results
 in emissions of greenhouse gases (GHG), criteria air pollutants (CAP) and
-short-lived climate pollutants (SLCP).
+short-lived climate pollutants (SLCP). In the absence of management activity, atmospheric emissions are produced from stochastic processes such as wildfire and pest or disease outbreaks. Figure ref:fig:wood_fates presents an overview of emissions and emissions reduction pathways for wood from California's forests. The focus of this analysis is on deriving emissions associated with management activity. Approximately 34 MMT CO2e is emitted annually from California's forest from pest or disease induced mortality cite:Christensen2016. Emissions from mortality are indirectly related to management activities just as wildfire is and *must* be accounted for a comprehensive evaluation of the climate impacts of harvesting. This report doe not assess greenhouse gas emissions from mortality.   
 
-#+CAPTION: Overview of the system. \label{fig:wood_fates}
+label:fig:wood_fates
+#+CAPTION: Overview of fates of wood resulting from harvest and mortality in California forests. Note that time is not represented in this figure.  
 #+ATTR_LATEX: :width 0.75\textwidth
 [[./graphics/wood_fates.pdf]]
 
@@ -128,7 +129,7 @@ Several steps are necessary to address the objective stated:
 
 ** Estimating CO2 equivalent emissions from forest biomass burning
 
-#+CAPTION: Data sources available from CARB for estimating GHG and SLCP emissions from forest management. \label{fig:wood_fates}
+#+CAPTION: Data sources available from CARB for estimating GHG and SLCP emissions from forest management.
 #+ATTR_LATEX: :width 0.75\textwidth
 [[./graphics/burning.pdf]]
 
@@ -382,7 +383,7 @@ Figure ref:fig:flow_chart reflects the flow of wood
 from Californias forest to its fate in-use and is the frame of
 reference for the following analysis.
 
-#+CAPTION: Wood flows from commercial timber harvest in California \label{fig:flow_chart}
+#+CAPTION: Wood flows from timber harvest in California \label{fig:flow_chart}
 #+ATTR_LATEX: :width 0.75\textwidth
 [[./graphics/flow_chart.pdf]]
 
@@ -857,12 +858,9 @@ For years after 1970, milling efficiency for year $x$ is calculated as:
  #+END_LaTeX
 
 
-To estimate annualized construction and demolition material, we use ratios of finished wood products to construction debris and demolition debris referenced in citet:McKeever2004. This data is sparse and should be considered unreliable for years other than those for which it is reported in  citeauthor:McKeever2004. 
+To estimate annualized construction waste material, we use ratios of finished wood products to construction debris and demolition debris referenced in citet:McKeever2004. This data from citeauthor:McKeever2004 is sparse and should be considered unreliable for years other than those for which it is reported.  Construction debris was estimated in 2002 as approximately 15% of total wood used in construction. Demolition debris from wood produced annually from wood grown on California forestland is outside of the scope of this report.
 
-Construction debris was estimated in 2002 as approximately 15% of total wood used in construction. Demolition debris from wood produced annually from wood grown on California forestland is outside of the scope of this report.
-
-
-Table ref:tab:me_and_lr presents annualized estimates of logging and milling residuals, finished lumber, and construction debris based on BOE roundwood harvest volumes:
+Table ref:tab:me_and_lr presents ten year average estimates of logging and milling residuals, finished lumber, and construction debris based on BOE roundwood harvest volumes. 
 
 #+NAME: tab:me_and_lr
  #+BEGIN_SRC python :results raw :exports results
@@ -875,8 +873,8 @@ Table ref:tab:me_and_lr presents annualized estimates of logging and milling res
  convUnits = 5.44 #MCF/MMBF
 
  def me(yr,vol):
-     me70 = 0.42 
-     me11 = 0.48
+     me70 = 0.42 #Mill efficiency in 1970
+     me11 = 0.48 #Mill efficiency in 2011
      ann = (me11 - me70)/(2011-1970)
      if yr <= 1970:
          return vol * (me70-((1970-yr)*ann))
@@ -900,53 +898,62 @@ Table ref:tab:me_and_lr presents annualized estimates of logging and milling res
  con.create_function('log_res', 2, lr)
  con.create_function('mill_res', 2, me)
  #crs = con.cursor()
- f = pd.read_sql_query('select year "Year", total_mmbf/{uc} as "Total RW", log_res(year, total_mmbf/{uc}) as "LR", mill_res(year, total_mmbf/{uc}) as "MR", (total_mmbf/{uc})-mill_res(year, total_mmbf/{uc}) "FL",((total_mmbf/{uc})-mill_res(year, total_mmbf/{uc}))*0.15 "CD" from boe'.format(uc=convUnits), con)
+
+ #first 'f' calculates annual volumes by pool, second 'f' calculates 10-year everage pools.
+
+ #f = pd.read_sql_query('select year "Year", total_mmbf/{uc} as "Total RW", log_res(year, total_mmbf/{uc}) as "LR", mill_res(year, total_mmbf/{uc}) as "MR", (total_mmbf/{uc})-mill_res(year, total_mmbf/{uc}) "FL",((total_mmbf/{uc})-mill_res(year, total_mmbf/{uc}))*0.15 "CD" from boe'.format(uc=convUnits), con)
+
+ f = pd.read_sql_query("""with foo as (select min(year)+10 mny from boe)
+     select s1.year-10 "10-year start",
+     	    s1.year "10-year end",
+	    avg(s2.total_mmbf/{uc}) as "RW",
+	    avg(log_res(s2.year, s2.total_mmbf/{uc})) as "LR",
+	    avg(mill_res(s2.year, s2.total_mmbf/{uc})) as "MR",
+	    avg((s2.total_mmbf/{uc})-mill_res(s2.year, s2.total_mmbf/{uc})) "FL",
+	    avg(((s2.total_mmbf/{uc})-mill_res(s2.year, s2.total_mmbf/{uc}))*0.15) "CD"
+	    from boe s1, 
+	    	 boe s2,
+		 foo
+            where s2.year between s1.year - 10 and s1.year 
+	    and s1.year >= foo.mny
+	    group by s1.year 
+	    order by s1.year;""".format(uc=convUnits), con)
+ f.to_sql('tenyear_pools_boe', con, if_exists = 'replace')
  return(tabulate([list(row) for row in f.values], headers=f.columns.tolist(), tablefmt = 'orgtbl'))
  #+END_SRC
 
 #+ATTR_LATEX: :environment longtable
-#+CAPTION: Annualized logging and mill residual estimates based on BOE harvest volumes in Million Cubic Feet (MCF). RW:Roundwood harvested, LR: Logging residues, MR: Mill Residues, FL: Finished Lumber, CD: Construction Debris
+#+CAPTION: Ten-year average logging and mill residual estimates based on BOE harvest volumes in Million Cubic Feet (MCF). RW:Roundwood harvested, LR: Logging residues, MR: Mill Residues, FL: Finished Lumber, CD: Construction Debris
  #+RESULTS: tab:me_and_lr
- | Year | Total RW |      LR |      MR |      FL |      CD |
- |------+----------+---------+---------+---------+---------|
- | 1978 |  825.551 | 12.5367 | 356.397 | 469.155 | 70.3732 |
- | 1979 |   733.64 | 61.1621 | 317.791 | 415.848 | 62.3773 |
- | 1980 |  581.618 | 31.8535 | 252.791 | 328.827 |  49.324 |
- | 1981 |  491.176 | 26.7494 | 214.201 | 276.976 | 41.5463 |
- | 1982 |  426.103 | 20.6512 | 186.446 | 239.657 | 35.9485 |
- | 1983 |  617.279 | 43.0887 | 271.001 | 346.279 | 51.9418 |
- | 1984 |  651.838 | 40.6067 | 287.127 | 364.711 | 54.7067 |
- | 1985 |  701.838 | 4.56444 | 310.178 |  391.66 |  58.749 |
- | 1986 |  784.007 |  38.797 |  347.64 | 436.367 | 65.4551 |
- | 1987 |  827.206 | 79.4265 | 368.006 |   459.2 |   68.88 |
- | 1988 |  858.456 | 43.6605 | 383.164 | 475.291 | 71.2937 |
- | 1989 |  813.235 | 56.0238 | 364.171 | 449.065 | 67.3597 |
- | 1990 |  739.154 | 33.4726 | 332.079 | 407.076 | 61.0614 |
- | 1991 |  587.316 | 10.3265 | 264.722 | 322.594 | 48.3891 |
- | 1992 |  546.507 | 12.1823 | 247.128 | 299.379 | 44.9069 |
- | 1993 |  527.757 | 20.6698 | 239.422 | 288.336 | 43.2504 |
- | 1994 |  425.735 | 17.1318 | 193.761 | 231.974 | 34.7961 |
- | 1995 |  423.897 | 19.2602 | 193.545 | 230.352 | 34.5528 |
- | 1996 |  417.831 | 15.1669 | 191.387 | 226.444 | 33.9666 |
- | 1997 |  441.176 | 16.8076 | 202.726 | 238.451 | 35.7676 |
- | 1998 |  384.375 | 13.3606 | 177.188 | 207.188 | 31.0781 |
- | 1999 |  394.118 | 12.2791 | 182.255 | 211.862 | 31.7793 |
- | 2000 |  361.397 | 19.6179 | 167.653 | 193.744 | 29.0616 |
- | 2001 |  294.669 | 13.6376 | 137.129 |  157.54 |  23.631 |
- | 2002 |  310.662 | 10.8658 | 145.026 | 165.636 | 24.8454 |
- | 2003 |  305.699 | 10.8445 | 143.156 | 162.542 | 24.3813 |
- | 2004 |  313.603 | 5.15472 | 147.317 | 166.286 | 24.9429 |
- | 2005 |  317.096 | 10.0915 | 149.422 | 167.674 | 25.1511 |
- | 2006 |  299.816 | 6.44854 | 141.718 | 158.098 | 23.7147 |
- | 2007 |  298.897 | 11.0516 | 141.721 | 157.176 | 23.5764 |
- | 2008 |  252.206 | 2.88876 | 119.952 | 132.254 | 19.8381 |
- | 2009 |  147.978 | 3.56061 | 70.5963 | 77.3816 | 11.6072 |
- | 2010 |  213.419 | 2.82181 | 102.129 |  111.29 | 16.6935 |
- | 2011 |  236.765 | 5.90173 | 113.647 | 123.118 | 18.4676 |
- | 2012 |  240.257 | 5.86833 | 115.675 | 124.582 | 18.6873 |
- | 2013 |   302.39 | 9.14176 | 146.032 | 156.358 | 23.4536 |
- | 2014 |  269.485 | 4.31778 | 130.536 | 138.949 | 20.8424 |
-
+ | 10-year start | 10-year end |      RW |      LR |      MR |      FL |      CD |
+ |---------------+-------------+---------+---------+---------+---------+---------|
+ |          1978 |        1988 | 681.701 | 35.8321 | 299.522 | 382.179 | 57.3269 |
+ |          1979 |        1989 | 680.582 | 35.5686 | 300.229 | 380.353 | 57.0529 |
+ |          1980 |        1990 | 681.083 | 33.4429 | 301.528 | 379.555 | 56.9333 |
+ |          1981 |        1991 | 681.601 | 36.6856 | 302.612 | 378.989 | 56.8483 |
+ |          1982 |        1992 | 686.631 | 29.0319 | 305.606 | 381.025 | 57.1538 |
+ |          1983 |        1993 | 695.872 | 31.6858 | 310.422 | 385.451 | 57.8176 |
+ |          1984 |        1994 | 678.459 | 34.6552 |   303.4 | 375.059 | 56.2589 |
+ |          1985 |        1995 | 657.737 | 29.8443 | 294.892 | 362.845 | 54.4267 |
+ |          1986 |        1996 | 631.918 | 32.9573 | 284.093 | 347.825 | 52.1738 |
+ |          1987 |        1997 | 600.752 | 25.6276 | 270.919 | 329.833 | 49.4749 |
+ |          1988 |        1998 | 560.495 | 28.4593 | 253.572 | 306.923 | 46.0384 |
+ |          1989 |        1999 | 518.282 | 19.4761 | 235.308 | 282.975 | 42.4462 |
+ |          1990 |        2000 | 477.206 | 21.5218 | 217.442 | 259.764 | 38.9645 |
+ |          1991 |        2001 | 436.798 |  14.762 |  199.72 | 237.078 | 35.5618 |
+ |          1992 |        2002 | 411.648 | 16.8726 | 188.838 |  222.81 | 33.4214 |
+ |          1993 |        2003 | 389.756 | 12.1122 | 179.386 |  210.37 | 31.5555 |
+ |          1994 |        2004 | 370.287 | 12.4844 | 171.013 | 199.274 | 29.8912 |
+ |          1995 |        2005 | 360.411 | 11.7775 | 166.982 | 193.429 | 29.0143 |
+ |          1996 |        2006 | 349.131 | 12.0067 | 162.271 |  186.86 | 28.0291 |
+ |          1997 |        2007 | 338.319 | 7.73506 | 157.756 | 180.563 | 27.0845 |
+ |          1998 |        2008 |  321.14 | 10.0114 | 150.231 | 170.909 | 25.6364 |
+ |          1999 |        2009 | 299.649 | 8.85091 |  140.54 | 159.109 | 23.8663 |
+ |          2000 |        2010 | 283.222 | 8.45002 | 133.256 | 149.966 | 22.4949 |
+ |          2001 |        2011 | 271.892 | 7.18674 | 128.347 | 143.545 | 21.5318 |
+ |          2002 |        2012 | 266.945 | 5.00949 | 126.396 | 140.549 | 21.0823 |
+ |          2003 |        2013 | 266.193 | 5.76584 | 126.488 | 139.705 | 20.9558 |
+ |          2004 |        2014 | 262.901 | 6.99142 |  125.34 | 137.561 | 20.6341 |
 
 
 
@@ -955,6 +962,8 @@ Table ref:tab:me_and_lr presents annualized estimates of logging and milling res
 This analysis is a first step towards a broader analysis of the
 climate impacts of harvested wood in California. The following are key
 questions which follow from this analysis.
+
+
 ** References
 [[bibliographystyle:IEEEtranSN]]
 bibliography:fcat.bib
