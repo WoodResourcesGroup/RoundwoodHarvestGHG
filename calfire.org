@@ -97,11 +97,11 @@ Several steps are necessary to address the objective stated:
   any forest management emissions baseline.
 
 - Total emissions from pile burning of forest management residuals
-  includine SLCP and GHG components extrapolated from CARB emissions
+  including SLCP and GHG components extrapolated from CARB emissions
   inventory is XXX MTCO2e
 
 - Harvested wood in California in 2012 resulted in avoided emissions of
-  4 MMTCO2e
+  2.29 MMTCO2e
 
 - Logging residuals not used in bioenergy production contributed
   emissions of:
@@ -644,30 +644,87 @@ logging residues I begin with the CARB estimate of PM2.5 produced from
 forest management. 
 
 **** Estimate biomass from PM2.5 
-To estimate total biomass from PM2.5 I assume 90% consumption of
-biomass in piles and use the relationship of pile tonnage to PM
-emissions calculated using the [[http://depts.washington.edu/nwfire/piles/][Piled Fuels Biomass and Emissions Calculator]] provided by the Washington State Department of
-Natural Resources. This calculator is based on the [[http://www.fs.fed.us/pnw/fera/research/smoke/consume/index.shtml][Consume]] fire behavior model published by the US Forest Service.
+To estimate total biomass from PM2.5 I assume 90% consumption of biomass in piles and use the relationship of pile tonnage to PM emissions calculated using the [[http://depts.washington.edu/nwfire/piles/][Piled Fuels Biomass and Emissions Calculator]] provided by the Washington State Department of Natural Resources. This calculator is based on the [[http://www.fs.fed.us/pnw/fera/research/smoke/consume/index.shtml][Consume]] fire behavior model published by the US Forest Service. The ratio of PM2.5 to unburned tonnage of biomass used below is src_python{return(0.008236/1.360178)}. Ratio of PM2.5 to consumed fuel is src_python{return(0.008236/1.224161)}.
 
-|     | YEAR   | EICSOUN             | Annual PM 2.5(t)   | Biomass (BDT)   |
-|-----+--------+---------------------+--------------------+-----------------|
-| 0   | 2000   | FOREST MANAGEMENT   | 5474.31            | 901120          |
-| 1   | 2005   | FOREST MANAGEMENT   | 5474.31            | 901120          |
-| 2   | 2010   | FOREST MANAGEMENT   | 5474.31            | 901120          |
-| 3   | 2012   | FOREST MANAGEMENT   | 5477.3             | 901613          |
-| 4   | 2015   | FOREST MANAGEMENT   | 5480.51            | 902142          |
+
+#+NAME:   tab:cap_pmbiomass2015
+#+BEGIN_SRC sqlite :db fcat_biomass.sqlite :colnames yes :exports results
+select year,printf("%.2f","PM2_5"*365) "PM2.5 (t)", printf("%.2f","PM2_5"*365*(1.360178/0.008263)) "Pile-Burned Biomass (t)" from cpe_allyears where eicsoun = 'FOREST MANAGEMENT';
+#+END_SRC
+#+CAPTION: Forest biomass burned in piles based on ARB-reported PM2.5 emissions in the 'Forest Management' category using a ratio of src_python{return(1.360178/0.008263)} ton biomass per ton PM2.5.
+#+RESULTS: tab:cap_pmbiomass2015
+| YEAR | PM2.5 (t) | Pile-Burned Biomass (t) |
+|------+-----------+-------------------------|
+| 2000 |   5474.31 |               901129.28 |
+| 2005 |   5474.31 |               901129.28 |
+| 2010 |   5474.31 |               901129.28 |
+| 2012 |    5477.3 |               901621.96 |
+| 2015 |   5480.51 |               902150.69 |
 
 Total emissions resulting from pile burned forest management residuals
 can then be derived for the two greenhouse gasses produced from pile
 burning (CO2, CH4) and from BC:
 
-|     | Year   | Emissions source    | CO2 (t)       | CH4 (tCO2e)   | BC (tCO2e)   | Pile Burn (tCO2e)         |
-|-----+--------+---------------------+---------------+---------------+--------------+---------------------------|
-| 0   | 2000   | FOREST MANAGEMENT   | 1.34928e+06   | 127280        | 248255       | 1.72481e+06               |
-| 1   | 2005   | FOREST MANAGEMENT   | 1.34928e+06   | 127280        | 248255       | 1.72481e+06               |
-| 2   | 2010   | FOREST MANAGEMENT   | 1.34928e+06   | 127280        | 248255       | 1.72481e+06               |
-| 3   | 2012   | FOREST MANAGEMENT   | 1.35002e+06   | 127349        | 248391       | 1.72576e+06               |
-| 4   | 2015   | FOREST MANAGEMENT   | 1.35081e+06   | 127424        | 248536       | 1.72677e+06               |
+#+NAME: tab:emissions_pb
+#+BEGIN_SRC python :results raw :exports results
+import utils as ut
+import pandas as pd
+from tabulate import tabulate
+
+#SQLite Database connection
+sqdb = ut.sqlitedb('fcat_biomass')
+
+# Emissions ratios frrom consume
+pfbec = pd.read_csv('fera_pile_cemissions.csv', header=1)
+
+#Emissions ratios for BC from PM2.5
+ward = ut.gData('13UQtRfNBSJ81PXxbYSnB2LrjHePNcvhJhrsxRBjHpoY', 475419971)
+
+pmAnn = pd.read_sql('''
+                        select year,
+                                eicsoun,
+                                "PM2_5"*365 an_pm25_av
+                        from cpe_allyears
+                        where eicsoun = 'FOREST MANAGEMENT';
+                    ''', sqdb['cx'])
+
+def sp2bio(pm, species = 'PM2.5 (tons)'):
+    """
+    calculate ratio of pm2.5 to species (CH4, Co2, biomass, etc.
+    """
+    return pm * (pfbec[species]/pfbec['Pile Biomass (tons)'])
+
+def bioPm(pm):
+    """
+    calculate biomass from Consume ratio fro PM2.5
+    """
+    return pm * (pfbec['Pile Biomass (tons)']/pfbec['PM2.5 (tons)'])
+
+#Calculate CO2 from biomass
+co2t = lambda x: sp2bio(x,'CO2 (tons)')
+
+#Calculate CH4 from biomass
+ch4t = lambda x: sp2bio(x,'CH4 (tons)')
+
+pmAnn['biomass_t']=pmAnn.an_pm25_av.apply(bioPm)
+pmAnn['co2_t'] = pmAnn.biomass_t.apply(co2t)
+pmAnn['ch4_t'] = pmAnn.biomass_t.apply(ch4t)
+pmAnn['ch4_co2e'] = pmAnn.ch4_t * 56
+pmAnn['bc_co2e']= pmAnn.an_pm25_av.apply(ut.pm2bcgwpPiles)
+pmAnn['t_co2e']= pmAnn.co2_t + pmAnn.ch4_co2e + pmAnn.bc_co2e
+
+return(tabulate([list(row) for row in pmAnn[['YEAR','EICSOUN','co2_t','ch4_co2e','bc_co2e','t_co2e']].values], headers=['Year','Emissions source','CO2 (t)', 'CH4 (tCO2e)', 'BC (tCO2e)', 'Pile Burn Total (tCO2e)'], tablefmt = 'orgtbl'))
+#+END_SRC
+
+#+RESULTS: tab:emissions_pb
+| Year | Emissions source  |     CO2 (t) | CH4 (tCO2e) | BC (tCO2e) | Pile Burn Total (tCO2e) |
+|------+-------------------+-------------+-------------+------------+-------------------------|
+| 2000 | FOREST MANAGEMENT | 1.34928e+06 |      127280 |     248255 |             1.72481e+06 |
+| 2005 | FOREST MANAGEMENT | 1.34928e+06 |      127280 |     248255 |             1.72481e+06 |
+| 2010 | FOREST MANAGEMENT | 1.34928e+06 |      127280 |     248255 |             1.72481e+06 |
+| 2012 | FOREST MANAGEMENT | 1.35002e+06 |      127349 |     248391 |             1.72576e+06 |
+| 2015 | FOREST MANAGEMENT | 1.35081e+06 |      127424 |     248536 |             1.72677e+06 |
+
 
 **** Emissions from decomposition of un-utilized forest management residuals
 
@@ -686,7 +743,7 @@ total reported by the TPO:
 LR_d &= LR - LR_{piles} - LR_{bio} \\
 \text{where:}\\
 LR_d &= \text{Logging residuals subject to anerobic decomposition} \\
-LR &= \text{Total logging rsiduals reported by TPO}\\
+LR &= \text{Total logging residue reported by TPO}\\
 LR_{piles} &= \text{Logging residues combusted in anthropogenic pile burns}\\
 LR_{bio} &= \text{Logging residues used to produce bioenergy}
 \end{align*}
