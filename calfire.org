@@ -168,7 +168,7 @@ select gwp_20 "GWP_{20}",
        source "Source" from bc_gwp;
 #+END_SRC
 
-#+CAPTION: Range of GWP values for Black Carbon.
+#+CAPTION: Range of Global Warming Potential(GWP) values for Black Carbon.
 #+RESULTS: tab:bc_gwp
 | GWP_{20} | GWP\sigma_{20} | GWP_{100} | GWP\sigma_{100} | GWP_{500} | GWP\sigma_{500} | Source                          |
 |----------+----------------+-----------+-----------------+-----------+-----------------+---------------------------------|
@@ -178,7 +178,7 @@ select gwp_20 "GWP_{20}",
 
 
 
-CARB reports PM 2.5 emissions in tons/day. Annual emissions  as
+CARB reports PM 2.5 emissions in tons/day. Annual emissions as
 reported by CARB are shown in Table 1.
 
 #+NAME: arb_pm_ann
@@ -197,9 +197,9 @@ select eicsoun as Source, printf("%.2f", pm2_5*365) as 'PM 2.5 (t y^{-1})' from 
 Black Carbon emissions
 can be estimated from PM 2.5 emissions if the ratio of smoldering to
 flaming combustion is known. citet:Ward1989 provide estimates of
-the ratio of smoldering to flaming combustion for a hand/machine piled
+the ratio of smoldering to flaming combustion for hand/machine piled
 burns, prescribed natural fire and wildfire. BC is a fraction
-of the Total Carbon (TC) component of PM 2.5. Thus BC is related to PM
+of the Total Carbon (TC) component of PM 2.5. Thus BC may be calculated from PM
 2.5 by Eq. eqref:eq-bc :
 
 
@@ -220,7 +220,8 @@ BC_s &= \text{Black Carbon fraction of Total Carbon for smoldering phase} \nonum
 #+END_LaTeX
 
 # [[http://mathurl.com/ha5ugpu.png]]
-Based on citet:Ward1989 and citet:Jenk1996 the following ratios are
+
+Based on citet:Ward1989 and citet:Jenk1996, the following ratios are
 used herein.
 
 #+NAME:   tab:bc_pm
@@ -252,10 +253,31 @@ following steps are taken
 3. Estimate annual BC emissions based on probability distributions
    defined in 2.
 
+
+#+NAME: CARB_BC
+#+BEGIN_SRC sqlite :db fcat_biomass.sqlite :colnames yes :exports results
+select eicsoun as Source, printf("%.2f", pm2_5*365) as 'PM 2.5 (t y^{-1})', 
+case when eicsoun='ALL VEGETATION' then pm2_5*365 * (.05870124 + .0228641)
+when eicsoun = 'FOREST MANAGEMENT' then pm2_5*365 * (.046904 + .01624)
+when eicsoun = 'WILDLAND FIRE USE (WFU)' then pm2_5*365 * (.08016309 + .020944) end
+ from cpe_2015 WHERE eicsoun in ('FOREST MANAGEMENT','WILDLAND FIRE USE (WFU)','ALL VEGETATION');
+#+END_SRC
+
+#+RESULTS: CARB_BC
+| Source                  | PM 2.5 (t y^{-1}) |
+|-------------------------+-------------------|
+| ALL VEGETATION          |         137630.15 |
+| FOREST MANAGEMENT       |           5480.51 |
+| WILDLAND FIRE USE (WFU) |           6802.43 |
+
+#+CAPTION: Emissions of black carbon from 
+
+
 The following plot represents estimates of total BC emissions resulting
 from combustion of biomass in the CARB CAP emissions categories
 reflecting woody biomass combustion in wildfire, pile burning, and
 prescribed natural fire.
+
 
 #+CAPTION: Short-lived climate pollution from open burning of biomass as reported by CARB criteria pollutant emissions inventory.
 #+ATTR_LATEX: :width \textwidth
@@ -282,7 +304,7 @@ wildfire and slash burning through 2004 (Table ref:arb_ghg_2004).
 #+BEGIN_SRC sqlite :db fcat_biomass.sqlite :colnames yes :exports results
 select sc_cat as "Source Category", avg(mmtco2e) as "Average annual emissions 1994-2004 MMTCO_2e" from arb_co2 where sc_cat in ('Forest and rangeland fires', 'Timber harvest slash')  group by sc_cat;
 #+END_SRC
-
+#+CAPTION: something134
 #+RESULTS: arb_ghg_2004
 | Source Category            | Average annual emissions 1994-2004 MMTCO_2e |
 |----------------------------+---------------------------------------------|
@@ -371,7 +393,7 @@ following emission reduction sources:
 
 *** Displacement Factors Applied to Timber Products Output
 
-To evaluate the climate impact of harvested wood in California I used
+To evaluate the climate impact of harvested wood in California, I used
 harvested roundwood estimates from the Timber Products Output (TPO)
 database[fn:3]. I used two estimates of the DF applied
 to the harvested wood reported in the TPO based on whether logging
@@ -392,19 +414,21 @@ I applied displacement factors reported by cite:Sathre2010 to the
 reported volumes from the TPO database. The following references are used to
 arrive at a displacement factor for harvested roundwood without
 logging residue utilization.
-*Table:??*
-| reference          | displacement factor (without residue utilization) |
+
+#+CAPTION: Wood displacement factor without residue utilization
+| reference          | displacement factor                               |
 |--------------------+---------------------|
 | citet:Eriksson2007 |                 1.7 |
 | citet:Eriksson2007 |                 2.2 |
 | citet:Salazar2009  |                 4.9 |
 | citet:Werner2005   |                 1.7 |
 
-I use an average of the DF reported here of *2.625* tCO2e/t finished
+I applied an average of the DF reported here of *2.625* tCO2e/t finished
 wood product. For harvested roundwood with logging residue utilization the following
 studies are used.
-*Table*: 
-| reference             | displacement factor (with residue utilization) |
+
+#+CAPTION:  Wood discplacement factor with residue utilization
+| reference             | displacement factor                            |
 |-----------------------+---------------------|
 | citet:Eriksson2007    |                 1.9 |
 | citet:Eriksson2007    |                 2.5 |
@@ -437,14 +461,14 @@ feedstocks. From personal communications with
 [[http://www.bber.umt.edu/staff/mciver.asp][Chelsea McIver]], all bioenergy feedstock reported is sourced in-woods (ie, not mill
 residues).
 
+#+CAPTION: % volume wood diverted to Bioenergy use
 |     | year   | bioenergy % of harvest   |
 |-----+--------+--------------------------|
 | 0   | 2000   | 0.024                    |
 | 1   | 2006   | 0.036                    |
 | 2   | 2012   | 0.082                    |
 
-The TPO reports the total logging residues produced from the states
-harvest.
+#+CAPTION: The TPO reports the total logging residues produced from harvest throughout the state by year and ownership.
 
 |      | Ownership         | Roundwood Products   | Logging Residues   | Year   |
 |------+-------------------+----------------------+--------------------+--------|
@@ -466,10 +490,10 @@ harvest.
 | 15   | Other Private     | 174.7                | 22.3               | 1994   |
 
 
-In addition to the TPO, the California Board of Equalization (BOE
-reports historical timber harvest.  Averaged over the years where both
-sources report data, the BOE is 8% less than TPO (Table ref:tab:tpo_boe). This is reasonable considering that:
-1. BOE data may under-reported as there may be a financial incentive to reduce tax burden
+In addition to the TPO, the California Board of Equalization (BOE) also
+reports historic timber harvest volumes.  Comparing between years where both
+sources report data, the BOE on average reports 8% less volume than the TPO (Table ref:tab:tpo_boe) database. This is reasonable considering that:
+1. BOE data may be under-reported, as there may be a financial incentive to reduce tax burden
 2. BOE does not include volume harvested from native American tribal lands in the state
 
 #+NAME:   tab:tpo_boe
@@ -518,10 +542,9 @@ select year, state+blm+nat_forest+private as "McIver, et. al. (2012) MMBF", tota
 | 2011 |                      1432.5 |     1288 |     0.9 |
 | 2012 |                      1421.3 |     1307 |    0.92 |
 
-The BOE does not report harvest from tribal lands but the TPO does. By
-TPO data, harvest from tribal lands averages 0.74% of the total
+The TPO reports harvest from tribal lands, which occupies on average 0.74% of the total
 annual harvest in the state for the 37 years of parallel data. For
-this analysis we use TPO data and include tribal lands. 
+this analysis we use TPO data to include harvest volume from tribal lands. 
 
 
 #+NAME:   tab:MandM
@@ -601,14 +624,13 @@ select year, printf("%.2f",state/5.44) "State", printf("%.2f",(blm+nat_forest)/5
 | 2011 |  0.18 |   55.42 |  207.72 |    2.1 |
 | 2012 |  5.13 |   37.39 |  218.75 |   1.49 |
 
-To use the TPO data to estimate emissions reductions using the DF we apply a
+To use the TPO data to estimate emissions reductions using the DF, we apply a
 conversion factor of *5.44* MCF/MMBF. This is an approximation as the
-actual sawlog conversion factor varies with the log size which, on
-average over time has changed.  
+actual sawlog conversion factor varies with average harvested log size, which has changed over time.  
 
 
-The ratio of harvested volume to which we can apply a displacement
-factor reflecting bioenergy use of logging residuals can be calculated
+Using the ratio of logging residuals consumed by bioenergy (mciver), to the total logging residuals reported in the TSP, we can calculated the harvest volume the ratio of harvest volume to logging residuals used in bioenergy,
+we calculateted 
 based on the ratio of reported consumption of logging residuals in
 bioenergy by citeauthor:Mciver2012 to the total logging residuals reported
 in the TPO. citeauthor:Mciver2012 report bioenergy consumption from 2000
