@@ -185,14 +185,14 @@ reported by CARB are shown in Table 1.
 #+BEGIN_SRC sqlite :db fcat_biomass.sqlite :colnames yes :exports results
 select eicsoun as Source, printf("%.2f", pm2_5*365) as 'PM 2.5 (t y^{-1})' from cpe_2015 WHERE eicsoun in ('FOREST MANAGEMENT','WILDLAND FIRE USE (WFU)','ALL VEGETATION');
 #+END_SRC
-
+#+CAPTION: Emissions of PM 2.5 in 2015 as reported by CARB
 #+RESULTS: arb_pm_ann
 | Source                  | PM 2.5 (t)        |
 |-------------------------+-------------------|
 | ALL VEGETATION          |         137630.15 |
 | FOREST MANAGEMENT       |           5480.51 |
 | WILDLAND FIRE USE (WFU) |           6802.43 |
-#+CAPTION: Emissions of PM 2.5 in 2015 as reported by CARB
+
 
 Black Carbon emissions
 can be estimated from PM 2.5 emissions if the ratio of smoldering to
@@ -327,7 +327,7 @@ inventory published by CARB.
 
 
 ** Fate of harvested wood
-Wood harvested from California's forests is used in construction,
+Wood harvested from California's forests are used in construction,
 landscaping, and consumer products. Residues from the
 production of these wood products may be directed towards alternative product streams to generate elctricity and
 heat with a portion going to landfills or left in the
@@ -392,7 +392,7 @@ I applied displacement factors reported by cite:Sathre2010 to the
 reported volumes from the TPO database. The following references are used to
 arrive at a displacement factor for harvested roundwood without
 logging residue utilization.
-
+*Table:??*
 | reference          | displacement factor (without residue utilization) |
 |--------------------+---------------------|
 | citet:Eriksson2007 |                 1.7 |
@@ -403,7 +403,7 @@ logging residue utilization.
 I use an average of the DF reported here of *2.625* tCO2e/t finished
 wood product. For harvested roundwood with logging residue utilization the following
 studies are used.
-
+*Table*: 
 | reference             | displacement factor (with residue utilization) |
 |-----------------------+---------------------|
 | citet:Eriksson2007    |                 1.9 |
@@ -414,23 +414,26 @@ studies are used.
 | citet:Gustavsson2006a |                 3.3 |
 | citet:Pingoud2001     |                 3.2 |
 
-I use an average of the DF reported here of *3.243* tCO2e/t finished
+I used an average of the DF reported here of *3.243* tCO2e/t finished
 wood product.
 
-TPO is reported in terms of roundwood harvested for products. The
-displacement factors presented in Sathre and O'Connonr are in terms of
+
+The TPO reports values in terms of roundwood harvested for products, but the
+displacement factors presented in Sathre and O'Connor are in terms of
 tons of carbon in wood products. Therefore we must assume a milling
-efficiency to convert TPO estimates to finished wood products. I assume
+efficiency to convert TPO volume estimates to finished wood product volume. I assumed
 a milling efficiency of 0.5.
 
-Further, TPO is reported in in cubic feet and the DF implies a mass
-unit. To convert cubic meters to a mass unit we use the average wood
+
+Further, TPO is reported in cubic feet and the DF implies a mass
+unit. To convert cubic meters to a mass unit, we used the average wood
 density of harvested volume in California weighted by species. Harvest
 volume by species is reported in citet:Mciver2012. The resulting weighted average wood density used here is *27.94
 lbs/cuft*.
 
-McIver and Morgan report the percent of harvest used as bioenergy
-feedstock. From personal communications with
+
+McIver and Morgan report the percent of harvested wood used in bioenergy
+feedstocks. From personal communications with
 [[http://www.bber.umt.edu/staff/mciver.asp][Chelsea McIver]], all bioenergy feedstock reported is sourced in-woods (ie, not mill
 residues).
 
