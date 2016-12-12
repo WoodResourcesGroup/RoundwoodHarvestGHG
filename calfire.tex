@@ -1,4 +1,4 @@
-% Created 2016-12-07 Wed 17:19
+% Created 2016-12-08 Thu 11:43
 \documentclass[a4paper]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -69,7 +69,64 @@ The focus of this analysis is on deriving emissions associated with \textbf{mana
 
 Quantifying the climate effects of wood products and forest management
 residuals is important to the development of the Forest Climate Plan
-(FCP)\footnote{The \href{http://www.fire.ca.gov/fcat/}{Forest Climate Action Team} (FCAT) was assembled in August of 2014 with the primary purpose of developing a Forest Carbon Plan by the end of 2016. FCAT is comprised of Executive level members from many of the State’s natural resources agencies, state and federal forest land managers, and other key partners directly or indirectly involved in California forestry. FCAT is under the leadership of CAL FIRE, Cal-EPA, and The Natural Resources Agency.} as well as efforts underway by the California Board of
+(FCP)\footnote{The \href{http://www.fire.ca.gov/fcat/}{Forest Climate Action Team} (FCAT) was assembled in August of 2014 with the primary purpose of developing a Forest Carbon Plan by the end of 2016. FCAT is comprised of Executive level members from many of the State’s natural resources agencies, state and federal forest land managers, and other key partners directly or indirectly involved in California forestry. FCAT is under the leadership of CAL FIRE, Cal-EPA, and The Natural Resources Agency.
+\% Created 2016-12-08 Thu 11:35
+\documentclass[a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{fixltx2e}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{marvosym}
+\usepackage{wasysym}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\tolerance=1000
+\usepackage{amssymb,amsmath}
+\usepackage{natbib}
+\usepackage[margin=2cm]{geometry}
+\usepackage{fancyhdr} \%For headers and footers
+\pagestyle{fancy} \%For headers and footers
+\usepackage{lastpage} \%For getting page x of y
+\usepackage{float} \%Allows the figures to be positioned and formatted nicely
+\floatstyle{boxed} \%using this
+\usepackage{draftwatermark}
+\restylefloat{figure} \%and this command
+\usepackage{url} \%Formatting of yrls
+\rhead\{\includegraphics[width=3cm]{berkeley}\}
+\chead{}
+\lfoot{Draft}
+\cfoot{}
+\setlength{\parskip}{1em}
+\rfoot\{\thepage$\backslash$ of \pageref{LastPage}\}
+\author{Peter Tittmann, Ph.D.}
+\date{\today}
+\title{Emissions reductions from harvested wood products and management residuals}
+\hypersetup\{
+  pdfkeywords=\{\},
+  pdfsubject=\{\},
+  pdfcreator=\{Emacs 25.1.1 (Org mode 8.2.10)\}\}
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\pagebreak
+\section{California forest management emissions profile}
+\label{sec-1}
+
+Forest management activities in California produce logs for lumber markets while maintaining and enhancing forest health. In addition to merchantable logs, these harvest activities produce logging residuals and slash that are either left in the stand to decompose or piled and burned as directed by forest practice rules (\href{http://calfire.ca.gov/resource_mgt/downloads/2013_FP_Rulebook_with_Tech_RuleNo1.pdf}{California Forest Practice Rules}, Article 7 §
+917.2). Utilization of residual wood biomass produced from forest management activities has potential to reduce emissions from greenhouse gas (GHG) and other climate pollutants.
+
+Currently the majority of biomass produced from forest management activities are either left in the woods to decompose, or aggregated at a landing where it is eventually burned. When considered alongside the accumulation of woody material from historic fire suppression activity, combustible woody material in excess of historic reference conditions have elevated risk of damaging wildfire in much of California’s forestland. Common practice for fuel load management in California forests include prescribed natural fire and sanitation pile burning. However, as demonstrated by previous studies, prescribed natural fire is often only an effective tool for reducing fuel loading and maintaining fire resilient landscapes when coupled with mechanical treatment to remove biomass (Stephens et al 2009). Open burning can be a substantial source of strong radiative forcing agents (black carbon) and criteria air pollutants (PM, NOX) when compared to controlled combustion in biomass power plants with modern emissions control technology. 
+
+Any combustion or decomposition of residual material results in emissions of greenhouse gases (GHG), criteria air pollutants (CAP), and short-lived climate pollutants (SLCP). However, even in the absence of forest management activity, atmospheric emissions are produced from stochastic processes such as wildfire, pest, and disease outbreaks. As such, the air quality impact of common forestry practices as well as the opportunity cost of residual biomass use in bioenergy and applications weigh in favor of alternative utilization strategies. Figure ref:fig:wood$_{\text{fates}}$ presents an overview of emissions and emissions reduction pathways for wood from California's forests.} as well as efforts underway by the California Board of
 Forestry and CalFire to meet the intent of AB 1504 (2010)\footnote{\href{http://leginfo.legislature.ca.gov/faces/billTextClient.xhtml?bill_id=200920100AB1504}{AB-1504} Forest resources: carbon sequestration.(2009-2010)}. To
 inform these efforts, this report provides estimates of the following:
 
@@ -141,15 +198,8 @@ burns on National Forest System Lands are reported through PFIRS. However, Calif
 Districts are not required to report emissions through this system at this time. Therefore, it is not possible to associate burns in the PFIRS with commercial harvest activities.
 \end{itemize}
 
-
 \section{Estimating CO2 equivalent emissions from forest biomass burning}
 \label{sec-2}
-
-\begin{figure}[htb]
-\centering
-\includegraphics[width=0.75\textwidth]{./graphics/burning.pdf}
-\caption{Data sources available from CARB for estimating GHG and SLCP emissions from forest management.}
-\end{figure}
 
 
 \subsection{Estimating black carbon emissions from biomass burning}
@@ -167,6 +217,11 @@ forcing properties. The
 emissions estimates for 2015} captures particulate matter (PM 2.5) including black carbon, which
 is a strong short lived climate pollutant.
 
+\begin{figure}[htb]
+\centering
+\includegraphics[width=0.75\textwidth]{./graphics/burning.pdf}
+\caption{Data sources available from CARB for estimating GHG and SLCP emissions from forest management.}
+\end{figure}
 
 The citet:CaliforniaAirResourcesBoard2015,CaliforniaAirResourcesBoard2016
 also reports aggregated SLCP emissions from wildfire
@@ -353,7 +408,6 @@ Timber harvest slash & 0.155266666666667\\
 
 BC emissions in terms of CO2e has not been included in any GHG emissions
 inventory published by CARB.
-
 
 
 \section{Fate of harvested wood}
@@ -929,14 +983,12 @@ max & 17.8532 & 22.6 & 49.1 & 72.4 & 4.3\\
 
 
 
-
 \section{Further questions}
 \label{sec-4}
 
 This analysis is a first step towards a broader analysis of the
 climate impacts of harvested wood in California. The following are key
 questions which follow from this analysis.
-
 
 \section{References}
 \label{sec-5}
