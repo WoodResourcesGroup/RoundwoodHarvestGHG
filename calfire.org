@@ -50,9 +50,9 @@ residuals is important to the development of the Forest Climate Plan
 Forestry and CalFire to meet the intent of AB 1504 (2010)[fn:2]. To
 inform these efforts, this report provides estimates of the following:
 
-1. GHG and SLCP emissions produced from the combustion or
+ - GHG and SLCP emissions produced from the combustion or
    decomposition of logging residuals.
-2. GHG emissions reductions from the use of wood products harvested in
+ - GHG emissions reductions from the use of wood products harvested in
    the state.
 
 This analysis may provide insight into
@@ -109,31 +109,36 @@ approach is necessary to:
   burns on National Forest System Lands are reported through PFIRS. However, California Air Quality Management
   Districts are not required to report emissions through this system at this time. Therefore, it is not possible to associate burns in the PFIRS with commercial harvest activities.
   
-* Estimating CO2 equivalent emissions from in-forest biomass burning management
+* Estimating CO2 equivalent emissions from in-forest biomass burning
 
-** Estimating black carbon emissions from biomass burning
 
-The California Air Resources Board (CARB) reports
-emissions from forest biomass burning  in current
+
+The California Air Resources Board (CARB) reports on
+emissions from forest biomass burning in current
 [[http://www.arb.ca.gov/ei/ei.htm][statewide emissions inventories]]. The Greenhouse Gas (GHG) and Criteria Air
 Pollutant (CAP) emissions inventory are both necessary resources for establishing
 aggregate annual climate-forcing emissions. The GHG inventory captures
 gasses with radiative forcing properties but does not capture elemental
 carbon or black carbon (BC) emissions which also have strong radiative
-forcing properties. The
-[[http://www.arb.ca.gov/ei/emissiondata.htm][criteria air pollutant
-emissions estimates for 2015]] captures particulate matter (PM 2.5) including black carbon, which
-is a strong short lived climate pollutant.
+forcing properties. The citet:CaliforniaAirResourcesBoard2015,CaliforniaAirResourcesBoard2016
+also reports aggregated SLCP emissions from wildfire
+(src_python{return(0.66*122)} MMTCO2e) and prescribed fire
+(src_python{return(0.03*122)} MMTCO2e), but reference in the
+SLCP Strategy is made to the source of these estimates.
 
 #+CAPTION: Data sources available from CARB for estimating GHG and SLCP emissions from forest management.
 #+ATTR_LATEX: :width 0.75\textwidth
 [[./graphics/burning.pdf]]
 
-The citet:CaliforniaAirResourcesBoard2015,CaliforniaAirResourcesBoard2016
-also reports aggregated SLCP emissions from wildfire
-(src_python{return(0.66*122)} MMTCO2e) and prescribed fire
-(src_python{return(0.03*122)} MMTCO2e), but reference in the
-SLCP Strategy is made to the source of these estimates.
+
+** Estimating black carbon emissions from biomass burning
+The
+[[http://www.arb.ca.gov/ei/emissiondata.htm][criteria air pollutant
+emissions estimates for 2015]] captures particulate matter (PM 2.5) including black carbon, which
+is a strong short lived climate pollutant.
+
+
+
 
 
 
@@ -333,9 +338,9 @@ inventory published by CARB.
 
 
 * Estimating emissions impact from harvested wood management
-Wood harvested from California's forests are used in construction,
+Harvested wood from California's forests are used in construction,
 landscaping, and consumer products. Residues from the
-production of these wood products may be directed towards alternative product streams to generate elctricity and
+production of these wood products may be directed towards alternative product streams to generate electricity and
 heat with a portion going to landfills or left in the
 woods as slash.
 
