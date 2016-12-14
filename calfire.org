@@ -27,7 +27,7 @@
 * California Forest Management Emissions Profile
 
 Forest management activities in California produce logs for lumber markets while maintaining and enhancing forest health. In addition to merchantable logs, these harvest activities produce logging residuals and slash that are either left in the stand to decompose, or piled and burned as directed by forest practice rules ([[http://calfire.ca.gov/resource_mgt/downloads/2013_FP_Rulebook_with_Tech_RuleNo1.pdf][California Forest Practice Rules]], Article 7 §
-917.2). By utilizaing residual wood biomass produced from these forest management activities, there is potential to reduce emissions from greenhouse gas (GHG) and other climate pollutants.
+917.2). By utilizing residual wood biomass produced from these forest management activities, there is potential to reduce emissions from greenhouse gas (GHG) and other climate pollutants.
 
 Currently the majority of biomass produced from forest management activities are either left  in the woods to decompose, or aggregated at a landing where it is eventually burned. When considered alongside the accumulation of woody material from historic fire suppression activity, combustible woody material in excess of historic reference conditions have elevated the risk of damaging wildfire in much of California’s forestland. Common practice for fuel load management in California forests include prescribed natural fire and sanitation pile burning. However, as demonstrated by previous studies, prescribed natural fire is often only an effective tool for reducing fuel loading and maintaining fire resilient landscapes when coupled with mechanical treatment to remove biomass (Stephens et al 2009). Open burning can be a substantial source of strong radiative forcing agents (black carbon) and criteria air pollutants (PM, NOX) when compared to controlled combustion in biomass power plants with modern emissions control technology. 
 
@@ -55,16 +55,19 @@ inform these efforts, this report provides estimates of the following:
  - GHG emissions reductions from the use of wood products harvested in
    the state.
 
-This analysis may provide insight into
-opportunities to more effectively utilize woody biomass residuals from
-current forest management activities based on available historical
-data. Estimates are based on empirical data and reflect past forest
+Estimates are based empirical data and reflect past forest
 management activities. It is *critical* to note that the empirical
 data used in this analysis reflect point-in-time measures that are
 affected by a dynamic system of climate, growth, and mortality in
-forests as well as macroeconomic and policy forces. To effectivly
-manage these forests for climate (and/or other) benefits, a process modeling
-approach is necessary to: 
+forests as well as macroeconomic and policy forces. This analysis may provide insight into
+opportunities to more effectively utilize woody biomass residuals from
+current forest management activities. 
+
+
+//
+out of place.
+To develop these estimates, a process modeling
+approach was necessary to effectivly quantify emiision impact from forest biomass:
 
 1. Estimate CO2 equivalent emissions from burning forest management
    residuals using criteria pollutant and GHG emissions inventory
@@ -76,6 +79,8 @@ approach is necessary to:
 
 3. Establish life-cycle displacement factors (DF) for all
    utilized wood and apply DF to harvested wood to obtain an aggregate estimate.
+
+//
 
 ** Key Findings
 
