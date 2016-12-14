@@ -109,7 +109,7 @@ approach is necessary to:
   burns on National Forest System Lands are reported through PFIRS. However, California Air Quality Management
   Districts are not required to report emissions through this system at this time. Therefore, it is not possible to associate burns in the PFIRS with commercial harvest activities.
   
-* Estimating CO2 equivalent emissions from forest biomass burning
+* Estimating CO2 equivalent emissions from in-forest biomass burning management
 
 ** Estimating black carbon emissions from biomass burning
 
@@ -332,7 +332,7 @@ BC emissions in terms of CO2e has not been included in any GHG emissions
 inventory published by CARB.
 
 
-* Fate of harvested wood
+* Estimating emissions impact from harvested wood management
 Wood harvested from California's forests are used in construction,
 landscaping, and consumer products. Residues from the
 production of these wood products may be directed towards alternative product streams to generate elctricity and
