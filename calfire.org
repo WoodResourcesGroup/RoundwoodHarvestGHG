@@ -55,19 +55,8 @@ inform these efforts, this report provides estimates of the following:
  - GHG emissions reductions from the use of wood products harvested in
    the state.
 
-Estimates are based empirical data and reflect past forest
-management activities. It is *critical* to note that the empirical
-data used in this analysis reflect point-in-time measures that are
-affected by a dynamic system of climate, growth, and mortality in
-forests as well as macroeconomic and policy forces. This analysis may provide insight into
-opportunities to more effectively utilize woody biomass residuals from
-current forest management activities. 
-
-
 //
-out of place.
-To develop these estimates, a process modeling
-approach was necessary to effectivly quantify emiision impact from forest biomass:
+To develop these estimates, it is first necessary to identify the following steps:
 
 1. Estimate CO2 equivalent emissions from burning forest management
    residuals using criteria pollutant and GHG emissions inventory
@@ -79,8 +68,16 @@ approach was necessary to effectivly quantify emiision impact from forest biomas
 
 3. Establish life-cycle displacement factors (DF) for all
    utilized wood and apply DF to harvested wood to obtain an aggregate estimate.
-
 //
+
+Estimates are based empirical data and reflect past forest
+management activities. It is *critical* to note that the empirical
+data used in this analysis reflect point-in-time measures that are
+affected by a dynamic system of climate, growth, and mortality in
+forests as well as macroeconomic and policy forces. This analysis may provide insight into
+opportunities to more effectively utilize woody biomass residuals from
+current forest management activities. 
+
 
 ** Key Findings
 
