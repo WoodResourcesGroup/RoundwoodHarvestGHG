@@ -111,8 +111,6 @@ approach is necessary to:
   
 * Estimating CO2 equivalent emissions from in-forest biomass burning
 
-
-
 The California Air Resources Board (CARB) reports on
 emissions from forest biomass burning in current
 [[http://www.arb.ca.gov/ei/ei.htm][statewide emissions inventories]]. The Greenhouse Gas (GHG) and Criteria Air
@@ -337,26 +335,25 @@ BC emissions in terms of CO2e has not been included in any GHG emissions
 inventory published by CARB.
 
 
-* Estimating emissions impact from harvested wood management
-Harvested wood from California's forests are used in construction,
-landscaping, and consumer products. Residues from the
-production of these wood products may be directed towards alternative product streams to generate electricity and
-heat with a portion going to landfills or left in the
+* Estimating emissions from harvested wood
+Harvested wood from California's forests are used in a variety of construction,
+landscaping, and consumer products. This wood is fractionated through a multi-stage process of harvesting, processing, use, and disposal into several categories for which the time horizon of carbon return to the atmosphere varies widely. Wood residues generated from each stage of this process may also be directed towards alternative product streams (i.e., power and heat generation)
+to divert the volume of material sent to landfills or left in the
 woods as slash.
+
++ Logging Residuals :: Tops, limbs, and sub-merchantable material produced from harvest activities in the woods
++ Processing (Mill) Residuals :: Sawdust, shavings, bark, and off cuts from primary and secondary manufacturing.
++ Construction Debris :: Fraction of wood used in construction or  finished products that are not integratrated into its final form.
++ Demolition :: Wood used in construction that has reached the end of its useful life.
+
+Each category has multiple potential fates which can greatly influence the net emissions impact attributable to the initial forest management activity.  The fate of each of these pools is determined by a highly dynamic political and economic system. To understand how policy decisions will impact the fate and subsequent climate impact of harvested wood products, a detailed process model is necessary. To provide a rough estimate of the fate of annual round-wood harvest historically, we must use historical volumes and and apply what we know about milling efficiency improvements, logging utilization rates, and construction use efficiency. 
+
 
 # [[https://www.lucidchart.com/publicSegments/view/52a1774e-7722-4ebf-8e1a-e8fc6837bfee/image.png]]
 
 ** Disposition of wood harvested in California.
 
-Harvested wood from California's forests is fractionated through harvest, processing, and use into several categories for which the time horizon of carbon return to the atmosphere can vary widely:
-
-+ Logging Residuals :: Tops, limbs, and sub-merchantable material produced from harvest activities in the woods
-+ Processing (mill) residuals :: Sawdust, shavings, bark, and off cuts from primary and secondary manufacturing.
-+ Construction debris :: Fraction of wood used in construction or  finished products that are not integratrated into its final form.
-+ Demolition :: Wood used in construction that has reached the end of its useful life.
-
-Each category has multiple potential fates which can greatly influence the net emissions impact attributable to the initial forest management activity.  The fate of each of these pools is determined by a highly dynamic political and economic system. To understand how policy decisions will impact the fate and subsequent climate impact of harvested wood products, a detailed process model is necessary. To provide a rough estimate of the fate of annual round-wood harvest historically, we must use historical volumes and and apply what we know about milling efficiency improvements, logging utilization rates, and construction use efficiency. 
-
+*** Logging Residues
  According to citet:Morgan logging residues produced from sawlog harvest can be estimated using a factor of 0.0302 (+/-.0123 @95%CI) times the total cubic sawlog volume delivered to a mill. Unfortunately we cannot say how logging residue production has changed over time in California.  citet:Simmons2014 found that logging utilization has decreased in Idaho from 1990 to 2011 by 72%. For the purpose of this analysis we will assume that similar changes have occurred in California timber harvesting. We then estimate a logging residue production factor for years before 1990 based on the following equation wherein we assume 1990 residue ration for all years prior:
 
  #+BEGIN_LaTeX
@@ -401,7 +398,7 @@ Each category has multiple potential fates which can greatly influence the net e
  \end{align*}
  #+END_LaTeX
  
-
+*** Processing Residues
  Milling efficiency has increased by roughly 14% in California in the period between 1970 and 2006 citet:Keegan2010. For this analysis we assume a continuous improvement such that for years prior to 1970, milling efficiency in year $x$ is calculated as:
 
  #+BEGIN_LaTeX
@@ -433,7 +430,7 @@ For years after 1970, milling efficiency for year $x$ is calculated as:
  \end{align*}
  #+END_LaTeX
 
-
+*** Construction Residues
 To estimate annualized construction waste material, we use ratios of finished wood products to construction debris and demolition debris referenced in citet:McKeever2004. This data from citeauthor:McKeever2004 is sparse and should be considered unreliable for years other than those for which it is reported.  Construction debris was estimated in 2002 as approximately 15% of total wood used in construction. Demolition debris from wood produced annually from wood grown on California forestland is outside of the scope of this report.
 
 Table ref:tab:me_and_lr presents ten year average estimates of logging and milling residuals, finished lumber, and construction debris based on BOE roundwood harvest volumes. 
@@ -531,9 +528,9 @@ Table ref:tab:me_and_lr presents ten year average estimates of logging and milli
  |          2003 |        2013 | 266.193 | 5.76584 | 126.488 | 139.705 | 20.9558 |
  |          2004 |        2014 | 262.901 | 6.99142 |  125.34 | 137.561 | 20.6341 |
 
-** Wood Displacement Factors
+** Wood Product Displacement Factors
 
-In all of its applications, wood may be substituted by a range of other materials. For example, in
+For each product application, wood may be substituted by a range of other materials. For example, in
 residential construction, precast concrete and structural steel framing
 are competitive alternatives to wood. This choice of materials has a profound impact on GHG emissions in the
 construction sector and is expressed as a displacement
