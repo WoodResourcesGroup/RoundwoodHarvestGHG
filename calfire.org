@@ -24,7 +24,7 @@
 
 
 \pagebreak
-* California forest management emissions profile
+* California Forest Management Emissions Profile
 
 Forest management activities in California produce logs for lumber markets while maintaining and enhancing forest health. In addition to merchantable logs, these harvest activities produce logging residuals and slash that are either left in the stand to decompose, or piled and burned as directed by forest practice rules ([[http://calfire.ca.gov/resource_mgt/downloads/2013_FP_Rulebook_with_Tech_RuleNo1.pdf][California Forest Practice Rules]], Article 7 §
 917.2). By utilizaing residual wood biomass produced from these forest management activities, there is potential to reduce emissions from greenhouse gas (GHG) and other climate pollutants.
@@ -109,7 +109,7 @@ approach is necessary to:
   burns on National Forest System Lands are reported through PFIRS. However, California Air Quality Management
   Districts are not required to report emissions through this system at this time. Therefore, it is not possible to associate burns in the PFIRS with commercial harvest activities.
   
-* Estimating CO2 equivalent emissions from in-forest biomass burning
+* Estimating CO2 Equivalent Emissions from In-Forest Biomass Burning
 
 The California Air Resources Board (CARB) reports on
 emissions from forest biomass burning in current
@@ -121,7 +121,7 @@ carbon or black carbon (BC) emissions which also have strong radiative
 forcing properties. The citet:CaliforniaAirResourcesBoard2015,CaliforniaAirResourcesBoard2016
 also reports aggregated SLCP emissions from wildfire
 (src_python{return(0.66*122)} MMTCO2e) and prescribed fire
-(src_python{return(0.03*122)} MMTCO2e), but reference in the
+(src_python{return(0.03*122)} MMTCO2e), but no reference in the
 SLCP Strategy is made to the source of these estimates.
 
 #+CAPTION: Data sources available from CARB for estimating GHG and SLCP emissions from forest management.
@@ -129,14 +129,10 @@ SLCP Strategy is made to the source of these estimates.
 [[./graphics/burning.pdf]]
 
 
-** Estimating black carbon emissions from biomass burning
-The
-[[http://www.arb.ca.gov/ei/emissiondata.htm][criteria air pollutant
-emissions estimates for 2015]] captures particulate matter (PM 2.5) including black carbon, which
+** Estimating Black Carbon Emissions from Biomass Burning
+[[http://www.arb.ca.gov/ei/emissiondata.htm][Criteria air pollutant
+emissions estimates for 2015]] published by the California Air Resources Board includes particulate matter (PM 2.5) including black carbon, which
 is a strong short lived climate pollutant.
-
-
-
 
 
 
@@ -299,7 +295,7 @@ select sc_cat as "Source Category", avg(mmtco2e) as "Average annual emissions 19
 | Forest and rangeland fires |                                      2.0194 |
 | Timber harvest slash       |                           0.155266666666667 |
 
-** Estimating total emissions from combustion of forest management residuals
+** Estimating Total Emissions from Biomass Burning
 To arrive at an estimate of total emissions in 2015 from burning forest
 management residuals in CO2 equivalent terms from published CARB
 estimates we can combine the CO2 emissions reported for 2004 in the
@@ -334,19 +330,18 @@ select sc_cat, avg(mmtco2e) from arb_co2 where sc_cat in ('Forest and rangeland 
 BC emissions in terms of CO2e has not been included in any GHG emissions
 inventory published by CARB.
 
-
-* Estimating emissions from harvested wood
+* Estimating Emission Impact from Utilization of Harvested Wood
 Harvested wood from California's forests are used in a variety of construction,
-landscaping, and consumer products. This wood is fractionated through a multi-stage process of harvesting, processing, use, and disposal into several categories for which the time horizon of carbon return to the atmosphere varies widely. Wood residues generated from each stage of this process may also be directed towards alternative product streams (i.e., power and heat generation)
-to divert the volume of material sent to landfills or left in the
-woods as slash.
+landscaping, and consumer products. This wood is fractionated through a multi-stage process of harvesting, processing, and use into several categories (below) for which the time horizon of carbon return to the atmosphere varies widely. 
 
 + Logging Residuals :: Tops, limbs, and sub-merchantable material produced from harvest activities in the woods
 + Processing (Mill) Residuals :: Sawdust, shavings, bark, and off cuts from primary and secondary manufacturing.
 + Construction Debris :: Fraction of wood used in construction or  finished products that are not integratrated into its final form.
 + Demolition :: Wood used in construction that has reached the end of its useful life.
 
-Each category has multiple potential fates which can greatly influence the net emissions impact attributable to the initial forest management activity.  The fate of each of these pools is determined by a highly dynamic political and economic system. To understand how policy decisions will impact the fate and subsequent climate impact of harvested wood products, a detailed process model is necessary. To provide a rough estimate of the fate of annual round-wood harvest historically, we must use historical volumes and and apply what we know about milling efficiency improvements, logging utilization rates, and construction use efficiency. 
+Each category has multiple potential fates which can greatly influence the net emissions impact attributable to the initial forest management activity.  Wood residues may be directed towards alternative product streams (i.e., power and heat generation)
+to divert the volume of material sent to landfills or left in the
+woods as slash. Use of wood in construction may sequester carbon in a stable environment for a long period. The fate of each of these pools is determined by a highly dynamic political and economic system. To understand how policy decisions will impact the fate and subsequent climate impact of harvested wood products, a detailed process model is necessary. To provide a rough estimate of the fate of annual round-wood harvest historically, we must use historical volumes and and apply what we know about milling efficiency improvements, logging utilization rates, and construction use efficiency. 
 
 
 # [[https://www.lucidchart.com/publicSegments/view/52a1774e-7722-4ebf-8e1a-e8fc6837bfee/image.png]]
@@ -1020,8 +1015,7 @@ feet.
 | max     | 17.8532    | 22.6      | 49.1        | 72.4      | 4.3        |
 
 
-
-* Further questions
+* Further Questions
 
 This analysis is a first step towards a broader analysis of the
 climate impacts of harvested wood in California. The following are key
