@@ -111,7 +111,8 @@ current forest management activities.
   burns on National Forest System Lands are reported through PFIRS. However, California Air Quality Management
   Districts are not required to report emissions through this system at this time. Therefore, it is not possible to associate burns in the PFIRS with commercial harvest activities.
   
-* Estimating CO2 Equivalent Emissions from In-Forest Biomass Burning
+* Estimating CO2 Equivalent Emissions from In-Forest Biomass Combustion
+
 
 The California Air Resources Board (CARB) reports on
 emissions from forest biomass burning in current
