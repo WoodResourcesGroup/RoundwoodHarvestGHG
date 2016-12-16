@@ -296,8 +296,8 @@ select sc_cat as "Source Category", avg(mmtco2e) as "Average annual emissions 19
 | Timber harvest slash       |                           0.155266666666667 |
 
 ** Estimating Total Emissions from Biomass Burning
-To arrive at an estimate of total emissions in 2015 from burning forest
-management residuals in CO2 equivalent terms from published CARB
+To arrive at an estimate of total CO2 equivalent emissions in 2015 from burning of forest
+management residuals using published CARB
 estimates, we combine the CO2 emissions reported for 2004 ///in the
 LULUC <-- where is this from??? Biodegradable Carbon Emissions and Sinks/// with black carbon
 emissions extrapolated from the CARB Criteria Air Pollutant Emissions
@@ -330,9 +330,9 @@ select sc_cat, avg(mmtco2e) from arb_co2 where sc_cat in ('Forest and rangeland 
 //BC emissions in terms of CO2e has not been included in any GHG emissions
 inventory published by CARB. Remove?//
 
-* Estimating Emission Impact from Utilization of Harvested Wood
-Harvested wood from California's forests are used in a variety of construction,
-landscaping, and consumer products. This wood is fractionated through a multi-stage process of harvesting, processing, and use into several categories (below) for which the time horizon of carbon return to the atmosphere varies widely. 
+* Estimating Emissions Impact from Utilization of Harvested Wood
+Wood harvested from California's forests are utilized in a variety of construction,
+landscaping, and consumer products. During the manufacture of these products, this wood is fractionated through a multi-stage process of harvesting, processing, and use into several ??carbon pool?? categories (below) for which the time horizon of carbon return to the atmosphere varies widely. 
 
 + Logging Residuals :: Tops, limbs, and sub-merchantable material produced from harvest activities in the woods
 + Processing (Mill) Residuals :: Sawdust, shavings, bark, and off cuts from primary and secondary manufacturing.
