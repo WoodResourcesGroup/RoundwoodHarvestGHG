@@ -118,25 +118,19 @@ The California Air Resources Board (CARB) reports on
 emissions from forest biomass burning in current
 [[http://www.arb.ca.gov/ei/ei.htm][statewide emissions inventories]]. The Greenhouse Gas (GHG) and Criteria Air
 Pollutant (CAP) emissions inventory are both necessary resources for establishing
-aggregate annual climate-forcing emissions. The GHG inventory captures
-gasses with radiative forcing properties but does not capture elemental
+aggregate annual climate-forcing emissions ref:fig:burn_diag. The GHG inventory captures
+gasses with radiative forcing properties including CO2 and CH4, but does not capture elemental
 carbon or black carbon (BC) emissions which also have strong radiative
-forcing properties. The citet:CaliforniaAirResourcesBoard2015,CaliforniaAirResourcesBoard2016
-also reports aggregated SLCP emissions from wildfire
+forcing properties ref:tab:bc_gwp. The citet:CaliforniaAirResourcesBoard2015,CaliforniaAirResourcesBoard2016
+CAP report captures SLCP emissions from wildfire
 (src_python{return(0.66*122)} MMTCO2e) and prescribed fire
-(src_python{return(0.03*122)} MMTCO2e), but no reference in the
-SLCP Strategy is made to the source of these estimates.
+(src_python{return(0.03*122)} MMTCO2e) from which black carbon emissions may be estimated., //but no reference in the
+SLCP Strategy is made to the source of these estimates//. When viewed in aggregate, a comprehensive reporting of total climate impact from anthropogenic burning may be estimated. 
 
 #+CAPTION: Data sources available from CARB for estimating GHG and SLCP emissions from forest management.
 #+ATTR_LATEX: :width 0.75\textwidth
+#+Results: fig:burn_diag
 [[./graphics/burning.pdf]]
-
-
-** Estimating Black Carbon Emissions from Biomass Burning
-[[http://www.arb.ca.gov/ei/emissiondata.htm][Criteria air pollutant
-emissions estimates for 2015]] published by the California Air Resources Board includes particulate matter (PM 2.5) including black carbon, which
-is a strong short lived climate pollutant.
-
 
 
 #+NAME:   tab:bc_gwp
@@ -159,8 +153,9 @@ select gwp_20 "GWP_{20}",
 
 
 
-
-CARB reports PM 2.5 emissions in tons/day. Annual emissions as
+** Estimating Black Carbon Emissions from Biomass Burning
+The [[http://www.arb.ca.gov/ei/emissiondata.htm][2015 Criteria air pollutant (CAP)
+emissions estimates]] published by the California Air Resources Board reports on particulate matter (PM 2.5) of which black carbon is a component. CARB reports PM 2.5 emissions in tons/day. Annual emissions as
 reported by CARB are shown in Table 1.
 
 #+NAME: arb_pm_ann
@@ -1016,7 +1011,6 @@ shown in Figure ref:em_reduc_own.
 [[./graphics/harv_em_reductions.png]]
 
 # [[https://raw.githubusercontent.com/peteWT/fcat_biomass/master/graphics/harv_em_reductions.png]]
-
 
 * Further Questions
 
