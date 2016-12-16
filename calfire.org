@@ -152,7 +152,6 @@ select gwp_20 "GWP_{20}",
 |   3200.0 |                |     900.0 |                 |           |                 | citet:CaliforniaAirResourcesBoard2015 |
 
 
-
 ** Estimating Black Carbon Emissions from Biomass Burning
 The [[http://www.arb.ca.gov/ei/emissiondata.htm][2015 Criteria air pollutant (CAP)
 emissions estimates]] published by the California Air Resources Board reports on particulate matter (PM 2.5) of which black carbon is a component. CARB reports PM 2.5 emissions in tons/day. Annual emissions as
@@ -171,15 +170,12 @@ select eicsoun as Source, printf("%.2f", pm2_5*365) as 'PM 2.5 (t y^{-1})' from 
 | WILDLAND FIRE USE (WFU) |           6802.43 |
 
 
-Black Carbon emissions
-can be estimated from PM 2.5 emissions if the ratio of smoldering to
-flaming combustion is known. citet:Ward1989 provide estimates of
+Black Carbon is a fraction
+of the Total Carbon (TC) component of PM 2.5. Using estimates of
 the ratio of smoldering to flaming combustion for hand/machine piled
-burns, prescribed natural fire and wildfire. BC is a fraction
-of the Total Carbon (TC) component of PM 2.5. Thus BC may be calculated from PM
-2.5 by Eq. eqref:eq-bc :
-
-
+burns, prescribed natural fire and wildfire from citet:Ward1989, Black Carbon emissions
+can be estimated from PM 2.5 emissions. Thus BC may be calculated from PM
+2.5 with the following equations Eq. eqref:eq-bc :
 
 #+BEGIN_LaTeX
 \begin{align}
@@ -208,12 +204,15 @@ select source as 'Source', "Unnamed 0" as 'BC_f t^{-1} PM', tc_f_cv as 'TC_f^{Cv
 #+END_SRC
 #+CAPTION: Factors used for calculating Black Carbon (BC) emissions from three primary combustion sources. BC is a fraction of Total Carbon (TC) which is a fraction of total PM 2.5. Coefficients of variation (C_v) are reported here as well.
 #+RESULTS: tab:bc_pm
++------------+----------------+---------------------+--------------------+--------------------+---------------------+----------------------+
 | Source     | BC_f t^{-1} PM | TC_f^{Cv} t^{-1} PM | BC_f^{Cv} t^{-1} TC | BC_s t^{-1} PM 2.5 | TC_s^{Cv} t^{-1} PM | BC_s^{Cv} t^{-1} TC |
++------------+----------------+---------------------+--------------------+--------------------+---------------------+----------------------+
+|            |  Flaming Phase |    Smoldering Phase                    |
 |------------+----------------+---------------------+---------------------+--------------------+---------------------+---------------------|
 | Pile Burn  |       0.046904 |                0.09 |                0.45 |            0.01624 |                0.01 |                0.49 |
 | Prescribed |     0.08016309 |              0.0733 |              0.5833 |           0.020944 |                0.08 |                0.29 |
 | Wildfire   |     0.05870124 |              0.0867 |              0.4467 |          0.0228641 |                0.06 |               0.338 |
-
++------------+----------------+---------------------+--------------------+--------------------+---------------------+----------------------+
 
 
 To arrive at a rough estimate of BC emissions based on PM2.5 the
