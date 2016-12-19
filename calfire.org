@@ -27,12 +27,11 @@
 * California forest management emissions profile
 
 Forest management activities in California produce logs for lumber markets while maintaining and enhancing forest health. In addition to merchantable logs, these harvest activities produce logging residuals and slash that are either left in the stand to decompose, or piled and burned as directed by forest practice rules ([[http://calfire.ca.gov/resource_mgt/downloads/2013_FP_Rulebook_with_Tech_RuleNo1.pdf][California Forest Practice Rules]], Article 7 §
-917.2). By utilizaing residual wood biomass produced from these forest management activities, there is potential to reduce emissions from greenhouse gas (GHG) and other climate pollutants.
+917.2). By utilizing residual wood biomass produced from these forest management activities, there is potential to reduce emissions from greenhouse gas (GHG) and other climate pollutants.
 
-Currently the majority of biomass produced from forest management activities are either left  in the woods to decompose, or aggregated at a landing where it is eventually burned. When considered alongside the accumulation of woody material from historic fire suppression activity, combustible woody material in excess of historic reference conditions have elevated the risk of damaging wildfire in much of California’s forestland. Common practice for fuel load management in California forests include prescribed natural fire and sanitation pile burning. However, as demonstrated by previous studies, prescribed natural fire is often only an effective tool for reducing fuel loading and maintaining fire resilient landscapes when coupled with mechanical treatment to remove biomass (Stephens et al 2009). Open burning can be a substantial source of strong radiative forcing agents (black carbon) and criteria air pollutants (PM, NOX) when compared to controlled combustion in biomass power plants with modern emissions control technology. 
+Currently the majority of biomass produced from forest management activities are either left  in the woods to decompose, or aggregated at a landing where it is eventually burned. When considered alongside the accumulation of woody material from historic fire suppression activity, combustible woody material in excess of historic reference conditions have elevated the risk of damaging wildfire in much of California’s forestland. Common practice for fuel load management in California forests include prescribed natural fire and sanitation pile burning. However, as demonstrated by previous studies, prescribed natural fire is often only an effective tool for reducing fuel loading and maintaining fire resilient landscapes when coupled with mechanical treatment to remove biomass cite:Stephens2009c. Open burning can be a substantial source of strong radiative forcing agents (black carbon) and criteria air pollutants (PM, NOX) when compared to controlled combustion in biomass power plants with modern emissions control technology. 
 
-Any combustion or decomposition of residual material results in emissions of greenhouse gases (GHG), criteria air pollutants (CAP), and short-lived climate pollutants (SLCP). However, even in the absence of forest management activity, atmospheric emissions are produced from 
-stochastic processes such as wildfire, pest, and disease outbreaks. As such, the air quality impact of common forestry practices as well as the opportunity cost of residual biomass use in bioenergy and applications weigh in favor of alternative utilization strategies. Figure ref:fig:wood_fates presents an overview of emissions and emissions reduction pathways for wood from California's forests. 
+Any combustion or decomposition of residual material results in emissions of greenhouse gases (GHG), criteria air pollutants (CAP), and short-lived climate pollutants (SLCP). In the absence of forest management activity, atmospheric emissions are produced from  stochastic processes such as wildfire, pest, and disease outbreaks. As such, the air quality impact of common forestry practices as well as the opportunity cost of residual biomass use in bioenergy and applications weigh in favor of alternative utilization strategies. Figure ref:fig:wood_fates presents an overview of emissions and emissions reduction pathways for wood from California's forests. 
 
 
 #+LABEL:fig:wood_fates
@@ -41,7 +40,7 @@ stochastic processes such as wildfire, pest, and disease outbreaks. As such, the
 [[./graphics/wood_fates.pdf]]
 
 
-The focus of this analysis is on deriving emissions associated with *management activity*. This report does not assess greenhouse gas emissions from pest or disease induced mortality, which is estimated at approximately 34 MMT CO2e annually in California forests cite:Christensen2016. Emissions from mortality are indirectly related to management activities just as wildfire is, and *must* be accounted for to comprehensively evaluate the climate impacts of harvesting.    
+The focus of this analysis is on deriving emissions associated with *management activity*. This report does not assess greenhouse gas emissions from pest or disease induced mortality, which is estimated at approximately 34 MMT CO2e annually in California forests cite:Christensen2016. Emissions from mortality are indirectly related to management activities just as wildfire is, and *must* be accounted for to comprehensively evaluate the climate impacts of harvesting. 
 
 
 Quantifying the climate effects of wood products and forest management
@@ -55,14 +54,9 @@ inform these efforts, this report provides estimates of the following:
  - GHG emissions reductions from the use of wood products harvested in
    the state.
 
-This analysis may provide insight into
-opportunities to more effectively utilize woody biomass residuals from
-current forest management activities based on available historical
-data. Estimates are based on empirical data and reflect past forest
-management activities. It is *critical* to note that the empirical
-data used in this analysis reflect point-in-time measures that are
+This analysis provides insight into opportunities to more effectively utilize woody biomass residuals from current forest management activities based on available historical data. Estimates are based on empirical data and reflect past forest management activities. It is *critical* to note that the empirical data used in this analysis reflect point-in-time measures that are
 affected by a dynamic system of climate, growth, and mortality in
-forests as well as macroeconomic and policy forces. To effectivly
+forests as well as macroeconomic and policy forces. To effectively
 manage these forests for climate (and/or other) benefits, a process modeling
 approach is necessary to: 
 
@@ -105,13 +99,13 @@ approach is necessary to:
   management activity and could be used for this purpose in California
 
 - The [[https://ssl.arb.ca.gov/pfirs/][Prescribed Fire Information Reporting System]] (PFIRS) may be a useful tool for quantifying
-  emissions from pile burns and prescribed fire. It is a requirment that prescribed fires and pile
+  emissions from pile burns and prescribed fire. It is a requirement that prescribed fires and pile
   burns on National Forest System Lands are reported through PFIRS. However, California Air Quality Management
   Districts are not required to report emissions through this system at this time. Therefore, it is not possible to associate burns in the PFIRS with commercial harvest activities.
   
 * Estimating CO2 equivalent emissions from in-forest biomass burning
 
-
+Two approaches are deployed here to estimate aggregate CO2 equicalent emissions from anthropogenic biomass burning in California. The first is based on reported emissions from regional air quality offices. The second is derived from timber harvest activities tracked through tax records.
 
 The California Air Resources Board (CARB) reports on
 emissions from forest biomass burning in current
@@ -126,6 +120,7 @@ also reports aggregated SLCP emissions from wildfire
 (src_python{return(0.03*122)} MMTCO2e), but reference in the
 SLCP Strategy is made to the source of these estimates.
 
+The California Board of Equalization cite:CaliforniaStateBoardofEqualization2015 tracks timber harvests by year for public and private lands. Others cite:Mciver2012 report the fate of harvested wood that is taken to a mill or bioenergy plant.  We can use the timber harvest data in combination with logging removal factors from cite:Morgan and estimates of in-woods biomass consumed in energy production to ascertain an estimate of the volume of logging residuals left in the woods. 
 #+CAPTION: Data sources available from CARB for estimating GHG and SLCP emissions from forest management.
 #+ATTR_LATEX: :width 0.75\textwidth
 [[./graphics/burning.pdf]]
@@ -136,11 +131,6 @@ The
 [[http://www.arb.ca.gov/ei/emissiondata.htm][criteria air pollutant
 emissions estimates for 2015]] captures particulate matter (PM 2.5) including black carbon, which
 is a strong short lived climate pollutant.
-
-
-
-
-
 
 #+NAME:   tab:bc_gwp
 #+BEGIN_SRC sqlite :db fcat_biomass.sqlite :colnames yes :exports results
@@ -164,13 +154,13 @@ select gwp_20 "GWP_{20}",
 
 
 CARB reports PM 2.5 emissions in tons/day. Annual emissions as
-reported by CARB are shown in Table 1.
+reported by CARB are shown in Table ref:arb_pm_ann.
 
 #+NAME: arb_pm_ann
 #+BEGIN_SRC sqlite :db fcat_biomass.sqlite :colnames yes :exports results
 select eicsoun as Source, printf("%.2f", pm2_5*365) as 'PM 2.5 (t y^{-1})' from cpe_2015 WHERE eicsoun in ('FOREST MANAGEMENT','WILDLAND FIRE USE (WFU)','ALL VEGETATION');
 #+END_SRC
-#+CAPTION: Emissions of PM 2.5 in 2015 as reported by CARB
+#+CAPTION: Emissions of PM 2.5 in 2015 as reported by CARB. ALL VEGETATION: Wildfire, FOREST MANAGEMENT: Pile burning, WILDLAND FIRE USE (WFU): Prescribed burn.
 #+RESULTS: arb_pm_ann
 | Source                  | PM 2.5 (t)        |
 |-------------------------+-------------------|
@@ -179,12 +169,8 @@ select eicsoun as Source, printf("%.2f", pm2_5*365) as 'PM 2.5 (t y^{-1})' from 
 | WILDLAND FIRE USE (WFU) |           6802.43 |
 
 
-Black Carbon emissions
-can be estimated from PM 2.5 emissions if the ratio of smoldering to
-flaming combustion is known. citet:Ward1989 provide estimates of
-the ratio of smoldering to flaming combustion for hand/machine piled
-burns, prescribed natural fire and wildfire. BC is a fraction
-of the Total Carbon (TC) component of PM 2.5. Thus BC may be calculated from PM
+Black Carbon emissions can be estimated from PM 2.5 emissions if the ratio of smoldering to
+flaming combustion is known. citet:Ward1989,Jenk1996 provide estimates of the ratio of smoldering to flaming combustion for hand/machine piled burns, prescribed natural fire and wildfire. BC is a fraction of the Total Carbon (TC) component of PM 2.5. Thus BC may be calculated from PM
 2.5 by Eq. eqref:eq-bc :
 
 
@@ -206,38 +192,31 @@ BC_s &= \text{Black Carbon fraction of Total Carbon for smoldering phase} \nonum
 
 # [[http://mathurl.com/ha5ugpu.png]]
 
-Based on citet:Ward1989 and citet:Jenk1996, the following ratios are
-used herein.
+Based on citet:Ward1989 and citet:Jenk1996, ratios in Table ref:tab:bc_pm are used herein.
 
 #+NAME:   tab:bc_pm
 #+BEGIN_SRC sqlite :db fcat_biomass.sqlite :colnames yes :exports results
-select source as 'Source', "Unnamed 0" as 'BC_f t^{-1} PM', tc_f_cv as 'TC_f^{Cv} t^{-1} PM', ec_f_cv as 'BC_f^{Cv} t^{-1} TC', "Unnamed 1" as 'BC_s t^{-1} PM 2.5', tc_s_cv as 'TC_s^{Cv} t^{-1} PM',ec_s_cv as 'BC_s^{Cv} t^{-1} TC' from ec_ratios;
+select source as 'Source',
+    "Unnamed 0" as 'BC_f t^{-1} PM',
+--    tc_f_cv as 'TC_f^{Cv} t^{-1} PM',
+    ec_f_cv as 'BC_f^{Cv} t^{-1} TC', 
+    "Unnamed 1" as 'BC_s t^{-1} PM 2.5',
+--    tc_s_cv as 'TC_s^{Cv} t^{-1} PM',
+    ec_s_cv as 'BC_s^{Cv} t^{-1} TC'
+from ec_ratios;
 
 #+END_SRC
 #+CAPTION: Factors used for calculating Black Carbon (BC) emissions from three primary combustion sources. BC is a fraction of Total Carbon (TC) which is a fraction of total PM 2.5. Coefficients of variation (C_v) are reported here as well.
 #+RESULTS: tab:bc_pm
-| Source     | BC_f t^{-1} PM | TC_f^{Cv} t^{-1} PM | BC_f^{Cv} t^{-1} TC | BC_s t^{-1} PM 2.5 | TC_s^{Cv} t^{-1} PM | BC_s^{Cv} t^{-1} TC |
-|------------+----------------+---------------------+---------------------+--------------------+---------------------+---------------------|
-| Pile Burn  |       0.046904 |                0.09 |                0.45 |            0.01624 |                0.01 |                0.49 |
-| Prescribed |     0.08016309 |              0.0733 |              0.5833 |           0.020944 |                0.08 |                0.29 |
-| Wildfire   |     0.05870124 |              0.0867 |              0.4467 |          0.0228641 |                0.06 |               0.338 |
+| Source     | BC_f t^{-1} PM | BC_f^{Cv} t^{-1} TC | BC_s t^{-1} PM 2.5 | BC_s^{Cv} t^{-1} TC |
+|------------+----------------+---------------------+--------------------+---------------------|
+| Pile Burn  |       0.046904 |                0.45 |            0.01624 |                0.49 |
+| Prescribed |     0.08016309 |              0.5833 |           0.020944 |                0.29 |
+| Wildfire   |     0.05870124 |              0.4467 |          0.0228641 |               0.338 |
 
 
 
-To arrive at a rough estimate of BC emissions based on PM2.5 the
-following steps are taken
-
-1. Determine the amount of PM2.5 produced in the flaming and smoldering
-   phases of combustion for each type (piles, prescribed,
-   wildfire). Ratios from citet:Ward1989, table 5 are used.
-2. Define 1000 normal probability distributions using the coefficient
-   of variation from Table ref:tab:bc_pm for the percent of PM2.5
-   comprised of carbonaceous material (TC) and percent of TC comprised
-   of black carbon (BC) give estimates and coefficient of variation
-   estimates provided by citet:Ward1989, tables 2 and 3.
-3. Estimate annual BC emissions based on probability distributions
-   defined in 2.
-
+To arrive at a rough estimate of BC emissions based on PM2.5 we determine the amount of PM2.5 produced in the flaming and smoldering phases of combustion for each type (piles, prescribed, wildfire). Ratios from citet:Ward1989 Table 5 are used. We then estimate annual BC emissions using the ratios applied to the estimated volume of burned biomass.
 
 #+NAME: CARB_BC
 #+BEGIN_SRC sqlite :db fcat_biomass.sqlite :colnames yes :exports results
@@ -248,7 +227,7 @@ when eicsoun = 'WILDLAND FIRE USE (WFU)' then pm2_5*365 * (.08016309 + .020944) 
 
 printf("%.2f", case when eicsoun='ALL VEGETATION' then pm2_5*365 * (.05870124 + .0228641)*3200
 when eicsoun = 'FOREST MANAGEMENT' then pm2_5*365 * (.046904 + .01624)*3200
-when eicsoun = 'WILDLAND FIRE USE (WFU)' then pm2_5*365 * (.08016309 + .020944)*3200 end) as 'GWP (t y^{-1})'
+when eicsoun = 'WILDLAND FIRE USE (WFU)' then pm2_5*365 * (.08016309 + .020944)*3200 end) as 'CO2e (t y^{-1})'
 
  from cpe_2015 WHERE eicsoun in ('FOREST MANAGEMENT','WILDLAND FIRE USE (WFU)','ALL VEGETATION');
 #+END_SRC
@@ -263,15 +242,15 @@ when eicsoun = 'WILDLAND FIRE USE (WFU)' then pm2_5*365 * (.08016309 + .020944)*
 #+CAPTION: Annual black carbon emissions calculated from CARB volumes 
 
 
-The following plot represents estimates of total BC emissions resulting
-from combustion of biomass in the CARB CAP emissions categories
-reflecting woody biomass combustion in wildfire, pile burning, and
-prescribed natural fire.
+# The following plot represents estimates of total BC emissions resulting
+# from combustion of biomass in the CARB CAP emissions categories
+# reflecting woody biomass combustion in wildfire, pile burning, and
+# prescribed natural fire.
 
 
-#+CAPTION: Short-lived climate pollution from open burning of biomass as reported by CARB criteria pollutant emissions inventory.
-#+ATTR_LATEX: :width \textwidth
-[[./graphics/bc_prob_gwp.pdf]]
+# #+CAPTION: Short-lived climate pollution from open burning of biomass as reported by CARB criteria pollutant emissions inventory.
+# #+ATTR_LATEX: :width \textwidth
+# [[./graphics/bc_prob_gwp.pdf]]
 
 # [[https://github.com/peteWT/fcat_biomass/blob/master/graphics/bc_prob_gwp.png?raw=true]]
 
