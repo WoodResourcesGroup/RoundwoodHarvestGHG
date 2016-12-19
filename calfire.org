@@ -34,9 +34,10 @@ Currently, the majority of biomass produced from forest management activities en
 Ultimately, any combustion or decomposition of residual material results in emissions of greenhouse gases (GHG), criteria air pollutants (CAP), and short-lived climate pollutants (SLCP). Even in the absence of forest management activity, atmospheric emissions are produced from 
 stochastic processes such as wildfire, pest, and disease outbreaks. As such, utilization strategies are necessary to reduce the air quality impact of common forestry practice. Furthermore, the opportunity cost of residual biomass use in bioenergy and applications weigh in favor of alternative utilization strategies. Figure ref:fig:wood_fates presents an overview of emissions and emissions reduction pathways for wood from California's forests. 
 
+ref:wood_fate
 
 #+LABEL:fig:wood_fates
-#+CAPTION: Overview of fates of wood resulting from harvest and mortality in California forests. Note that time is not represented in this figure.  
+#+CAPTION: Overview of fates of wood resulting from harvest and mortality in California forests. Note that time is not represented in this figure. \label{fig:wood_fate} 
 #+ATTR_LATEX: :width 0.75\textwidth
 [[./graphics/wood_fates.pdf]]
 
@@ -527,8 +528,8 @@ Table ref:tab:me_and_lr presents ten year average estimates of logging and milli
 From logging residuals not used in bioenergy, emmisions are produced
 from combustion or biological decomposition of the
 material over time. To calculate the ratio of burned to decompsed
-logging residues, I begin with the CARB estimate of annual PM2.5 emissions produced from
-forest management. 
+logging residues, I first calculate the total biomass volume of pile burned forest management residuals, then compare with total residues as reported by the TPO to find the difference. C02e emissions are then independly derived for both conversion streams of logging residuals. /// forremove  utilize the CARB estimate of annual PM2.5 emissions produced from
+forest management with the Consume fire behavior model to extrapolate total 
 
 **** Estimate biomass from PM2.5: 
 
@@ -716,7 +717,7 @@ feet.
    [[http://www.calfire.ca.gov/resource_mgt/resource_mgt_forestpractice_gis][Forest
    Practice Geographical Information System]]. *TODO*
 
-** Wood Product Displacement Factors
+** Avoided Emissions from Wood Product Displacement Factors
 
 For each product application, wood may be substituted by a range of other materials. For example, in
 residential construction, precast concrete and structural steel framing
