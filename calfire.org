@@ -129,7 +129,7 @@ SLCP estimates. When viewed in aggregate, a comprehensive reporting of total cli
 [[./graphics/burning.pdf]]
 
 
-#+NAME:   tab:bc_gwp
+#+NAME: tab:bc_gwp
 #+BEGIN_SRC sqlite :db fcat_biomass.sqlite :colnames yes :exports results
 select gwp_20 "GWP_{20}",
        gwp_20_std "GWP\sigma_{20}",
@@ -251,7 +251,7 @@ when eicsoun = 'WILDLAND FIRE USE (WFU)' then pm2_5*365 * (.08016309 + .020944)*
 
 
 
-Given the variance in baseline assumptions of BC volume ref: tab:bc_pm, it is critical to identify the minimum and maximum range of probable emissions volumes.
+Given the variance in baseline assumptions of BC volume ref:tab:bc_pm, it is critical to identify the minimum and maximum range of probable emissions volumes.
 The following plot represents estimates of total BC emissions resulting
 from combustion of biomass in the CARB CAP emissions categories
 reflecting woody biomass combustion in wildfire, pile burning, and
@@ -651,14 +651,14 @@ GWP_{CH_4} &= \text{Global warming potential of methane: 56}
 
 ** Emissions from non-commercial management residuals
 
-/Note: Residues from non-commercial management activities are assumed to
-be small in comparison with commercial logging residues. In addition, there is
-presently no empirical data available. As such, estimating these volumes
-has not been prioritied. I have attempted to provide an estimate for management
-activity on 
-public lands in the National Forest System here./
+# Residues from non-commercial management activities are assumed to
+# be small in comparison with commercial logging residues. In addition, there is
+# presently no empirical data available. As such, estimating these volumes
+# has not been prioritied. I have attempted to provide an estimate for management
+# activity on 
+# public lands in the National Forest System here.
 
-The Timber ???? (TPO) in California does not report wood volume produced from
+The Timber Products Output (TPO) in California does not report wood volume produced from
 non-commercial management activities. This includes management
 activities such as pre-commercial thinning, sanitation thinning, and
 fuels reduction thinning. To estimate the volume of material produced
