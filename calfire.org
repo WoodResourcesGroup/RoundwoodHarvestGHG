@@ -156,7 +156,7 @@ emissions estimates]] published by the California Air Resources Board reports on
 #+BEGIN_SRC sqlite :db fcat_biomass.sqlite :colnames yes :exports results
 select eicsoun as Source, printf("%.2f", pm2_5*365) as 'PM 2.5 (t y^{-1})' from cpe_2015 WHERE eicsoun in ('FOREST MANAGEMENT','WILDLAND FIRE USE (WFU)','ALL VEGETATION');
 #+END_SRC
-#+CAPTION: Emissions of PM 2.5 in 2015 as reported by CARB
+#+CAPTION: Emissions of PM 2.5 in 2015 as reported by CARB \label{arb_pm_ann}
 #+RESULTS: arb_pm_ann
 | Source                  | PM 2.5 (t)        |
 |-------------------------+-------------------|
@@ -197,7 +197,7 @@ used herein.
 select source as 'Source', "Unnamed 0" as 'BC_f t^{-1} PM', tc_f_cv as 'TC_f^{Cv} t^{-1} PM', ec_f_cv as 'BC_f^{Cv} t^{-1} TC', "Unnamed 1" as 'BC_s t^{-1} PM 2.5', tc_s_cv as 'TC_s^{Cv} t^{-1} PM',ec_s_cv as 'BC_s^{Cv} t^{-1} TC' from ec_ratios;
 
 #+END_SRC
-#+CAPTION: Peter, I feel like there is too much going on in this table. Factors used for calculating Black Carbon (BC) emissions from the three primary combustion sources. BC is a fraction of Total Carbon (TC) which is a fraction of total PM 2.5. Coefficients of variation (C_v) are reported here as well.
+#+CAPTION: Peter, I feel like there is too much going on in this table. Factors used for calculating Black Carbon (BC) emissions from the three primary combustion sources. BC is a fraction of Total Carbon (TC) which is a fraction of total PM 2.5. Coefficients of variation (C_v) are reported here as well. \label{tab:bc_pm}
 #+RESULTS: tab:bc_pm
 +------------+----------------+---------------------+--------------------+--------------------+---------------------+---------------------+
 | Source     | BC_f t^{-1} PM | TC_f^{Cv} t^{-1} PM | BC_f^{Cv} t^{-1} TC| BC_s t^{-1} PM 2.5 | TC_s^{Cv} t^{-1} PM | BC_s^{Cv} t^{-1} TC |
@@ -240,7 +240,7 @@ when eicsoun = 'WILDLAND FIRE USE (WFU)' then pm2_5*365 * (.08016309 + .020944)*
 
  from cpe_2015 WHERE eicsoun in ('FOREST MANAGEMENT','WILDLAND FIRE USE (WFU)','ALL VEGETATION');
 #+END_SRC
-#+CAPTION: Annual black carbon emissions calculated from CARB volumes 
+#+CAPTION: Annual black carbon emissions calculated from CARB volumes \label{tab:carb_bc}
 
 #+RESULTS: carb_bc
 | Source                  | PM 2.5 (t y^{-1}) | BC (t y^{-1}) | GWP (t y^{-1}) |
