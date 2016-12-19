@@ -34,18 +34,14 @@ Currently, the majority of biomass produced from forest management activities en
 Ultimately, any combustion or decomposition of residual material results in emissions of greenhouse gases (GHG), criteria air pollutants (CAP), and short-lived climate pollutants (SLCP). Even in the absence of forest management activity, atmospheric emissions are produced from 
 stochastic processes such as wildfire, pest, and disease outbreaks. As such, utilization strategies are necessary to reduce the air quality impact of common forestry practice. Furthermore, the opportunity cost of residual biomass use in bioenergy and applications weigh in favor of alternative utilization strategies. Figure ref:fig:wood_fates presents an overview of emissions and emissions reduction pathways for wood from California's forests. 
 
-ref:wood_fate
-
-#+LABEL:fig:wood_fates
-#+CAPTION: Overview of fates of wood resulting from harvest and mortality in California forests. Note that time is not represented in this figure. \label{fig:wood_fate} 
+#+CAPTION: Overview of fates of wood resulting from harvest and mortality in California forests. Note that time is not represented in this figure. \label{fig:wood_fates} 
 #+ATTR_LATEX: :width 0.75\textwidth
 [[./graphics/wood_fates.pdf]]
 
 
 The focus of this analysis is on deriving emissions associated with *management activity*. This report does not assess greenhouse gas emissions from pest or disease induced mortality, which is estimated at approximately 34 MMT CO2e annually in California forests cite:Christensen2016. Emissions from mortality are indirectly related to management activities just as wildfire is, and must be accounted for to comprehensively evaluate the climate impacts of harvesting.    
 
-//
-To develop these estimates, it is first necessary to identify the following steps:
+To estimate emissions affected by management activity, it is first necessary to identify the following steps:
 
 1. Estimate CO2 equivalent emissions from burning forest management
    residuals using criteria pollutant and GHG emissions inventory
@@ -127,7 +123,7 @@ CAP report captures SLCP emissions from wildfire
 (src_python{return(0.03*122)} MMTCO2e) from which black carbon emissions may be estimated. However, no reference in the CAP report is made to the source of these
 SLCP estimates. When viewed in aggregate, a comprehensive reporting of total climate impact from anthropogenic burning may be estimated. 
 
-#+CAPTION: Data sources available from CARB for estimating GHG and SLCP emissions from forest management.
+#+CAPTION: Data sources available from CARB for estimating GHG and SLCP emissions from forest management. \label{fig:burn_diag}
 #+ATTR_LATEX: :width 0.75\textwidth
 #+Results: fig:burn_diag
 [[./graphics/burning.pdf]]
@@ -144,7 +140,7 @@ select gwp_20 "GWP_{20}",
        source "Source" from bc_gwp;
 #+END_SRC
 
-#+CAPTION: Range of Global Warming Potential(GWP) values for Black Carbon.
+#+CAPTION: Range of Global Warming Potential(GWP) values for Black Carbon.\label{tab:bc_gwp}
 #+RESULTS: tab:bc_gwp
 | GWP_{20} | GWP\sigma_{20} | GWP_{100} | GWP\sigma_{100} | GWP_{500} | GWP\sigma_{500} | Source                          |
 |----------+----------------+-----------+-----------------+-----------+-----------------+---------------------------------|
