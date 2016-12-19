@@ -156,7 +156,7 @@ emissions estimates]] published by the California Air Resources Board reports on
 #+BEGIN_SRC sqlite :db fcat_biomass.sqlite :colnames yes :exports results
 select eicsoun as Source, printf("%.2f", pm2_5*365) as 'PM 2.5 (t y^{-1})' from cpe_2015 WHERE eicsoun in ('FOREST MANAGEMENT','WILDLAND FIRE USE (WFU)','ALL VEGETATION');
 #+END_SRC
-#+CAPTION: Emissions of PM 2.5 in 2015 as reported by CARB
+#+CAPTION: Emissions of PM 2.5 in 2015 as reported by CARB \label{arb_pm_ann}
 #+RESULTS: arb_pm_ann
 | Source                  | PM 2.5 (t)        |
 |-------------------------+-------------------|
@@ -197,17 +197,15 @@ used herein.
 select source as 'Source', "Unnamed 0" as 'BC_f t^{-1} PM', tc_f_cv as 'TC_f^{Cv} t^{-1} PM', ec_f_cv as 'BC_f^{Cv} t^{-1} TC', "Unnamed 1" as 'BC_s t^{-1} PM 2.5', tc_s_cv as 'TC_s^{Cv} t^{-1} PM',ec_s_cv as 'BC_s^{Cv} t^{-1} TC' from ec_ratios;
 
 #+END_SRC
-#+CAPTION: Peter, I feel like there is too much going on in this table. Factors used for calculating Black Carbon (BC) emissions from the three primary combustion sources. BC is a fraction of Total Carbon (TC) which is a fraction of total PM 2.5. Coefficients of variation (C_v) are reported here as well.
+#+CAPTION: Peter, I feel like there is too much going on in this table. Factors used for calculating Black Carbon (BC) emissions from the three primary combustion sources. BC is a fraction of Total Carbon (TC) which is a fraction of total PM 2.5. Coefficients of variation (C_v) are reported here as well. \label{tab:bc_pm}
 #+RESULTS: tab:bc_pm
-+------------+----------------+---------------------+--------------------+--------------------+---------------------+---------------------+
-| Source     | BC_f t^{-1} PM | TC_f^{Cv} t^{-1} PM | BC_f^{Cv} t^{-1} TC| BC_s t^{-1} PM 2.5 | TC_s^{Cv} t^{-1} PM | BC_s^{Cv} t^{-1} TC |
-+------------+----------------+---------------------+--------------------+--------------------+---------------------+---------------------+
-|            |  Flaming Phase                                            |    Smoldering Phase                                            |
-|------------+----------------+---------------------+--------------------+--------------------+---------------------+---------------------|
-| Pile Burn  |       0.046904 |                0.09 |                0.45|            0.01624 |                0.01 |                0.49 |
-| Prescribed |     0.08016309 |              0.0733 |              0.5833|           0.020944 |                0.08 |                0.29 |
-| Wildfire   |     0.05870124 |              0.0867 |              0.4467|          0.0228641 |                0.06 |               0.338 |
-+------------+----------------+---------------------+--------------------+--------------------+---------------------+---------------------+
+
+| Source     | BC_f t^{-1} PM | TC_f^{Cv} t^{-1} PM | BC_f^{Cv} t^{-1} TC | BC_s t^{-1} PM 2.5 | TC_s^{Cv} t^{-1} PM | BC_s^{Cv} t^{-1} TC |
+|------------+----------------+---------------------+---------------------+--------------------+---------------------+---------------------|
+| Pile Burn  |       0.046904 |                0.09 |                0.45 |            0.01624 |                0.01 |                0.49 |
+| Prescribed |     0.08016309 |              0.0733 |              0.5833 |           0.020944 |                0.08 |                0.29 |
+| Wildfire   |     0.05870124 |              0.0867 |              0.4467 |          0.0228641 |                0.06 |               0.338 |
+
 
 
 To arrive at a rough estimate of BC emissions based on PM2.5, the
@@ -240,8 +238,7 @@ when eicsoun = 'WILDLAND FIRE USE (WFU)' then pm2_5*365 * (.08016309 + .020944)*
 
  from cpe_2015 WHERE eicsoun in ('FOREST MANAGEMENT','WILDLAND FIRE USE (WFU)','ALL VEGETATION');
 #+END_SRC
-#+CAPTION: Annual black carbon emissions calculated from CARB volumes 
-
+#+CAPTION: Annual black carbon emissions calculated from CARB volumes \label{tab:carb_bc}
 #+RESULTS: carb_bc
 | Source                  | PM 2.5 (t y^{-1}) | BC (t y^{-1}) | GWP (t y^{-1}) |
 |-------------------------+-------------------+---------------+----------------|
@@ -258,7 +255,7 @@ reflecting woody biomass combustion in wildfire, pile burning, and
 prescribed natural fire.
 
 
-#+CAPTION: Short-lived climate pollution from open burning of biomass as reported by CARB criteria pollutant emissions inventory.
+#+CAPTION: Short-lived climate pollution from open burning of biomass as reported by CARB criteria pollutant emissions inventory.\label{tab:bc_pm}
 #+ATTR_LATEX: :width \textwidth
 [[./graphics/bc_prob_gwp.pdf]]
 
@@ -274,7 +271,7 @@ PM2.5 to CO2 and to CH4 ref:tab:pfe_calc from the Piled Fuels Emissions Calculat
 | Pile Biomass (t) | Consumed Biomass (t) | PM2.5 (t) | CO2 (t) | CH4 (t) |
 |------------------+---------------------+-----------+---------+---------|
 |         1.360178 |            1.224161 |  0.008263 |  2.0366 | 0.0034  |
-#+CAPTION: Ratios of Biomass to GHG emissions from the Piled Fuels Emissions Calculator.
+#+CAPTION: Ratios of Biomass to GHG emissions from the Piled Fuels Emissions Calculator. \label{tab:pfe_calc}
 
 In addition, the
 [[[[http://www.arb.ca.gov/cc/inventory/archive/tables/net_co2_flux_2007-11-19.pdf]]][CARB
@@ -284,7 +281,7 @@ wildfire and slash burning(<- peter, how is this different to pile burns?) up th
 #+BEGIN_SRC sqlite :db fcat_biomass.sqlite :colnames yes :exports results
 select sc_cat as "Source Category", avg(mmtco2e) as "Average annual emissions 1994-2004 MMTCO_2e" from arb_co2 where sc_cat in ('Forest and rangeland fires', 'Timber harvest slash')  group by sc_cat;
 #+END_SRC
-#+CAPTION: Annual GHG Emissions estimated from CARB GHG emissions inventory
+#+CAPTION: Annual GHG Emissions estimated from CARB GHG emissions inventory \label{arb_ghg_2004}
 #+RESULTS: arb_ghg_2004
 | Source Category            | Average annual emissions 1994-2004 MMTCO_2e |
 |----------------------------+---------------------------------------------|
@@ -310,7 +307,7 @@ burning annual approaches 1 Mt CO2e ref:tab:carb1990_co2e.
 #+BEGIN_SRC sqlite :db fcat_biomass.sqlite :colnames yes :exports results
 select sc_cat, avg(mmtco2e) from arb_co2 where sc_cat in ('Forest and rangeland fires', 'Timber harvest slash')  group by sc_cat;
 #+END_SRC
-#+CAPTION: Estimated average annual CO2 equivilant emissions by source and emission type.
+#+CAPTION: Estimated average annual CO2 equivilant emissions by source and emission type. \label{carb1990_co2e}
 #+RESULTS: tab:carb1990_co2e
 | sc_cat                     |      avg(mmtco2e) |
 |----------------------------+-------------------|
@@ -336,7 +333,7 @@ through a multi-stage process of harvesting, processing, and utilization to resi
 + Construction Debris :: Fraction of wood used in construction or  finished products that are not integratrated into its final form.
 + Demolition :: Wood used in construction that has reached the end of its useful life.
 
-Each category has multiple potential fates which can greatly influence the net emissions impact attributed to the initial forest management activity. While wood products used in construction or finished products may sequester carbon in a stable environment for a long period, residues sent to landfills or left in the woods as slash emit climate forcing gasses. These wood residues may be directed towards alternative product streams (i.e., chip, power and heat generation) with controlled combustion //peter - I changed the  meaning here//. The fate of each of these pools is determined by a highly dynamic political and economic system. To understand how policy decisions will impact the fate and subsequent climate impact of harvested wood products, a detailed process model is necessary. 
+Each category has multiple potential fates which can greatly influence the net emissions impact attributed to the initial forest management activity. While wood products used in construction or finished products may sequester carbon in a stable environment for a long period, residues sent to landfills or left in the woods as slash emit climate forcing gasses. These wood residues may be directed towards alternative product streams (i.e., chip, power and heat generation) with controlled combustion //peter - I changed the  meaning here//. The fate of each of these pools is determined by a highly dynamic political and economic system. To understand how policy decisions will impact the fate and subsequent climate impact of harvested wood products, a detailed process model is necessary. ref:wood_fates
 
 # [[https://www.lucidchart.com/publicSegments/view/52a1774e-7722-4ebf-8e1a-e8fc6837bfee/image.png]]
 
@@ -777,8 +774,8 @@ arrive at an average displacement factor of *2.625* tCO2e/t finished
 wood product for harvested roundwood without
 logging residue utilization.
 
-#+CAPTION: Wood displacement factor without residue utilization
-| reference          | displacement factor                               |
+#+CAPTION: Wood displacement factor without residue utilization \label{tab:df_no_use}
+| reference          | displacement factor |
 |--------------------+---------------------|
 | citet:Eriksson2007 |                 1.7 |
 | citet:Eriksson2007 |                 2.2 |
@@ -790,8 +787,8 @@ studies are used. I used an average of the DF reported here of *3.243* tCO2e/t f
 wood product.
 
 
-#+CAPTION:  Wood discplacement factor with residue utilization
-| reference             | displacement factor                            |
+#+CAPTION:  Wood discplacement factor with residue utilization \label{tab:df_inc_use}
+| reference             | displacement factor |
 |-----------------------+---------------------|
 | citet:Eriksson2007    |                 1.9 |
 | citet:Eriksson2007    |                 2.5 |
@@ -822,7 +819,7 @@ feedstocks. From personal communications with
 [[http://www.bber.umt.edu/staff/mciver.asp][Chelsea McIver]], all bioenergy feedstock reported is sourced in-woods (ie, not mill
 residues).
 
-#+CAPTION: % volume of wood diverted to Bioenergy use by year
+#+CAPTION: % volume of wood diverted to Bioenergy use by year \label{tab:bio_vol}
 |     | year   | bioenergy % of harvest   |
 |-----+--------+--------------------------|
 | 0   | 2000   | 0.024                    |
@@ -831,7 +828,7 @@ residues).
 
 
 
-#+CAPTION: The TPO reports the total logging residues produced from harvest throughout the state by year and ownership.
+#+CAPTION: The TPO reports the total logging residues produced from harvest throughout the state by year and ownership.\label{tab:residue_annual}
 
 |      | Ownership         | Roundwood Products   | Logging Residues   | Year   |
 |------+-------------------+----------------------+--------------------+--------|
@@ -865,7 +862,7 @@ select year, state+blm+nat_forest+private as "McIver, et. al. (2012) MMBF", tota
 #+END_SRC
 
 #+ATTR_LATEX: :environment longtable
-#+CAPTION: Total annual harvest reported by citet:Mciver2012 and California Board of Equalization.
+#+CAPTION: Total annual harvest reported by citet:Mciver2012 and California Board of Equalization.\label{tab:tpo_boe}
 #+RESULTS: tab:tpo_boe
 | year | McIver, et. al. (2012) MMBF | BOE MMBF | BOE/M&M |
 |------+-----------------------------+----------+---------|
@@ -916,7 +913,7 @@ select year, printf("%.2f",state/5.44) "State", printf("%.2f",(blm+nat_forest)/5
 #+END_SRC
 
 #+ATTR_LATEX: :environment longtable
-#+CAPTION: Annual harvest by ownership from citet:Mciver2012 (MCF)
+#+CAPTION: Annual harvest by ownership from citet:Mciver2012 (MCF)\label{tab:MandM}
 #+RESULTS: tab:MandM
 | year | State | Federal | Private | Tribal |
 |------+-------+---------+---------+--------|
@@ -1008,7 +1005,7 @@ timber harvest, we apply the appropriate displacement factor (with or
 without logging residual utilization) to the commensurate fraction of
 harvested roundwood. The results are shown in the following chart.
 
-#+CAPTION: Historical emissions reductions resulting from harvested roundwood using displacement factors from citep:Sathre2010 applied to TPO data.
+#+CAPTION: Historical emissions reductions resulting from harvested roundwood using displacement factors from citep:Sathre2010 applied to TPO data.\label{em_reduc_hist}
 #+ATTR_LATEX: :width \textwidth
 [[./graphics/ann_hh_em_reduc.pdf]]
 
@@ -1016,7 +1013,7 @@ Contribution of the varios ownership categories to the aggregate is
 shown in Figure ref:em_reduc_own.
 
 #+NAME: em_reduc_own
-#+CAPTION: Historical emissions reductions by ownership for selected years resulting from harvested roundwood using displacement factors from citep:Sathre2010 applied to TPO data.
+#+CAPTION: Historical emissions reductions by ownership for selected years resulting from harvested roundwood using displacement factors from citep:Sathre2010 applied to TPO data. \label{em_reduc_own}
 [[./graphics/harv_em_reductions.png]]
 
 # [[https://raw.githubusercontent.com/peteWT/fcat_biomass/master/graphics/harv_em_reductions.png]]
