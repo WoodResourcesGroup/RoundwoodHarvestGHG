@@ -114,10 +114,10 @@ The California Air Resources Board (CARB) reports on
 emissions from forest biomass burning in current Greenhouse Gas (GHG) and Criteria Air
 Pollutant (CAP) 
 [[http://www.arb.ca.gov/ei/ei.htm][emissions inventories]]. Both are necessary resources for establishing
-aggregate annual climate-forcing emissions ref:fig:burn_diag. The GHG inventory captures
+aggregate annual climate-forcing emissions (Figure ref:fig:burn_diag). The GHG inventory captures
 gasses with radiative forcing properties including CO2 and CH4, but does not capture elemental
 carbon or black carbon (BC) emissions which also have strong radiative
-forcing properties ref:tab:bc_gwp. The citet:CaliforniaAirResourcesBoard2015,CaliforniaAirResourcesBoard2016
+forcing properties (Table ref:tab:bc_gwp). The citet:CaliforniaAirResourcesBoard2015,CaliforniaAirResourcesBoard2016
 CAP report captures SLCP emissions from wildfire
 (src_python{return(0.66*122)} MMTCO2e) and prescribed fire
 (src_python{return(0.03*122)} MMTCO2e) from which black carbon emissions may be estimated. However, no reference in the CAP report is made to the source of these
@@ -150,13 +150,21 @@ select gwp_20 "GWP_{20}",
 
 ** Estimating Black Carbon Emissions from Biomass Burning
 Black carbon is not directly reported by statewide emissions summaries. The [[http://www.arb.ca.gov/ei/emissiondata.htm][2015 Criteria air pollutant (CAP)
-emissions estimates]] published by the California Air Resources Board reports on particulate matter (PM 2.5) of which black carbon is a component. CARB reports annual PM 2.5 emissions in tons/day as shown in ref:arb_pm_ann.
+emissions estimates]] published by the California Air Resources Board reports on particulate matter (PM 2.5) of which black carbon is a component. CARB reports annual PM 2.5 emissions in tons/day as shown in Table ref:tab:arb_pm_ann.
 
-#+NAME: arb_pm_ann
+#+NAME: tab:arb_pm_ann
 #+BEGIN_SRC sqlite :db fcat_biomass.sqlite :colnames yes :exports results
 select eicsoun as Source, printf("%.2f", pm2_5*365) as 'PM 2.5 (t y^{-1})' from cpe_2015 WHERE eicsoun in ('FOREST MANAGEMENT','WILDLAND FIRE USE (WFU)','ALL VEGETATION');
 #+END_SRC
-#+CAPTION: Emissions of PM 2.5 in 2015 as reported by CARB \label{arb_pm_ann}
+
+#+RESULTS: tab:arb_pm_ann
+| Source                  | PM 2.5 (t y^{-1}) |
+|-------------------------+-------------------|
+| ALL VEGETATION          |         137630.15 |
+| FOREST MANAGEMENT       |           5480.51 |
+| WILDLAND FIRE USE (WFU) |           6802.43 |
+
+#+CAPTION: Emissions of PM 2.5 in 2015 as reported by CARB \label{tab:arb_pm_ann}
 #+RESULTS: arb_pm_ann
 | Source                  | PM 2.5 (t)        |
 |-------------------------+-------------------|
