@@ -365,7 +365,9 @@ residuals in California. To estimate current values, we apply known milling effi
 improvements, logging utilization rates, and construction use efficiency to historical production volumes. 
 
 *** Logging Residues
- According to citet:Morgan, logging residues produced from sawlog harvest can be estimated using a factor of 0.0302 (+/-.0123 @95%CI) times the total cubic sawlog volume delivered to a mill. Unfortunately, we cannot say how logging residue production has changed over time in California.  citet:Simmons2014 found that logging utilization has decreased in Idaho from 1990 to 2011 by 72%. For the purpose of this analysis, we will assume that similar changes have occurred in California timber harvesting. We then estimate a logging residue production factor for years before 1990 based on the following equation. We assume 1990 residue ratios for all years prior.
+ According to citet:Morgan, logging residues produced from sawlog harvest can be estimated using a factor of 0.0302 (+/-.0123 @95%CI) times the total cubic sawlog volume delivered to a mill. citet:Simmons2014 found that logging utilization has decreased in Idaho from 1990 to 2011 by 72%. Unfortunately, we cannot say how logging residue production has changed over time in California. For the purpose of this analysis, we will assume that similar changes have occurred in California timber harvesting. 
+
+ We estimate logging residue production factor for years before 1990 based on the following equation. We assume 1990 residue ratios for all years prior.
 
  #+BEGIN_LaTeX
 
@@ -378,14 +380,14 @@ improvements, logging utilization rates, and construction use efficiency to hist
  \end{align*}
  #+END_LaTeX
 
- For logging residue production factors between 1990 and 2004, we calculate logging residues as a function of the percent change in logging residual ratios estimated for Idaho citet:Simmons2014 applied to the known logging residual ratio reported by citet:Morgan. To reflect the uncertainty in the estimate provided by citet:Morgan, we calculate the logging residual using a randomly selected value from a normal probability distribution defined by the estimate and upper and lower bounds of the 95% confidence interval provided:
+ For logging residue production factors between 1990 and 2004, we calculate logging residues by adjusting the logging residual ratio reported by citet:Morgan with the percent change in logging residual ratios estimated for Idaho by citet:Simmons2014. To reflect the uncertainty in the estimate provided by citet:Morgan, we calculate the logging residual using a randomly selected value from a normal probability distribution defined by the estimate and upper and lower bounds of the 95% confidence interval provided:
 
  #+BEGIN_LaTeX
 
  \begin{align*}
  V\llap{--}lr_{x} = V\llap{--}rw_{x}\left(\eta_{04}+ \left(\eta_{04}\left(\left(Y_1-x\right)\frac{\eta_\Delta}{Y_\Delta}\right)\right)\right)\\
  \text{Where:}\\
- V\llap{--}rw_{x} = \text{Rundwood volume harvested in year }x\\
+ V\llap{--}rw_{x} = \text{Roundwood volume harvested in year }x\\
  \eta_{04} = \mathcal{N}(0.0302,0.0123) \text{ ratio of logging residues to roundwood harvested in CA, 2004}\\
  Y_1 = 2004 \text{ (year for which logging residual estimate available for CA)} \\
  x = \text{year for which logging residues are calculated}\\
@@ -442,7 +444,8 @@ For years after 1970, milling efficiency for year $x$ is calculated as:
  #+END_LaTeX
 
 *** Construction Residues
-To estimate annualized construction waste material, we use ratios of finished wood products to construction debris and demolition debris referenced in citet:McKeever2004. This data from citeauthor:McKeever2004 is sparse and should be considered unreliable for years other than those for which it is reported.  Construction debris was estimated in 2002 as approximately 15% of the total wood used in construction. Demolition debris from wood produced annually from wood grown on California forestland is outside of the scope of this report.
+To estimate annualized construction waste material, we apply ratios of finished wood products to construction and demolition debris as referenced in citet:McKeever2004 to Board of Equalization (BOE) citet:??? roundwood harvest volumes. The data from citeauthor:McKeever2004 is sparse and should be considered unreliable for years other than those for which it is reported.  Construction debris was estimated in 2002 as approximately 15% of the total wood used in construction. Demolition debris from wood produced annually from wood grown on California forestland is outside of the scope of this report.
+
 
 Table ref:tab:me_and_lr presents ten year average estimates of logging and milling residuals, finished lumber, and construction debris based on Board of Equalization (BOE) roundwood harvest volumes. // this is kinda random? no mention of BOE data earlier?//
 
