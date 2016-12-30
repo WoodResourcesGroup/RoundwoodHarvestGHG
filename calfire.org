@@ -160,10 +160,9 @@ When viewed in aggregate, a comprehensive reporting of total climate impact from
 
 ** Estimating Black Carbon Emissions from Biomass Burning
 
-Black carbon is not directly reported by statewide emissions summaries. However, BC is a fraction of the Total 
-Carbon (TC) component of particulate matter (PM 2.5) emissions, which are published annually by the CARB. 
-Using the [[http://www.arb.ca.gov/ei/emissiondata.htm][2015 Criteria air pollutant (CAP)
-emissions estimates]] shown in Table ref:arb_pm_ann with estimated ratios of 
+Black carbon (BC) is not directly reported by statewide emissions summaries. BC is a fraction of the Total 
+Carbon (TC) component measured in particulate matter (PM 2.5) emissions published annually by the CARB [[http://www.arb.ca.gov/ei/emissiondata.htm][Criteria air pollutant (CAP)
+emissions estimates]]. By using the 2015 CAP emissions estimates shown in Table ref:arb_pm_ann with estimated ratios of 
 smoldering to flaming combustion for hand/machine piled burns, prescribed 
 natural fire and wildfire from citet:Ward1989, Black Carbon emissions
 can be calculated from PM
@@ -232,8 +231,6 @@ select source as 'Source', "Unnamed 0" as 'BC_f t^{-1} PM', tc_f_cv as 'TC_f^{Cv
 | Wildfire   |     0.05870124 |              0.0867 |              0.4467 |          0.0228641 |                0.06 |               0.338 |
 
 
-
-
 2. Define 1000 normal probability distributions using the coefficient
    of variation from Table ref:tab:bc_pm to determine the percent of PM 2.5
    comprised by carbonaceous material (TC), and the percent of TC comprised
@@ -267,7 +264,9 @@ when eicsoun = 'WILDLAND FIRE USE (WFU)' then pm2_5*365 * (.08016309 + .020944)*
 
 
 
-Given the variance in baseline assumptions (maybe elaborate? FOR PETER)of BC volume in Table ref:tab:bc_pm, it is critical to acknowledge the minimum and maximum range of probable emissions volumes.
+Given the variance in baseline assumptions (maybe elaborate? FOR PETER)of
+BC volume in Table ref:tab:bc_pm, it is critical to acknowledge the 
+minimum and maximum range of probable emissions volumes.
 The following plot represents estimates of total BC emissions resulting
 from combustion of woody biomass in wildfire, pile burning, and
 prescribed natural fire based on CARB CAP emissions categories.
@@ -280,9 +279,11 @@ prescribed natural fire based on CARB CAP emissions categories.
 # [[https://github.com/peteWT/fcat_biomass/blob/master/graphics/bc_prob_gwp.png?raw=true]]
 
 ** Estimating GHG Emissions from Biomass Burning 
-To estimate GHG emissions from biomass combustion, we independently estimate emissions from pile, wildfire, and slash burning using published values from CARB(which ones?). 
-To estimate GHG emissions from pile burning, we use the ratio of
-PM 2.5 to CO2 and to CH4 (Table ref:tab:pfe_calc) from the Piled Fuels Emissions Calculator. The following ratios are then used to estimate GHG emissions from CARB-reported PM emissions.
+To estimate GHG emissions from biomass combustion, we estimates pile, wildfire, and
+slash burning emissions using published values from CARB(which ones?). 
+- To estimate GHG emissions from *pile burning*, we use the ratio of
+PM 2.5 to CO2 and to CH4 from the Piled Fuels
+Emissions Calculator. The following ratios are applied to CARB-reported PM emissions to estimate GHG emissions (Table ref:tab:pfe_calc).
 
 
 #+NAME: tab:pfe_calc
@@ -292,7 +293,7 @@ PM 2.5 to CO2 and to CH4 (Table ref:tab:pfe_calc) from the Piled Fuels Emissions
 |         1.360178 |            1.224161 |  0.008263 |  2.0366 | 0.0034  |
 #+CAPTION: Ratios of Biomass to GHG emissions from the Piled Fuels Emissions Calculator. \label{tab:pfe_calc}
 
-In addition, the
+- To estimate GHG emissions from *wildfire* and *slash burning*, we In addition, the
 [[[[http://www.arb.ca.gov/cc/inventory/archive/tables/net_co2_flux_2007-11-19.pdf]]][CARB
 greenhouse gas emissions inventory]] estimates emissions from
 wildfire and slash burning(<- peter, how is this different to pile burns?) up through 2004 (Table ref:arb_ghg_2004) in MMT CO2e.
@@ -534,7 +535,6 @@ Table ref:tab:me_and_lr presents ten year average estimates of logging and milli
  |          2003 |        2013 | 266.193 | 5.76584 | 126.488 | 139.705 | 20.9558 |
  |          2004 |        2014 | 262.901 | 6.99142 |  125.34 | 137.561 | 20.6341 |
 
-
 ** Emissions from un-utilized logging residues
 
 From logging residuals not used in bioenergy, emmisions are produced
@@ -728,7 +728,7 @@ feet.
 2. *Private industrial timber lands:* CalFIRE's
    [[http://www.calfire.ca.gov/resource_mgt/resource_mgt_forestpractice_gis][Forest
    Practice Geographical Information System]]. *TODO*
-
+   
 ** Avoided Emissions from Wood Product Displacement Factors
 
 For each product application, wood may be substituted by a range of other materials. For example, in
