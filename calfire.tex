@@ -1,4 +1,4 @@
-% Created 2016-12-19 Mon 15:20
+% Created 2016-12-19 Mon 15:51
 \documentclass[a4paper]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -149,10 +149,10 @@ The California Air Resources Board (CARB) reports on
 emissions from forest biomass burning in current Greenhouse Gas (GHG) and Criteria Air
 Pollutant (CAP) 
 \href{http://www.arb.ca.gov/ei/ei.htm}{emissions inventories}. Both are necessary resources for establishing
-aggregate annual climate-forcing emissions \ref{fig:burn_diag}. The GHG inventory captures
+aggregate annual climate-forcing emissions (Figure \ref{fig:burn_diag}). The GHG inventory captures
 gasses with radiative forcing properties including CO2 and CH4, but does not capture elemental
 carbon or black carbon (BC) emissions which also have strong radiative
-forcing properties \ref{tab:bc_gwp}. The \citet{CaliforniaAirResourcesBoard2015,CaliforniaAirResourcesBoard2016}
+forcing properties (Table \ref{tab:bc_gwp}). The \citet{CaliforniaAirResourcesBoard2015,CaliforniaAirResourcesBoard2016}
 CAP report captures SLCP emissions from wildfire
 (\texttt{80.52} MMTCO2e) and prescribed fire
 (\texttt{3.66} MMTCO2e) from which black carbon emissions may be estimated. However, no reference in the CAP report is made to the source of these
@@ -180,13 +180,23 @@ GWP$_{\text{20}}$ & GWP$\sigma$$_{\text{20}}$ & GWP$_{\text{100}}$ & GWP$\sigma$
 \subsection{Estimating Black Carbon Emissions from Biomass Burning}
 \label{sec-2-1}
 Black carbon is not directly reported by statewide emissions summaries. The \href{http://www.arb.ca.gov/ei/emissiondata.htm}{2015 Criteria air pollutant (CAP)
-emissions estimates} published by the California Air Resources Board reports on particulate matter (PM 2.5) of which black carbon is a component. CARB reports annual PM 2.5 emissions in tons/day as shown in \ref{arb_pm_ann}.
+emissions estimates} published by the California Air Resources Board reports on particulate matter (PM 2.5) of which black carbon is a component. CARB reports annual PM 2.5 emissions in tons/day as shown in \ref{tab:arb_pm_ann}.
 
-\begin{table}[htb]
-\caption{Emissions of PM 2.5 in 2015 as reported by CARB}
-\centering
+\begin{center}
 \begin{tabular}{lr}
 Source & PM 2.5 (t y$^{\text{-1}}$)\\
+\hline
+ALL VEGETATION & 137630.15\\
+FOREST MANAGEMENT & 5480.51\\
+WILDLAND FIRE USE (WFU) & 6802.43\\
+\end{tabular}
+\end{center}
+
+\begin{table}[htb]
+\caption{Emissions of PM 2.5 in 2015 as reported by CARB \label{tab:arb_pm_ann}}
+\centering
+\begin{tabular}{lr}
+Source & PM 2.5 (t)\\
 \hline
 ALL VEGETATION & 137630.15\\
 FOREST MANAGEMENT & 5480.51\\
@@ -220,7 +230,7 @@ Based on \citet{Ward1989} and \citet{Jenk1996}, the following ratios are
 used herein.
 
 \begin{table}[htb]
-\caption{Peter, I feel like there is too much going on in this table. Factors used for calculating Black Carbon (BC) emissions from the three primary combustion sources. BC is a fraction of Total Carbon (TC) which is a fraction of total PM 2.5. Coefficients of variation (C$_{\text{v}}$) are reported here as well.}
+\caption{Peter, I feel like there is too much going on in this table. Factors used for calculating Black Carbon (BC) emissions from the three primary combustion sources. BC is a fraction of Total Carbon (TC) which is a fraction of total PM 2.5. Coefficients of variation (C$_{\text{v}}$) are reported here as well. \label{tab:bc_pm}}
 \centering
 \begin{tabular}{lrrrrrr}
 Source & BC$_{\text{f}}$ t$^{\text{-1}}$ PM & TC$_{\text{f}}^{\text{Cv}}$ t$^{\text{-1}}$ PM & BC$_{\text{f}}^{\text{Cv}}$ t$^{\text{-1}}$ TC & BC$_{\text{s}}$ t$^{\text{-1}}$ PM 2.5 & TC$_{\text{s}}^{\text{Cv}}$ t$^{\text{-1}}$ PM & BC$_{\text{s}}^{\text{Cv}}$ t$^{\text{-1}}$ TC\\
@@ -228,15 +238,19 @@ Source & BC$_{\text{f}}$ t$^{\text{-1}}$ PM & TC$_{\text{f}}^{\text{Cv}}$ t$^{\t
 Pile Burn & 0.046904 & 0.09 & 0.45 & 0.01624 & 0.01 & 0.49\\
 Prescribed & 0.08016309 & 0.0733 & 0.5833 & 0.020944 & 0.08 & 0.29\\
 Wildfire & 0.05870124 & 0.0867 & 0.4467 & 0.0228641 & 0.06 & 0.338\\
+\end{tabular}
+\end{table}
+
+\begin{center}
+\begin{tabular}{lrrrrrr}
 Source & BC$_{\text{f}}$ t$^{\text{-1}}$ PM & TC$_{\text{f}}^{\text{Cv}}$ t$^{\text{-1}}$ PM & BC$_{\text{f}}^{\text{Cv}}$ t$^{\text{-1}}$ TC & BC$_{\text{s}}$ t$^{\text{-1}}$ PM 2.5 & TC$_{\text{s}}^{\text{Cv}}$ t$^{\text{-1}}$ PM & BC$_{\text{s}}^{\text{Cv}}$ t$^{\text{-1}}$ TC\\
- & Flaming Phase & Smoldering Phase\\
 \hline
 Pile Burn & 0.046904 & 0.09 & 0.45 & 0.01624 & 0.01 & 0.49\\
 Prescribed & 0.08016309 & 0.0733 & 0.5833 & 0.020944 & 0.08 & 0.29\\
 Wildfire & 0.05870124 & 0.0867 & 0.4467 & 0.0228641 & 0.06 & 0.338\\
-Source & PM 2.5 (t y$^{\text{-1}}$) & BC (t y$^{\text{-1}}$) & GWP (t y$^{\text{-1}}$)\\
 \end{tabular}
-\end{table}
+\end{center}
+
 
 
 To arrive at a rough estimate of BC emissions based on PM2.5, the
@@ -268,7 +282,9 @@ WILDLAND FIRE USE (WFU) & 6802.43 & 687.77 & 2200877.13\\
 \end{tabular}
 \end{center}
 
-\begin{center}
+\begin{table}[htb]
+\caption{Annual black carbon emissions calculated from CARB volumes \label{tab:carb_bc}}
+\centering
 \begin{tabular}{lrrr}
 Source & PM 2.5 (t y$^{\text{-1}}$) & BC (t y$^{\text{-1}}$) & GWP (t y$^{\text{-1}}$)\\
 \hline
@@ -276,7 +292,7 @@ ALL VEGETATION & 137630.15 & 11225.85 & 35922719.54\\
 FOREST MANAGEMENT & 5480.51 & 346.06 & 1107396.54\\
 WILDLAND FIRE USE (WFU) & 6802.43 & 687.77 & 2200877.13\\
 \end{tabular}
-\end{center}
+\end{table}
 
 
 
@@ -290,7 +306,7 @@ prescribed natural fire.
 \begin{figure}[htb]
 \centering
 \includegraphics[width=\textwidth]{./graphics/bc_prob_gwp.pdf}
-\caption{Short-lived climate pollution from open burning of biomass as reported by CARB criteria pollutant emissions inventory.}
+\caption{Short-lived climate pollution from open burning of biomass as reported by CARB criteria pollutant emissions inventory.\label{tab:bc_pm}}
 \end{figure}
 
 \subsection{Estimating GHG Emissions from Biomass Burning}
@@ -311,7 +327,7 @@ In addition, the
 greenhouse gas emissions inventory]] estimates emissions from
 wildfire and slash burning(<- peter, how is this different to pile burns?) up through 2004 (Table \ref{arb_ghg_2004}).
 \begin{table}[htb]
-\caption{Annual GHG Emissions estimated from CARB GHG emissions inventory}
+\caption{Annual GHG Emissions estimated from CARB GHG emissions inventory \label{arb_ghg_2004}}
 \centering
 \begin{tabular}{lr}
 Source Category & Average annual emissions 1994-2004 MMTCO$_{\text{2e}}$\\
@@ -338,7 +354,7 @@ condition. We find that a rough estimate of CO2e emissions from pile
 burning annual approaches 1 Mt CO2e \ref{tab:carb1990_co2e}.
 
 \begin{table}[htb]
-\caption{Estimated average annual CO2 equivilant emissions by source and emission type.}
+\caption{Estimated average annual CO2 equivilant emissions by source and emission type. \label{carb1990_co2e}}
 \centering
 \begin{tabular}{lr}
 sc$_{\text{cat}}$ & avg(mmtco2e)\\
@@ -374,7 +390,7 @@ through a multi-stage process of harvesting, processing, and utilization to resi
 \item[{Demolition}] Wood used in construction that has reached the end of its useful life.
 \end{description}
 
-Each category has multiple potential fates which can greatly influence the net emissions impact attributed to the initial forest management activity. While wood products used in construction or finished products may sequester carbon in a stable environment for a long period, residues sent to landfills or left in the woods as slash emit climate forcing gasses. These wood residues may be directed towards alternative product streams (i.e., chip, power and heat generation) with controlled combustion \emph{\emph{peter - I changed the  meaning here}}. The fate of each of these pools is determined by a highly dynamic political and economic system. To understand how policy decisions will impact the fate and subsequent climate impact of harvested wood products, a detailed process model is necessary. 
+Each category has multiple potential fates which can greatly influence the net emissions impact attributed to the initial forest management activity. While wood products used in construction or finished products may sequester carbon in a stable environment for a long period, residues sent to landfills or left in the woods as slash emit climate forcing gasses. These wood residues may be directed towards alternative product streams (i.e., chip, power and heat generation) with controlled combustion \emph{\emph{peter - I changed the  meaning here}}. The fate of each of these pools is determined by a highly dynamic political and economic system. To understand how policy decisions will impact the fate and subsequent climate impact of harvested wood products, a detailed process model is necessary. \ref{wood_fates}
 
 \subsection{Disposition of Harvested Wood in California.}
 \label{sec-3-1}
@@ -464,33 +480,33 @@ Table \ref{tab:me_and_lr} presents ten year average estimates of logging and mil
 \hline\multicolumn{7}{r}{Continued on next page} \\
 \endfoot
 \endlastfoot
-1978 & 1988 & 681.701 & 34.8704 & 299.522 & 382.179 & 57.3269\\
-1979 & 1989 & 680.582 & 33.0407 & 300.229 & 380.353 & 57.0529\\
-1980 & 1990 & 681.083 & 37.3961 & 301.528 & 379.555 & 56.9333\\
-1981 & 1991 & 681.601 & 31.6703 & 302.612 & 378.989 & 56.8483\\
-1982 & 1992 & 686.631 & 29.9757 & 305.606 & 381.025 & 57.1538\\
-1983 & 1993 & 695.872 & 25.8166 & 310.422 & 385.451 & 57.8176\\
-1984 & 1994 & 678.459 & 24.6176 & 303.4 & 375.059 & 56.2589\\
-1985 & 1995 & 657.737 & 29.427 & 294.892 & 362.845 & 54.4267\\
-1986 & 1996 & 631.918 & 27.8744 & 284.093 & 347.825 & 52.1738\\
-1987 & 1997 & 600.752 & 28.9845 & 270.919 & 329.833 & 49.4749\\
-1988 & 1998 & 560.495 & 27.3297 & 253.572 & 306.923 & 46.0384\\
-1989 & 1999 & 518.282 & 20.0281 & 235.308 & 282.975 & 42.4462\\
-1990 & 2000 & 477.206 & 18.9246 & 217.442 & 259.764 & 38.9645\\
-1991 & 2001 & 436.798 & 16.8343 & 199.72 & 237.078 & 35.5618\\
-1992 & 2002 & 411.648 & 14.6331 & 188.838 & 222.81 & 33.4214\\
-1993 & 2003 & 389.756 & 12.0774 & 179.386 & 210.37 & 31.5555\\
-1994 & 2004 & 370.287 & 10.0653 & 171.013 & 199.274 & 29.8912\\
-1995 & 2005 & 360.411 & 13.7874 & 166.982 & 193.429 & 29.0143\\
-1996 & 2006 & 349.131 & 11.0852 & 162.271 & 186.86 & 28.0291\\
-1997 & 2007 & 338.319 & 13.7461 & 157.756 & 180.563 & 27.0845\\
-1998 & 2008 & 321.14 & 10.7429 & 150.231 & 170.909 & 25.6364\\
-1999 & 2009 & 299.649 & 7.9378 & 140.54 & 159.109 & 23.8663\\
-2000 & 2010 & 283.222 & 7.43276 & 133.256 & 149.966 & 22.4949\\
-2001 & 2011 & 271.892 & 7.69882 & 128.347 & 143.545 & 21.5318\\
-2002 & 2012 & 266.945 & 7.50672 & 126.396 & 140.549 & 21.0823\\
-2003 & 2013 & 266.193 & 6.01439 & 126.488 & 139.705 & 20.9558\\
-2004 & 2014 & 262.901 & 6.77769 & 125.34 & 137.561 & 20.6341\\
+1978 & 1988 & 681.701 & 30.6277 & 299.522 & 382.179 & 57.3269\\
+1979 & 1989 & 680.582 & 38.4338 & 300.229 & 380.353 & 57.0529\\
+1980 & 1990 & 681.083 & 31.1597 & 301.528 & 379.555 & 56.9333\\
+1981 & 1991 & 681.601 & 31.5936 & 302.612 & 378.989 & 56.8483\\
+1982 & 1992 & 686.631 & 39.3647 & 305.606 & 381.025 & 57.1538\\
+1983 & 1993 & 695.872 & 34.9048 & 310.422 & 385.451 & 57.8176\\
+1984 & 1994 & 678.459 & 36.7081 & 303.4 & 375.059 & 56.2589\\
+1985 & 1995 & 657.737 & 31.0119 & 294.892 & 362.845 & 54.4267\\
+1986 & 1996 & 631.918 & 28.5312 & 284.093 & 347.825 & 52.1738\\
+1987 & 1997 & 600.752 & 26.7997 & 270.919 & 329.833 & 49.4749\\
+1988 & 1998 & 560.495 & 30.0402 & 253.572 & 306.923 & 46.0384\\
+1989 & 1999 & 518.282 & 18.8804 & 235.308 & 282.975 & 42.4462\\
+1990 & 2000 & 477.206 & 20.8067 & 217.442 & 259.764 & 38.9645\\
+1991 & 2001 & 436.798 & 15.4676 & 199.72 & 237.078 & 35.5618\\
+1992 & 2002 & 411.648 & 15.5598 & 188.838 & 222.81 & 33.4214\\
+1993 & 2003 & 389.756 & 13.9915 & 179.386 & 210.37 & 31.5555\\
+1994 & 2004 & 370.287 & 14.3281 & 171.013 & 199.274 & 29.8912\\
+1995 & 2005 & 360.411 & 14.1414 & 166.982 & 193.429 & 29.0143\\
+1996 & 2006 & 349.131 & 12.3767 & 162.271 & 186.86 & 28.0291\\
+1997 & 2007 & 338.319 & 11.4827 & 157.756 & 180.563 & 27.0845\\
+1998 & 2008 & 321.14 & 10.8187 & 150.231 & 170.909 & 25.6364\\
+1999 & 2009 & 299.649 & 11.0332 & 140.54 & 159.109 & 23.8663\\
+2000 & 2010 & 283.222 & 9.79385 & 133.256 & 149.966 & 22.4949\\
+2001 & 2011 & 271.892 & 7.2886 & 128.347 & 143.545 & 21.5318\\
+2002 & 2012 & 266.945 & 7.36299 & 126.396 & 140.549 & 21.0823\\
+2003 & 2013 & 266.193 & 5.82813 & 126.488 & 139.705 & 20.9558\\
+2004 & 2014 & 262.901 & 6.77406 & 125.34 & 137.561 & 20.6341\\
 \end{longtable}
 
 
@@ -566,14 +582,8 @@ GWP_{CH_4} &= \text{Global warming potential of methane: 56}
 \subsection{Emissions from non-commercial management residuals}
 \label{sec-3-3}
 
-/Note: Residues from non-commercial management activities are assumed to
-be small in comparison with commercial logging residues. In addition, there is
-presently no empirical data available. As such, estimating these volumes
-has not been prioritied. I have attempted to provide an estimate for management
-activity on 
-public lands in the National Forest System here./
 
-The Timber ???? (TPO) in California does not report wood volume produced from
+The Timber Products Output (TPO) in California does not report wood volume produced from
 non-commercial management activities. This includes management
 activities such as pre-commercial thinning, sanitation thinning, and
 fuels reduction thinning. To estimate the volume of material produced
@@ -709,7 +719,7 @@ wood product for harvested roundwood without
 logging residue utilization.
 
 \begin{table}[htb]
-\caption{Wood displacement factor without residue utilization}
+\caption{Wood displacement factor without residue utilization \label{tab:df_no_use}}
 \centering
 \begin{tabular}{lr}
 reference & displacement factor\\
@@ -727,7 +737,7 @@ wood product.
 
 
 \begin{table}[htb]
-\caption{Wood discplacement factor with residue utilization}
+\caption{Wood discplacement factor with residue utilization \label{tab:df_inc_use}}
 \centering
 \begin{tabular}{lr}
 reference & displacement factor\\
@@ -764,7 +774,7 @@ feedstocks. From personal communications with
 residues).
 
 \begin{table}[htb]
-\caption{\% volume of wood diverted to Bioenergy use by year}
+\caption{\% volume of wood diverted to Bioenergy use by year \label{tab:bio_vol}}
 \centering
 \begin{tabular}{rrr}
  & year & bioenergy \% of harvest\\
@@ -810,7 +820,7 @@ sources report data, the BOE database reports on average, 8\% less volume than t
 \end{enumerate}
 
 \begin{longtable}{rrrr}
-\caption{Total annual harvest reported by \citet{Mciver2012} and California Board of Equalization.}
+\caption{Total annual harvest reported by \citet{Mciver2012} and California Board of Equalization.\label{tab:tpo_boe}}
 \\
 year & McIver, et. al. (2012) MMBF & BOE MMBF & BOE/M\&M\\
 \hline
@@ -861,7 +871,7 @@ this analysis we used TPO data to include harvest volume from tribal lands.
 
 
 \begin{longtable}{rrrrr}
-\caption{Annual harvest by ownership from \citet{Mciver2012} (MCF)}
+\caption{Annual harvest by ownership from \citet{Mciver2012} (MCF)\label{tab:MandM}}
 \\
 year & State & Federal & Private & Tribal\\
 \hline
@@ -961,7 +971,7 @@ harvested roundwood. The results are shown in the following chart.
 \begin{figure}[htb]
 \centering
 \includegraphics[width=\textwidth]{./graphics/ann_hh_em_reduc.pdf}
-\caption{Historical emissions reductions resulting from harvested roundwood using displacement factors from \citep{Sathre2010} applied to TPO data.}
+\caption{Historical emissions reductions resulting from harvested roundwood using displacement factors from \citep{Sathre2010} applied to TPO data.\label{em_reduc_hist}}
 \end{figure}
 
 Contribution of the varios ownership categories to the aggregate is
@@ -970,7 +980,7 @@ shown in Figure \ref{em_reduc_own}.
 \begin{figure}[htb]
 \centering
 \includegraphics[width=.9\linewidth]{./graphics/harv_em_reductions.png}
-\caption{\label{em_reduc_own}Historical emissions reductions by ownership for selected years resulting from harvested roundwood using displacement factors from \citep{Sathre2010} applied to TPO data.}
+\caption{\label{em_reduc_own}Historical emissions reductions by ownership for selected years resulting from harvested roundwood using displacement factors from \citep{Sathre2010} applied to TPO data. \label{em_reduc_own}}
 \end{figure}
 
 \section{Further Questions}
