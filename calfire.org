@@ -444,10 +444,9 @@ For years after 1970, milling efficiency for year $x$ is calculated as:
  #+END_LaTeX
 
 *** Construction Residues
-To estimate annualized construction waste material, we apply ratios of finished wood products to construction and demolition debris as referenced in citet:McKeever2004 to Board of Equalization (BOE) citet:??? roundwood harvest volumes. The data from citeauthor:McKeever2004 is sparse and should be considered unreliable for years other than those for which it is reported.  Construction debris was estimated in 2002 as approximately 15% of the total wood used in construction. Demolition debris from wood produced annually from wood grown on California forestland is outside of the scope of this report.
-
-
-Table ref:tab:me_and_lr presents ten year average estimates of logging and milling residuals, finished lumber, and construction debris based on Board of Equalization (BOE) roundwood harvest volumes. // this is kinda random? no mention of BOE data earlier?//
+To estimate annualized construction waste material, we apply the ratio of construction and demolition debris to finished wood products (citet:McKeever2004) to Board of Equalization (BOE) citet:??? roundwood harvest volumes. In 2002, construction debris was estimated as approximately 15% of the total wood used in construction. Of note is that the data from citeauthor:McKeever2004 is sparse and should be considered unreliable for years other than those for which it is reported. Furthermore, distinguishing demolition debris from wood produced annually from wood grown on California forestland is outside of the scope of this report. 
+*** Harvested Wood Residue Summary
+The following Table ref:tab:me_and_lr presents ten year average estimates of logging and milling residuals, finished lumber, and construction debris based on Board of Equalization (BOE) roundwood harvest volumes.
 
 #+NAME: tab:me_and_lr
  #+BEGIN_SRC python :results raw :exports results
