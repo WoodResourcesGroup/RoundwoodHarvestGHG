@@ -158,7 +158,7 @@ SLCP estimates.
 
 When viewed in aggregate, a comprehensive reporting of total climate impact from anthropogenic burning may be estimated. 
 
-** Estimating Black Carbon Emissions from Biomass Burning
+** Estimating /Black Carbon/ Emissions from Biomass Burning
 
 Black carbon (BC) is not directly reported by statewide emissions summaries. BC is a fraction of the Total 
 Carbon (TC) component measured in particulate matter (PM 2.5) emissions published annually by the CARB [[http://www.arb.ca.gov/ei/emissiondata.htm][Criteria air pollutant (CAP)
@@ -278,13 +278,14 @@ prescribed natural fire based on CARB CAP emissions categories.
 
 # [[https://github.com/peteWT/fcat_biomass/blob/master/graphics/bc_prob_gwp.png?raw=true]]
 
-** Estimating GHG Emissions from Biomass Burning 
+** Estimating /GHG Emissions/ from Biomass Burning 
 To estimate GHG emissions from biomass combustion, we estimates pile, wildfire, and
 slash burning emissions using published values from CARB(which ones?). 
-- To estimate GHG emissions from *pile burning*, we use the ratio of
-PM 2.5 to CO2 and to CH4 from the Piled Fuels
-Emissions Calculator. The following ratios are applied to CARB-reported PM emissions to estimate GHG emissions (Table ref:tab:pfe_calc).
 
+- To estimate GHG emissions from *pile burning*, we use the ratio of
+PM 2.5 to CO2 and to CH4 as determined in the Piled Fuels
+Emissions Calculator. These ratios are then applied to CARB-reported PM 
+emissions to estimate GHG emissions (Table ref:tab:pfe_calc).
 
 #+NAME: tab:pfe_calc
 
@@ -293,10 +294,10 @@ Emissions Calculator. The following ratios are applied to CARB-reported PM emiss
 |         1.360178 |            1.224161 |  0.008263 |  2.0366 | 0.0034  |
 #+CAPTION: Ratios of Biomass to GHG emissions from the Piled Fuels Emissions Calculator. \label{tab:pfe_calc}
 
-- To estimate GHG emissions from *wildfire* and *slash burning*, we In addition, the
+- To estimate GHG emissions from *wildfire* and *slash burning*, we utilize
+estimates provided by the the
 [[[[http://www.arb.ca.gov/cc/inventory/archive/tables/net_co2_flux_2007-11-19.pdf]]][CARB
-greenhouse gas emissions inventory]] estimates emissions from
-wildfire and slash burning(<- peter, how is this different to pile burns?) up through 2004 (Table ref:arb_ghg_2004) in MMT CO2e.
+greenhouse gas emissions inventory]] for years between 1994 through 2004 (Table ref:arb_ghg_2004).
 #+NAME: arb_ghg_2004
 #+BEGIN_SRC sqlite :db fcat_biomass.sqlite :colnames yes :exports results
 select sc_cat as "Source Category", avg(mmtco2e) as "Average annual emissions 1994-2004 MMTCO_2e" from arb_co2 where sc_cat in ('Forest and rangeland fires', 'Timber harvest slash')  group by sc_cat;
@@ -309,9 +310,9 @@ select sc_cat as "Source Category", avg(mmtco2e) as "Average annual emissions 19
 | Timber harvest slash       |                           0.155266666666667 |
 
 ** Estimating Total Emissions from Biomass Burning
-To arrive at an estimate of total CO2 equivalent (CO2e) emissions in 2015 from burning of forest
+To arrive at an estimate of total CO2 equivalent (CO2e) emissions in 2015, //from burning of forest
 management residuals using published CARB
-estimates, we combine the CO2 emissions reported for 2004 ///in the
+estimates,// we combine the CO2 emissions reported for 2004 ///in the
 LULUC <-- where is this from??? Biodegradable Carbon Emissions and Sinks/// with black carbon
 emissions extrapolated from the CARB Criteria Air Pollutant Emissions
 inventory estimates. The time discrepancy between the 2004 and 2015 is
