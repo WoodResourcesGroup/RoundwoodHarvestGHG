@@ -347,16 +347,17 @@ inventory published by CARB. Remove?//
 * Estimating Emissions Impact from Utilization of Harvested Wood
 Wood harvested from California's forests are utilized in a variety of construction,
 landscaping, and consumer products. During the manufacture of these products, this wood is fractionated 
-through a multi-stage process of harvesting, processing, and utilization to reside in several residual biomass fates (below) for which the time horizon of carbon return to the atmosphere varies widely. 
+through a multi-stage process of harvesting, processing, and utilization to reside in several residual biomass fates (below). 
+These biomass fates have widely variable time horizons for carbon return to the atmosphere. 
 
-+ Logging Residuals :: Tops, limbs, and sub-merchantable material produced from harvest activities in the woods
-+ Processing (Mill) Residuals :: Sawdust, shavings, bark, and off cuts from primary and secondary manufacturing.
-+ Construction Debris :: Fraction of wood used in construction or  finished products that are not integratrated into its final form.
-+ Demolition :: Wood used in construction that has reached the end of its useful life.
++ Logging Residuals :: Tops, limbs, and sub-merchantable material produced from harvest activities in the woods. These residuals may be left on site to naturally decompose or be combusted through controlled pile burning or wildfire.
++ Processing (Mill) Residuals :: Sawdust, shavings, bark, and off cuts from primary and secondary manufacturing. These residuals may be directed towards alternative product streams (i.e. wood pellet, wood chip, power and heat generation) or sent to a landfill.
++ Construction Debris :: Fraction of wood used in construction or finished products that are not integratrated into its final form. These residuals are most commonly sent to a landfill.
++ Demolition :: Wood used in construction that has reached the end of its useful life. These residuals are most commonly sent to a landfill.
 
-Each category has multiple potential fates which can greatly influence the net emissions impact attributed to the initial forest management activity. While wood products used in construction or finished products may sequester carbon in a stable environment for a long period, residues sent to landfills or left in the woods as slash emit climate forcing gasses. These wood residues may be directed towards alternative product streams (i.e., chip, power and heat generation) with controlled combustion //peter - I changed the  meaning here//. The fate of each of these pools is determined by a highly dynamic political and economic system. To understand how policy decisions will impact the fate and subsequent climate impact of harvested wood products, a detailed process model is necessary. ref:wood_fates
+Each category has multiple potential fates which can greatly influence the net emissions impact attributed to the initial forest management activity. While wood products used in construction or finished products may sequester carbon in a stable environment for a long period, residues sent to landfills or left in the woods as slash emit climate forcing gasses. Some of these wood residues may be further directed towards alternative product streams (i.e., chip, power and heat generation) with controlled combustion, but ultimately the fate of each of these pools is determined by a highly dynamic political and economic system. To understand how policy decisions will impact the fate and subsequent climate impact of harvested wood products, a detailed process model tracking the source and volume of harvested wood utilization is necessary. Figure ref:wood_fates
 
-# [[https://www.lucidchart.com/publicSegments/view/52a1774e-7722-4ebf-8e1a-e8fc6837bfee/image.png]]
+# [[https://www.lucidchart.com/publicSegments/view/52a1774e-7722-4ebf-8e1a-e8fc6837bfee/image.png]] 
 
 ** Disposition of Harvested Wood in California.
 To provide a rough estimate of the fate of annually harvested roundwood material, we apply what we know about milling efficiency improvements, logging utilization rates, and construction use efficiency to historical production volumes. 
