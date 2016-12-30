@@ -541,12 +541,16 @@ The following Table ref:tab:me_and_lr presents ten year average estimates of log
  |          2003 |        2013 | 266.193 | 5.76584 | 126.488 | 139.705 | 20.9558 |
  |          2004 |        2014 | 262.901 | 6.99142 |  125.34 | 137.561 | 20.6341 |
 
-** Emissions from un-utilized logging residues
+** Estimated Emissions from Harvested Wood in California
+*** Emissions from un-utilized logging residues
 
 From logging residuals not used in bioenergy, emmisions are produced
-from combustion or biological decomposition of the
-material over time. To calculate the ratio of burned to decompsed
-logging residues, I first calculate the total biomass volume of pile burned forest management residuals, then compare with total residues as reported by the TPO to find the difference. C02e emissions are then independly derived for both conversion streams of logging residuals. /// forremove  utilize the CARB estimate of annual PM2.5 emissions produced from
+from either combustion or biological decomposition of the
+material over time. To calculate the ratio of burned to decomposed
+logging residues, I first calculate the total biomass volume of pile burned forest
+management residuals, then compare with total residues as reported by the TPO to find the difference. 
+C02e emissions are then independly derived for both conversion streams of logging residuals. 
+/// forremove  utilize the CARB estimate of annual PM2.5 emissions produced from
 forest management with the Consume fire behavior model to extrapolate total 
 
 **** Estimate biomass from PM2.5: 
@@ -671,7 +675,7 @@ GWP_{CH_4} &= \text{Global warming potential of methane: 56}
 \end{align*}
 #+END_LaTeX
 
-** Emissions from non-commercial management residuals
+*** Emissions from non-commercial management residuals
 
 # Residues from non-commercial management activities are assumed to
 # be small in comparison with commercial logging residues. In addition, there is
