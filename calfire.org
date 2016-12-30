@@ -106,7 +106,6 @@ current forest management activities to reduce emissions.
   
 * Estimating CO2 Equivalent Emissions from In-Forest Biomass Combustion
 
-
 The California Air Resources Board (CARB) reports on
 emissions from in-forest biomass combustion with current Greenhouse Gas (GHG) and Criteria Air
 Pollutant (CAP) 
@@ -119,7 +118,6 @@ CAP report captures SLCP emissions from wildfire
 (src_python{return(0.66*122)} MMTCO2e) and prescribed fire
 (src_python{return(0.03*122)} MMTCO2e) from which black carbon emissions may be estimated. However, no reference in the CAP report is made to the source of these
 SLCP estimates. When viewed in aggregate, a comprehensive reporting of total climate impact from anthropogenic burning may be estimated. 
-
 
 #+CAPTION: Data sources available from CARB for estimating GHG and SLCP emissions from forest management. \label{fig:burn_diag}
 #+ATTR_LATEX: :width 0.75\textwidth
@@ -348,14 +346,15 @@ inventory published by CARB. Remove?//
 Wood harvested from California's forests are utilized in a variety of construction,
 landscaping, and consumer products. During the manufacture of these products, this wood is fractionated 
 through a multi-stage process of harvesting, processing, and utilization to reside in several residual biomass fates (below). 
-These biomass fates have widely variable time horizons for carbon return to the atmosphere. 
 
 + Logging Residuals :: Tops, limbs, and sub-merchantable material produced from harvest activities in the woods. These residuals may be left on site to naturally decompose or be combusted through controlled pile burning or wildfire.
 + Processing (Mill) Residuals :: Sawdust, shavings, bark, and off cuts from primary and secondary manufacturing. These residuals may be directed towards alternative product streams (i.e. wood pellet, wood chip, power and heat generation) or sent to a landfill.
 + Construction Debris :: Fraction of wood used in construction or finished products that are not integratrated into its final form. These residuals are most commonly sent to a landfill.
 + Demolition :: Wood used in construction that has reached the end of its useful life. These residuals are most commonly sent to a landfill.
 
-Each category has multiple potential fates which can greatly influence the net emissions impact attributed to the initial forest management activity. While wood products used in construction, finished products, or other stable environments may sequester carbon for a long period, residues sent to landfills or left in the woods as slash emit climate forcing gasses. Some of these wood residues may be further directed towards alternative uses under controlled combustion (i.e., pellet production, power and heat generation), but ultimately the fate of these pools is determined by a highly dynamic political and economic system. To understand how policy decisions will impact the fate and subsequent climate impact of harvested wood products, a detailed process model is necessary to track the distribution of harvested wood material. Figure ref:wood_fates
+These biomass fates have widely variable time horizons for carbon return to the atmosphere and can greatly influence the net emissions impact attributed to the initial forest management activity. While wood products used in construction, finished products, or other stable environments may sequester carbon for a long period, residues sent to landfills or left in the woods as slash emit climate forcing gasses to the atmosphere. Some of these wood residues may be redirected towards alternative controlled combustion applications (i.e., pellet production, power and heat generation)to avoid emissions. To assess the full emissions impact of harvested wood in California, we estimate total emissions from wood residues and displacement impact of wood product applications. 
+
+Ultimately the fate of these pools are determined by a highly dynamic political and economic system. To understand how policy decisions will impact the fate and subsequent climate impact of harvested wood products, a detailed process model is necessary to track the distribution of harvested wood material. Figure ref:wood_fates
 
 # [[https://www.lucidchart.com/publicSegments/view/52a1774e-7722-4ebf-8e1a-e8fc6837bfee/image.png]] 
 
@@ -541,19 +540,19 @@ The following Table ref:tab:me_and_lr presents ten year average estimates of log
  |          2003 |        2013 | 266.193 | 5.76584 | 126.488 | 139.705 | 20.9558 |
  |          2004 |        2014 | 262.901 | 6.99142 |  125.34 | 137.561 | 20.6341 |
 
-** Estimated Emissions from Harvested Wood in California
-*** Emissions from un-utilized logging residues
+** Emissions from un-utilized logging residues
 
 From logging residuals not used in bioenergy, emmisions are produced
 from either combustion or biological decomposition of the
 material over time. To calculate the ratio of burned to decomposed
 logging residues, I first calculate the total biomass volume of pile burned forest
-management residuals, then compare with total residues as reported by the TPO to find the difference. 
-C02e emissions are then independly derived for both conversion streams of logging residuals. 
-/// forremove  utilize the CARB estimate of annual PM2.5 emissions produced from
+management residuals, then compare with total biomass volume of residues as reported by the Timber Products Output (TPO) database. 
+C02e emissions are then independently derived for both conversion streams of logging residuals. 
+/// To establish the fraction of logging residue that is left to decompose, I 
+utilize the CARB estimate of annual PM2.5 emissions produced from
 forest management with the Consume fire behavior model to extrapolate total 
 
-**** Estimate biomass from PM2.5: 
+*** Estimate biomass from PM2.5: 
 
 To estimate total biomass from PM2.5, I assume 90% consumption of biomass in piles and use the relationship of pile tonnage to PM emissions calculated using the [[http://depts.washington.edu/nwfire/piles/][Piled Fuels Biomass and Emissions Calculator]] provided by the Washington State Department of Natural Resources. This calculator is based on the [[http://www.fs.fed.us/pnw/fera/research/smoke/consume/index.shtml][Consume]] fire behavior model published by the US Forest Service. The ratio of PM2.5 to unburned tonnage of biomass used below is src_python{return(0.008236/1.360178)}. Ratio of PM2.5 to consumed fuel is src_python{return(0.008236/1.224161)}.
 
@@ -637,7 +636,7 @@ return(tabulate([list(row) for row in pmAnn[['YEAR','EICSOUN','co2_t','ch4_co2e'
 | 2015 | FOREST MANAGEMENT | 1.35081e+06 |      127424 |     248536 |             1.72677e+06 |
 
 
-**** Emissions from decomposition of un-utilized forest management residuals:
+*** Emissions from decomposition of un-utilized forest management residuals:
 
 Un-utilized residual biomass not consumed in pile burns decomposes over
 time resulting in methane and carbon dioxide //inconsistent// emissions. To provide a
@@ -675,7 +674,7 @@ GWP_{CH_4} &= \text{Global warming potential of methane: 56}
 \end{align*}
 #+END_LaTeX
 
-*** Emissions from non-commercial management residuals
+** Emissions from non-commercial management residuals
 
 # Residues from non-commercial management activities are assumed to
 # be small in comparison with commercial logging residues. In addition, there is
@@ -775,7 +774,7 @@ of dry wood used. While studies ranged substantially around the average, the
 authors found that the majority of published displacement factors ranged
 between 1 and 3 tC/t dry wood. 
 
-** Displacement Factors Applied to Timber Products Output
+//** Displacement Factors Applied to Timber Products Output
 
 To evaluate the climate impact of harvested wood in California, I used
 harvested roundwood estimates from the Timber Products Output (TPO)
