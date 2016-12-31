@@ -359,10 +359,9 @@ Ultimately the fate of these pools are determined by a highly dynamic political 
 # [[https://www.lucidchart.com/publicSegments/view/52a1774e-7722-4ebf-8e1a-e8fc6837bfee/image.png]] 
 
 ** Disposition of Harvested Wood in California.
-To provide a rough estimate of the fate of annually harvested roundwood material, we estimate volumes of Logging, Processing, and Construction 
-residuals in California. To estimate current values, we apply known milling efficiency 
+To provide a rough estimate of the fate of annually harvested roundwood material, we estimate volumes of wood biomass residing in Logging, Processing, and Construction 
+residuals. To estimate current values, we apply known milling efficiency 
 improvements, logging utilization rates, and construction use efficiency to historical production volumes. 
-
 *** Logging Residues
  According to citet:Morgan, logging residues produced from sawlog harvest can be estimated using a factor of 0.0302 (+/-.0123 @95%CI) times the total cubic sawlog volume delivered to a mill. citet:Simmons2014 found that logging utilization has decreased in Idaho from 1990 to 2011 by 72%. Unfortunately, we cannot say how logging residue production has changed over time in California. For the purpose of this analysis, we will assume that similar changes have occurred in California timber harvesting. 
 
@@ -540,9 +539,9 @@ The following Table ref:tab:me_and_lr presents ten year average estimates of log
  |          2003 |        2013 | 266.193 | 5.76584 | 126.488 | 139.705 | 20.9558 |
  |          2004 |        2014 | 262.901 | 6.99142 |  125.34 | 137.561 | 20.6341 |
 
-** Emissions from un-utilized logging residues
+** Emissions from Un-Utilized Residues
 
-From logging residuals not used in bioenergy, emmisions are produced
+For logging residuals not used in bioenergy, emmisions are produced
 from either combustion or biological decomposition of the
 material over time. To calculate the ratio of burned to decomposed
 logging residues, I first calculate the total biomass volume of pile burned forest
