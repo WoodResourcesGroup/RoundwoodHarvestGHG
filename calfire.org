@@ -717,8 +717,8 @@ feet.
    
 ** Avoided Emissions from Wood Product Displacement Factors
 
-For each product application, wood may be substituted by a range of other materials. For example, in
-residential construction, precast concrete and structural steel framing
+For each product application, wood may be substituted by a range of other materials. In
+residential construction for example, precast concrete and structural steel framing
 are competitive alternatives to wood. This choice of materials has a profound impact on \ac{GHG} emissions in the
 construction sector and is expressed as a displacement
 factor (DF). A displacement factor quantifies the amount of emissions
@@ -751,7 +751,7 @@ of dry wood used. While studies ranged substantially around the average, the
 authors found that the majority of published displacement factors ranged
 between 1 and 3 tC/t dry wood. 
 
-//** Displacement Factors Applied to Timber Products Output
+*** Applying Displacement Factors to California Wood Harvest Volume
 
 To evaluate the climate impact of harvested wood in California, I used
 harvested roundwood estimates from the Timber Products Output (TPO)
