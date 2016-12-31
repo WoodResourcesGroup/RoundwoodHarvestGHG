@@ -121,6 +121,14 @@ current forest management activities to reduce emissions.
 
 
 The \ac{CARB} reports on emissions from in-forest biomass combustion with current \ac{GHG} and \cap{CAP} [[http://www.arb.ca.gov/ei/ei.htm][emissions inventories]]. Both are necessary resources for establishing aggregate annual climate-forcing emissions (Figure ref:fig:burn_diag). 
+The GHG inventory captures
+gasses with radiative forcing properties including CO2 and CH4, but does not capture elemental
+carbon or black carbon (BC) emissions which also have strong radiative
+forcing properties (Table ref:tab:bc_gwp). The citet:CaliforniaAirResourcesBoard2015,CaliforniaAirResourcesBoard2016
+CAP report captures SLCP emissions from wildfire
+(src_python{return(0.66*122)} MMTCO2e) and prescribed fire
+(src_python{return(0.03*122)} MMTCO2e) from which black carbon emissions may be estimated. However, no reference in the CAP report is made to the source of these
+SLCP estimates. When viewed in aggregate, a comprehensive reporting of total climate impact from anthropogenic burning may be estimated. 
 
 
 #+CAPTION: Data sources available from CARB for estimating \ac{GHG} and \ac{SLCP} emissions from forest management. \label{fig:burn_diag}
@@ -160,7 +168,13 @@ SLCP estimates. When viewed in aggregate, a comprehensive estimate of total clim
 
 ** Estimating /Black Carbon/ Emissions from Biomass Burning
 
+
 \acf{BC} is not directly reported by statewide emissions summaries.\ac{BC} is a fraction of the \ac{TC) component measured in particulate matter (PM 2.5). \ac{PM} emissions are published annually by \ac{CARB} ([[http://www.arb.ca.gov/ei/emissiondata.htm][Criteria air pollutant (CAP) emissions estimates]]). 
+By using the 2015 CAP emissions estimates shown in Table ref:arb_pm_ann with estimated ratios of 
+smoldering to flaming combustion for hand/machine piled burns, prescribed 
+natural fire and wildfire from citet:Ward1989, Black Carbon emissions
+can be calculated from PM
+2.5 with Eq. eqref:eq-bc
 
 
 #+NAME: tab:arb_pm_ann
@@ -184,6 +198,7 @@ printf("%.2f", pm2_5*365) as 'PM 2.5 (t y^{-1})' from cpe_2015 WHERE eicsoun in 
 | WILDLAND FIRE USE (WFU)         | Prescribed natural fire |           6802.43 |
 
 #+CAPTION: Emissions of PM 2.5 in 2015 as reported by CARB \label{tab:arb_pm_ann}
+
 
 Using the 2015 \ac{CAP} emissions estimates shown in Table ref:arb_pm_ann with estimated ratios of smoldering to flaming combustion for hand/machine piled burns, prescribed natural fire and wildfire from citet:Ward1989, \ac{BC} emissions can be estimated from PM 2.5 using equation eqref:eq-bc
 
@@ -211,13 +226,13 @@ The ratio of smoldering to flaming combustion behavior for each biomass burning 
 ratio. To arrive at a rough estimate of \ac{BC} emissions based on PM2.5, ratios from  citet:Ward1989 and citet:Jenk1996 ratios in Table ref:tab:bc_pm are used herein.
 #+NAME:   tab:bc_pm
 #+BEGIN_SRC sqlite :db fcat_biomass.sqlite :colnames yes :exports results
-select source as 'Source', "Unnamed 0" as 'BC_f t^{-1} PM', tc_f_cv as 'TC_f^{Cv} t^{-1} PM', ec_f_cv as 'BC_f^{Cv} t^{-1} TC', "Unnamed 1" as 'BC_s t^{-1} PM 2.5', tc_s_cv as 'TC_s^{Cv} t^{-1} PM',ec_s_cv as 'BC_s^{Cv} t^{-1} TC' from ec_ratios;
+select source as 'Source', "Unnamed 0" as 'BC_f t^{-1} PM', tc_f_cv as 'TC_f^{Cv} t^{-1} PM', ec_f_cv as 'BC_f^{Cv} t^{-1} TC', "Unnamed 1" as 'BC_s t^{-1} PM2.5', tc_s_cv as 'TC_s^{Cv} t^{-1} PM',ec_s_cv as 'BC_s^{Cv} t^{-1} TC' from ec_ratios;
 
 #+END_SRC
-#+CAPTION: Factors used for calculating Black Carbon (BC) emissions from the three primary combustion sources.\ac{BC}is a fraction of Total Carbon (TC) which is a fraction of total PM 2.5. Coefficients of variation (C_v) are reported here as well. \label{tab:bc_pm}
+#+CAPTION: Factors used for calculating \ac{BC} emissions from the three primary combustion sources.\ac{BC}is a fraction of Total Carbon (TC) which is a fraction of total PM 2.5. Coefficients of variation (C_v) are reported here as well. \label{tab:bc_pm}
 #+RESULTS: tab:bc_pm
 
-| Source     | BC_f t^{-1} PM | TC_f^{Cv} t^{-1} PM | BC_f^{Cv} t^{-1} TC | BC_s t^{-1} PM 2.5 | TC_s^{Cv} t^{-1} PM | BC_s^{Cv} t^{-1} TC |
+| Source     | BC_f t^{-1} PM | TC_f^{Cv} t^{-1} PM | BC_f^{Cv} t^{-1} TC | BC_s t^{-1} PM2.5 | TC_s^{Cv} t^{-1} PM | BC_s^{Cv} t^{-1} TC |
 |------------+----------------+---------------------+---------------------+--------------------+---------------------+---------------------|
 | Pile Burn  |       0.046904 |                0.09 |                0.45 |            0.01624 |                0.01 |                0.49 |
 | Prescribed |     0.08016309 |              0.0733 |              0.5833 |           0.020944 |                0.08 |                0.29 |
@@ -230,7 +245,7 @@ We then estimate annual \ac{BC} emissions (Table ref:tab:carb_bc).
 
 #+NAME: tab:carb_bc
 #+BEGIN_SRC sqlite :db fcat_biomass.sqlite :colnames yes :exports results
-select eicsoun as Source, printf("%.2f", pm2_5*365) as 'PM 2.5 (t y^{-1})', 
+select eicsoun as Source, printf("%.2f", pm2_5*365) as 'PM2.5 (t y^{-1})', 
 printf("%.2f", case when eicsoun='ALL VEGETATION' then pm2_5*365 * (.05870124 + .0228641)
 when eicsoun = 'FOREST MANAGEMENT' then pm2_5*365 * (.046904 + .01624)
 when eicsoun = 'WILDLAND FIRE USE (WFU)' then pm2_5*365 * (.08016309 + .020944) end) as 'BC (t y^{-1})', 
@@ -252,12 +267,14 @@ when eicsoun = 'WILDLAND FIRE USE (WFU)' then pm2_5*365 * (.08016309 + .020944)*
 
 
 
+
 Given the variance in \ac{BC} production from smoldering (\pm 49\%) and flaming (\pm 45\%) phases (Table ref:tab:bc_pm), actual emissions of \ac{BC}  may vary substantially depending on combustion. In addtion to these estimates cite:Chow2010 provides an alternative source for estimates of \ac{BC} and \ac{OC} emissions in the state in 2006. Further work is necessary to evaluate the impacts of \ac{OC} on the net \ac{CO2e} emissions from pile burning. cite:Pokhrel2016 estimated the absorptive properties of \ac{OC} to be 1.5 - 2.5 that of \ac{BC}. cite:Chow2010 estimated that on 2006 29,530 Mt of \ac{OC} was emitted from wildfires. 
 
 # [[https://github.com/peteWT/fcat_biomass/blob/master/graphics/bc_prob_gwp.png?raw=true]]
 
 ** Estimating \ac{GHG} Emissions from Biomass Burning
    The \ac{CARB} GHG emissions inventory resolved to combustion source (piles, prescribed, etc.) for forests and rangelands has not been updated since 2004. To provide a comparable estimate of GHG emissions from pile burning we use the ratio of \ac{PM} to the net \ac{CO2e} emissions from all \ac{GHG} species produced from the Piled Fuels Eissions Calculator (CONSUME model equations) sources two approaches are taken. As \ac{PM} is reported in the \ac{CAP} for pile burning we can apply this ratio to estimate \ac{GHG} emissions for the same time period.
+
 
 To estimate \ac{GHG} emissions from *pile burning*, we use the ratio of
 PM 2.5 to CO2 and to CH4 from the Piled Fuels Emissions Calculator. These ratios are then applied to CARB-reported PM emissions to estimate \ac{GHG} emissions (Table ref:tab:pfe_calc).
@@ -316,22 +333,31 @@ estimation. The use of the COMSUME moel to predict pile buring emissions is like
 * Estimating Emissions Impact from Utilization of Harvested Wood
 Wood harvested from California's forests are utilized in a variety of construction,
 landscaping, and consumer products. During the manufacture of these products, this wood is fractionated 
-through a multi-stage process of harvesting, processing, and utilization to reside in several residual biomass fates (below) for which the time horizon of carbon return to the atmosphere varies widely. 
+through a multi-stage process of harvesting, processing, and utilization to reside in several residual biomass fates (below). 
 
-+ Logging Residuals :: Tops, limbs, and sub-merchantable material produced from harvest activities in the woods
-+ Processing (Mill) Residuals :: Sawdust, shavings, bark, and off cuts from primary and secondary manufacturing.
-+ Construction Debris :: Fraction of wood used in construction or  finished products that are not integratrated into its final form.
-+ Demolition :: Wood used in construction that has reached the end of its useful life.
++ Logging Residuals :: Tops, limbs, and sub-merchantable material produced from harvest activities in the woods. These residuals may be left on site to naturally decompose or be combusted through controlled pile burning or wildfire.
++ Processing (Mill) Residuals :: Sawdust, shavings, bark, and off cuts from primary and secondary manufacturing. These residuals may be directed towards alternative product streams (i.e. wood pellet, wood chip, power and heat generation) or sent to a landfill.
++ Construction Debris :: Fraction of wood used in construction or finished products that are not integratrated into its final form. These residuals are most commonly sent to a landfill.
++ Demolition :: Wood used in construction that has reached the end of its useful life. These residuals are most commonly sent to a landfill.
 
+////
+These biomass fates have widely variable time horizons for carbon return to the atmosphere and can greatly influence the net emissions impact attributed to the initial forest management activity. While wood products used in construction, finished products, or other stable environments may sequester carbon for a long period, residues sent to landfills or left in the woods as slash emit climate forcing gasses to the atmosphere. Some of these wood residues may be redirected towards alternative controlled combustion applications (i.e., pellet production, power and heat generation)to avoid emissions. To assess the full emissions impact of harvested wood in California, we estimate total emissions from wood residues and displacement impact of wood product applications. 
+//////
 Each category has multiple potential fates which can greatly influence the net emissions impact attributed to the initial forest management activity. While wood products used in construction or finished products may sequester carbon in a stable environment for a long period, residues sent to landfills or left in the woods as slash emit climate forcing gasses. These wood residues may be directed towards alternative product streams (i.e., engineered wood products, power and heat generation) with controlled combustion. The fate of each of these pools is determined by a highly dynamic political and economic system. To understand how policy decisions will impact the fate and subsequent climate impact of harvested wood products, a detailed process model is necessary. ref:wood_fates
+////////
 
-# [[https://www.lucidchart.com/publicSegments/view/52a1774e-7722-4ebf-8e1a-e8fc6837bfee/image.png]]
+Ultimately the fate of these pools are determined by a highly dynamic political and economic system. To understand how policy decisions will impact the fate and subsequent climate impact of harvested wood products, a detailed process model is necessary to track the distribution of harvested wood material. Figure ref:wood_fates
+
+# [[https://www.lucidchart.com/publicSegments/view/52a1774e-7722-4ebf-8e1a-e8fc6837bfee/image.png]] 
 
 ** Disposition of Harvested Wood in California.
-To provide a rough estimate of the fate of annually harvested roundwood material, we apply what we know about milling efficiency improvements, logging utilization rates, and construction use efficiency to historical production volumes. 
-
+To provide a rough estimate of the fate of annually harvested roundwood material, we estimate the volume of wood biomass residing in Logging, Processing, and Construction 
+residuals. To estimate current values, we apply known milling efficiency 
+improvements, logging utilization rates, and construction use efficiency to historical production volumes. 
 *** Logging Residues
- According to citet:Morgan, logging residues produced from sawlog harvest can be estimated using a factor of 0.0302 (+/-.0123 @95%CI) times the total cubic sawlog volume delivered to a mill. Unfortunately, we cannot say how logging residue production has changed over time in California.  citet:Simmons2014 found that logging utilization has decreased in Idaho from 1990 to 2011 by 72%. For the purpose of this analysis, we will assume that similar changes have occurred in California timber harvesting. We then estimate a logging residue production factor for years before 1990 based on the following equation. We assume 1990 residue ratios for all years prior.
+ According to citet:Morgan, logging residues produced from sawlog harvest can be estimated using a factor of 0.0302 (+/-.0123 @95%CI) times the total cubic sawlog volume delivered to a mill. citet:Simmons2014 found that logging utilization has decreased in Idaho from 1990 to 2011 by 72%. Unfortunately, we cannot say how logging residue production has changed over time in California. For the purpose of this analysis, we will assume that similar changes have occurred in California timber harvesting. 
+
+ We estimate logging residue production factor for years before 1990 based on the following equation. We assume 1990 residue ratios for all years prior.
 
  #+BEGIN_LaTeX
 
@@ -344,14 +370,14 @@ To provide a rough estimate of the fate of annually harvested roundwood material
  \end{align*}
  #+END_LaTeX
 
- For logging residue production factors between 1990 and 2004, we calculate logging residues as a function of the percent change in logging residual ratios estimated for Idaho citet:Simmons2014 applied to the known logging residual ratio reported by citet:Morgan. To reflect the uncertainty in the estimate provided by citet:Morgan, we calculate the logging residual using a randomly selected value from a normal probability distribution defined by the estimate and upper and lower bounds of the 95% confidence interval provided:
+ For logging residue production factors between 1990 and 2004, we calculate logging residues by adjusting the logging residual ratio reported by citet:Morgan with the percent change in logging residual ratios estimated for Idaho by citet:Simmons2014. To reflect the uncertainty in the estimate provided by citet:Morgan, we calculate the logging residual using a randomly selected value from a normal probability distribution defined by the estimate and upper and lower bounds of the 95% confidence interval provided:
 
  #+BEGIN_LaTeX
 
  \begin{align*}
  V\llap{--}lr_{x} = V\llap{--}rw_{x}\left(\eta_{04}+ \left(\eta_{04}\left(\left(Y_1-x\right)\frac{\eta_\Delta}{Y_\Delta}\right)\right)\right)\\
  \text{Where:}\\
- V\llap{--}rw_{x} = \text{Rundwood volume harvested in year }x\\
+ V\llap{--}rw_{x} = \text{Roundwood volume harvested in year }x\\
  \eta_{04} = \mathcal{N}(0.0302,0.0123) \text{ ratio of logging residues to roundwood harvested in CA, 2004}\\
  Y_1 = 2004 \text{ (year for which logging residual estimate available for CA)} \\
  x = \text{year for which logging residues are calculated}\\
@@ -408,9 +434,9 @@ For years after 1970, milling efficiency for year $x$ is calculated as:
  #+END_LaTeX
 
 *** Construction Residues
-To estimate annualized construction waste material, we use ratios of finished wood products to construction debris and demolition debris referenced in citet:McKeever2004. This data from citeauthor:McKeever2004 is sparse and should be considered unreliable for years other than those for which it is reported.  Construction debris was estimated in 2002 as approximately 15% of the total wood used in construction. Demolition debris from wood produced annually from wood grown on California forestland is outside of the scope of this report.
-
-Table ref:tab:me_and_lr presents ten year average estimates of logging and milling residuals, finished lumber, and construction debris based on Board of Equalization (BOE) roundwood harvest volumes. // this is kinda random? no mention of BOE data earlier?//
+To estimate annualized construction waste material, we apply the ratio of construction and demolition debris to finished wood products (citet:McKeever2004) to Board of Equalization (BOE) citet:??? roundwood harvest volumes. In 2002, construction debris was estimated as approximately 15% of the total wood used in construction. Of note is that the data from citeauthor:McKeever2004 is sparse and should be considered unreliable for years other than those for which it is reported. Furthermore, distinguishing demolition debris from wood produced annually from wood grown on California forestland is outside of the scope of this report. 
+*** Harvested Wood Residue Summary
+The following Table ref:tab:me_and_lr presents ten year average estimates of logging and milling residuals, finished lumber, and construction debris based on Board of Equalization (BOE) roundwood harvest volumes.
 
 #+NAME: tab:me_and_lr
  #+BEGIN_SRC python :results raw :exports results
@@ -505,18 +531,20 @@ Table ref:tab:me_and_lr presents ten year average estimates of logging and milli
  |          2003 |        2013 | 266.193 | 5.76584 | 126.488 | 139.705 | 20.9558 |
  |          2004 |        2014 | 262.901 | 6.99142 |  125.34 | 137.561 | 20.6341 |
 
-** Emissions from un-utilized logging residues
+
+** Emissions from Un-Utilized Residues
 label:sec:boe_lr_emiss
 
-From logging residuals not used in bioenergy, emmisions are produced
-from combustion or biological decomposition of the
-material over time. To calculate the ratio of burned to decompsed
-logging residues, I first calculate the total biomass volume of pile burned forest management residuals, then compare with total residues as reported by the TPO to find the difference. C02e emissions are then independly derived for both conversion streams of logging residuals. /// forremove  utilize the CARB estimate of annual PM2.5 emissions produced from
-forest management with the Consume fire behavior model to extrapolate total 
+Residuals not utilized in bioenergy applications or sent to a landfill eventually 
+produce emmisions through combustion or biological decomposition of the
+material over time. Most of these residues originate from logging activity.  
+To calculate CO2e emissions from un-utilized residues, I first estimate the total volume of biomass 
+pile burned in forests using the CARB estimate of PM2.5. Then, by comparing total volume of pile burned and bioenergy diverted biomass against the 
+total biomass volume from the Timber Products Output (TPO) database, I resolve the remaining biomass volume as emitted through decomposition.  
 
-**** Estimate biomass from PM2.5: 
+*** Estimate Pile-Burned Biomass Emissions from PM2.5: 
 
-To estimate total biomass from PM2.5, I assume 90% consumption of biomass in piles and use the relationship of pile tonnage to PM emissions calculated using the [[http://depts.washington.edu/nwfire/piles/][Piled Fuels Biomass and Emissions Calculator]] provided by the Washington State Department of Natural Resources. This calculator is based on the [[http://www.fs.fed.us/pnw/fera/research/smoke/consume/index.shtml][Consume]] fire behavior model published by the US Forest Service. The ratio of PM2.5 to unburned tonnage of biomass used below is src_python{return(0.008236/1.360178)}. Ratio of PM2.5 to consumed fuel is src_python{return(0.008236/1.224161)}.
+To estimate total biomass from PM2.5, I assume 90% consumption of biomass in piles and use the relationship of pile tonnage to PM emissions as calculated from the [[http://depts.washington.edu/nwfire/piles/][Piled Fuels Biomass and Emissions Calculator]] provided by the Washington State Department of Natural Resources. This calculator is based on the [[http://www.fs.fed.us/pnw/fera/research/smoke/consume/index.shtml][Consume]] fire behavior model published by the US Forest Service. The ratio of PM2.5 to unburned tonnage of biomass used below is src_python{return(0.008236/1.360178)}. Ratio of PM2.5 to consumed fuel is src_python{return(0.008236/1.224161)}.
 
 
 #+NAME:   tab:cap_pmbiomass2015
@@ -598,7 +626,7 @@ return(tabulate([list(row) for row in pmAnn[['YEAR','EICSOUN','co2_t','ch4_co2e'
 | 2015 | FOREST MANAGEMENT | 1.35081e+06 |      127424 |     248536 |             1.72677e+06 |
 
 
-**** Emissions from decomposition of un-utilized forest management residuals:
+*** Emissions from Decomposition of un-utilized forest management residuals:
 
 Un-utilized residual biomass not consumed in pile burns decomposes over
 time resulting in methane and carbon dioxide //inconsistent// emissions. To provide a
@@ -636,7 +664,7 @@ GWP_{CH_4} &= \text{Global warming potential of methane: 56}
 \end{align*}
 #+END_LaTeX
 
-** Emissions from non-commercial management residuals
+** Emissions of Residuals from non-commercial managenent Activity
 
 # Residues from non-commercial management activities are assumed to
 # be small in comparison with commercial logging residues. In addition, there is
@@ -736,7 +764,7 @@ of dry wood used. While studies ranged substantially around the average, the
 authors found that the majority of published displacement factors ranged
 between 1 and 3 tC/t dry wood. 
 
-** Displacement Factors Applied to Timber Products Output
+//** Displacement Factors Applied to Timber Products Output
 
 To evaluate the climate impact of harvested wood in California, I used
 harvested roundwood estimates from the Timber Products Output (TPO)
