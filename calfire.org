@@ -120,7 +120,7 @@ current forest management activities to reduce emissions.
 * Estimating CO2 Equivalent Emissions from In-Forest Biomass Combustion
 
 
-The \ac{CARB} reports on emissions from in-forest biomass combustion with current \ac{GHG} and \cap{CAP} [[http://www.arb.ca.gov/ei/ei.htm][emissions inventories]]. Both are necessary resources for establishing aggregate annual climate-forcing emissions (Figure ref:fig:burn_diag). 
+The \ac{CARB} reports on emissions from in-forest biomass combustion with current \ac{GHG} and \cap{CAP} [[http://www.arb.ca.gov/ei/ei.htm][emissions inventories]]. Both are necessary resources for establishing aggregate annual climate-forcing emissions. 
 The GHG inventory captures
 gasses with radiative forcing properties including CO2 and CH4, but does not capture elemental
 carbon or black carbon (BC) emissions which also have strong radiative
@@ -130,11 +130,6 @@ CAP report captures SLCP emissions from wildfire
 (src_python{return(0.03*122)} MMTCO2e) from which black carbon emissions may be estimated. However, no reference in the CAP report is made to the source of these
 SLCP estimates. When viewed in aggregate, a comprehensive reporting of total climate impact from anthropogenic burning may be estimated. 
 
-
-#+CAPTION: Data sources available from CARB for estimating \ac{GHG} and \ac{SLCP} emissions from forest management. \label{fig:burn_diag}
-#+ATTR_LATEX: :width 0.75\textwidth
-#+Results: fig:burn_diag
-[[./graphics/burning.pdf]]
 
 The \ac{GHG} inventory captures
 gasses with radiative forcing properties including CO2 and CH4, but does not capture elemental
@@ -341,7 +336,7 @@ through a multi-stage process of harvesting, processing, and utilization to resi
 
 These biomass fates have widely variable time horizons for carbon return to the atmosphere which can greatly influence the net emissions impact attributed to the initial forest management activity. While wood products used in construction, finished products, or other stable environments may sequester carbon for a long period, residues sent to landfills or left in the woods as slash emit climate forcing gasses to the atmosphere. Some of these wood residues may be redirected towards alternative controlled combustion applications (i.e., pellet production, power and heat generation)to avoid emissions. To assess the full emissions impact of harvested wood in California, we estimate total emissions from wood residues and displacement impact of wood product applications. 
 
-Ultimately the fate of these pools are determined by a highly dynamic political and economic system. To understand how policy decisions will impact the fate and subsequent climate impact of harvested wood products, a detailed process model is necessary to track the distribution of harvested wood material. Figure ref:wood_fates
+Ultimately the fate of these pools are determined by a highly dynamic political and economic system. To understand how policy decisions will impact the fate and subsequent climate impact of forest management, a detailed process model is necessary to track the distribution of harvested wood material. Figure ref:wood_fates
 
 # [[https://www.lucidchart.com/publicSegments/view/52a1774e-7722-4ebf-8e1a-e8fc6837bfee/image.png]] 
 
@@ -536,7 +531,7 @@ To calculate CO2e emissions from un-utilized residues, I first estimate the tota
 pile burned in forests using the CARB estimate of PM2.5. Then, by comparing total volume of pile burned and bioenergy diverted biomass against the 
 total biomass volume from the Timber Products Output (TPO) database, I resolve the remaining biomass volume as emitted through decomposition.  
 
-*** Estimate Pile-Burned Biomass Emissions from PM2.5: 
+*** Emissions from Pile Burns of Un-utilized Biomass Residuals: 
 
 To estimate total biomass from PM2.5, I assume 90% consumption of biomass in piles and use the relationship of pile tonnage to PM emissions as calculated from the [[http://depts.washington.edu/nwfire/piles/][Piled Fuels Biomass and Emissions Calculator]] provided by the Washington State Department of Natural Resources. This calculator is based on the [[http://www.fs.fed.us/pnw/fera/research/smoke/consume/index.shtml][Consume]] fire behavior model published by the US Forest Service. The ratio of PM2.5 to unburned tonnage of biomass used below is src_python{return(0.008236/1.360178)}. Ratio of PM2.5 to consumed fuel is src_python{return(0.008236/1.224161)}.
 
@@ -619,14 +614,10 @@ return(tabulate([list(row) for row in pmAnn[['YEAR','EICSOUN','co2_t','ch4_co2e'
 | 2012 | FOREST MANAGEMENT | 1.35002e+06 |      127349 |     248391 |             1.72576e+06 |
 | 2015 | FOREST MANAGEMENT | 1.35081e+06 |      127424 |     248536 |             1.72677e+06 |
 
+*** Emissions from Decomposition of Un-Utilized Forest Management Residuals:
 
-*** Emissions from Decomposition of un-utilized forest management residuals:
-
-Un-utilized residual biomass not consumed in pile burns decomposes over
-time resulting in methane and carbon dioxide //inconsistent// emissions. To provide a
-full picture of the emissions from residual material produced from
-commercial timber harvesting in California, we must account for decomposition 
-of unutilized logging residuals left on-site that are not burned. To establish
+Un-utilized residual biomass not consumed in pile burns decompose over
+time to result in methane and carbon dioxide emissions. To establish
  the fraction of logging residue that is left to
 decompose, residues burned and used in bioenergy are subtracted from the
 total reported by the TPO:
@@ -667,7 +658,7 @@ GWP_{CH_4} &= \text{Global warming potential of methane: 56}
 # activity on 
 # public lands in the National Forest System here.
 
-The Timber Products Output (TPO) in California does not report wood volume produced from
+The /as{TPO} database in California does not report wood volume produced from
 non-commercial management activities. This includes management
 activities such as pre-commercial thinning, sanitation thinning, and
 fuels reduction thinning. To estimate the volume of material produced
@@ -680,7 +671,9 @@ from these activities we use the following sources:
    applied to the FACTS attributes to identify only non-commercial
    management activities.
 
-**** Forest Service Activity Tracking System (FACTS)
+
+Forest Service Activity Tracking System (FACTS)
+
 
 Data from TPO does not account for forest management activities that do
 not result in commercial products (timber sales, biomass sales). The
