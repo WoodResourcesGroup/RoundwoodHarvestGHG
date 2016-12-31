@@ -159,7 +159,7 @@ When viewed in aggregate, a comprehensive reporting of total climate impact from
 ** Estimating /Black Carbon/ Emissions from Biomass Burning
 
 Black carbon (BC) is not directly reported by statewide emissions summaries. BC is a fraction of the Total 
-Carbon (TC) component measured in particulate matter (PM 2.5) emissions published annually by the CARB [[http://www.arb.ca.gov/ei/emissiondata.htm][Criteria air pollutant (CAP)
+Carbon (TC) component measured in particulate matter (PM2.5) emissions published annually by the CARB [[http://www.arb.ca.gov/ei/emissiondata.htm][Criteria air pollutant (CAP)
 emissions estimates]]. By using the 2015 CAP emissions estimates shown in Table ref:arb_pm_ann with estimated ratios of 
 smoldering to flaming combustion for hand/machine piled burns, prescribed 
 natural fire and wildfire from citet:Ward1989, Black Carbon emissions
@@ -169,19 +169,19 @@ can be calculated from PM
 
 #+NAME: tab:arb_pm_ann
 #+BEGIN_SRC sqlite :db fcat_biomass.sqlite :colnames yes :exports results
-select eicsoun as Source, printf("%.2f", pm2_5*365) as 'PM 2.5 (t y^{-1})' from cpe_2015 WHERE eicsoun in ('FOREST MANAGEMENT','WILDLAND FIRE USE (WFU)','ALL VEGETATION');
+select eicsoun as Source, printf("%.2f", pm2_5*365) as 'PM2.5 (t y^{-1})' from cpe_2015 WHERE eicsoun in ('FOREST MANAGEMENT','WILDLAND FIRE USE (WFU)','ALL VEGETATION');
 #+END_SRC
 
 #+RESULTS: tab:arb_pm_ann
-| Source                  | PM 2.5 (t y^{-1}) |
+| Source                  | PM2.5 (t y^{-1}) |
 |-------------------------+-------------------|
 | ALL VEGETATION          |         137630.15 |
 | FOREST MANAGEMENT       |           5480.51 |
 | WILDLAND FIRE USE (WFU) |           6802.43 |
 
-#+CAPTION: Emissions of PM 2.5 in 2015 as reported by CARB \label{tab:arb_pm_ann}
+#+CAPTION: Emissions of PM2.5 in 2015 as reported by CARB \label{tab:arb_pm_ann}
 #+RESULTS: arb_pm_ann
-| Source                  | PM 2.5 (t)        |
+| Source                  | PM2.5 (t)        |
 |-------------------------+-------------------|
 | ALL VEGETATION          |         137630.15 |
 | FOREST MANAGEMENT       |           5480.51 |
@@ -216,13 +216,13 @@ following steps are taken:
 
 #+NAME:   tab:bc_pm
 #+BEGIN_SRC sqlite :db fcat_biomass.sqlite :colnames yes :exports results
-select source as 'Source', "Unnamed 0" as 'BC_f t^{-1} PM', tc_f_cv as 'TC_f^{Cv} t^{-1} PM', ec_f_cv as 'BC_f^{Cv} t^{-1} TC', "Unnamed 1" as 'BC_s t^{-1} PM 2.5', tc_s_cv as 'TC_s^{Cv} t^{-1} PM',ec_s_cv as 'BC_s^{Cv} t^{-1} TC' from ec_ratios;
+select source as 'Source', "Unnamed 0" as 'BC_f t^{-1} PM', tc_f_cv as 'TC_f^{Cv} t^{-1} PM', ec_f_cv as 'BC_f^{Cv} t^{-1} TC', "Unnamed 1" as 'BC_s t^{-1} PM2.5', tc_s_cv as 'TC_s^{Cv} t^{-1} PM',ec_s_cv as 'BC_s^{Cv} t^{-1} TC' from ec_ratios;
 
 #+END_SRC
-#+CAPTION: Factors used for calculating Black Carbon (BC) emissions from the three primary combustion sources. BC is a fraction of Total Carbon (TC) which is a fraction of total PM 2.5. Coefficients of variation (C_v) are reported here as well. \label{tab:bc_pm}
+#+CAPTION: Factors used for calculating Black Carbon (BC) emissions from the three primary combustion sources. BC is a fraction of Total Carbon (TC) which is a fraction of total PM2.5. Coefficients of variation (C_v) are reported here as well. \label{tab:bc_pm}
 #+RESULTS: tab:bc_pm
 
-| Source     | BC_f t^{-1} PM | TC_f^{Cv} t^{-1} PM | BC_f^{Cv} t^{-1} TC | BC_s t^{-1} PM 2.5 | TC_s^{Cv} t^{-1} PM | BC_s^{Cv} t^{-1} TC |
+| Source     | BC_f t^{-1} PM | TC_f^{Cv} t^{-1} PM | BC_f^{Cv} t^{-1} TC | BC_s t^{-1} PM2.5 | TC_s^{Cv} t^{-1} PM | BC_s^{Cv} t^{-1} TC |
 |------------+----------------+---------------------+---------------------+--------------------+---------------------+---------------------|
 | Pile Burn  |       0.046904 |                0.09 |                0.45 |            0.01624 |                0.01 |                0.49 |
 | Prescribed |     0.08016309 |              0.0733 |              0.5833 |           0.020944 |                0.08 |                0.29 |
@@ -230,7 +230,7 @@ select source as 'Source', "Unnamed 0" as 'BC_f t^{-1} PM', tc_f_cv as 'TC_f^{Cv
 
 
 2. Define 1000 normal probability distributions using the coefficient
-   of variation from Table ref:tab:bc_pm to determine the percent of PM 2.5
+   of variation from Table ref:tab:bc_pm to determine the percent of PM2.5
    comprised by carbonaceous material (TC), and the percent of TC comprised
    by black carbon (BC). //???Give estimates and coefficient of variation
    estimates provided by citet:Ward1989, tables 2 and 3.???//
@@ -241,7 +241,7 @@ select source as 'Source', "Unnamed 0" as 'BC_f t^{-1} PM', tc_f_cv as 'TC_f^{Cv
 
 #+NAME: tab:carb_bc
 #+BEGIN_SRC sqlite :db fcat_biomass.sqlite :colnames yes :exports results
-select eicsoun as Source, printf("%.2f", pm2_5*365) as 'PM 2.5 (t y^{-1})', 
+select eicsoun as Source, printf("%.2f", pm2_5*365) as 'PM2.5 (t y^{-1})', 
 printf("%.2f", case when eicsoun='ALL VEGETATION' then pm2_5*365 * (.05870124 + .0228641)
 when eicsoun = 'FOREST MANAGEMENT' then pm2_5*365 * (.046904 + .01624)
 when eicsoun = 'WILDLAND FIRE USE (WFU)' then pm2_5*365 * (.08016309 + .020944) end) as 'BC (t y^{-1})', 
@@ -254,7 +254,7 @@ when eicsoun = 'WILDLAND FIRE USE (WFU)' then pm2_5*365 * (.08016309 + .020944)*
 #+END_SRC
 #+CAPTION: Annual black carbon emissions calculated from CARB volumes \label{tab:carb_bc}
 #+RESULTS: tab:carb_bc
-| Source                  | PM 2.5 (t y^{-1}) | BC (t y^{-1}) | GWP (t y^{-1}) |
+| Source                  | PM2.5 (t y^{-1}) | BC (t y^{-1}) | GWP (t y^{-1}) |
 |-------------------------+-------------------+---------------+----------------|
 | ALL VEGETATION          |         137630.15 |      11225.85 |    35922719.54 |
 | FOREST MANAGEMENT       |           5480.51 |        346.06 |     1107396.54 |
@@ -281,7 +281,7 @@ To estimate GHG emissions from biomass combustion, we estimates pile, wildfire, 
 slash burning emissions using published values from CARB(which ones?). 
 
 - To estimate GHG emissions from *pile burning*, we use the ratio of
-PM 2.5 to CO2 and to CH4 as determined in the Piled Fuels
+PM2.5 to CO2 and to CH4 as determined in the Piled Fuels
 Emissions Calculator. These ratios are then applied to CARB-reported PM 
 emissions to estimate GHG emissions (Table ref:tab:pfe_calc).
 
@@ -359,7 +359,7 @@ Ultimately the fate of these pools are determined by a highly dynamic political 
 # [[https://www.lucidchart.com/publicSegments/view/52a1774e-7722-4ebf-8e1a-e8fc6837bfee/image.png]] 
 
 ** Disposition of Harvested Wood in California.
-To provide a rough estimate of the fate of annually harvested roundwood material, we estimate volumes of wood biomass residing in Logging, Processing, and Construction 
+To provide a rough estimate of the fate of annually harvested roundwood material, we estimate the volume of wood biomass residing in Logging, Processing, and Construction 
 residuals. To estimate current values, we apply known milling efficiency 
 improvements, logging utilization rates, and construction use efficiency to historical production volumes. 
 *** Logging Residues
@@ -541,19 +541,16 @@ The following Table ref:tab:me_and_lr presents ten year average estimates of log
 
 ** Emissions from Un-Utilized Residues
 
-For logging residuals not used in bioenergy, emmisions are produced
-from either combustion or biological decomposition of the
-material over time. To calculate the ratio of burned to decomposed
-logging residues, I first calculate the total biomass volume of pile burned forest
-management residuals, then compare with total biomass volume of residues as reported by the Timber Products Output (TPO) database. 
-C02e emissions are then independently derived for both conversion streams of logging residuals. 
-/// To establish the fraction of logging residue that is left to decompose, I 
-utilize the CARB estimate of annual PM2.5 emissions produced from
-forest management with the Consume fire behavior model to extrapolate total 
+Residuals not utilized in bioenergy applications or sent to a landfill eventually 
+produce emmisions through combustion or biological decomposition of the
+material over time. Most of these residues originate from logging activity.  
+To calculate CO2e emissions from un-utilized residues, I first estimate the total volume of biomass 
+pile burned in forests using the CARB estimate of PM2.5. Then, by comparing total volume of pile burned and bioenergy diverted biomass against the 
+total biomass volume from the Timber Products Output (TPO) database, I resolve the remaining biomass volume as emitted through decomposition.  
 
-*** Estimate biomass from PM2.5: 
+*** Estimate Pile-Burned Biomass Emissions from PM2.5: 
 
-To estimate total biomass from PM2.5, I assume 90% consumption of biomass in piles and use the relationship of pile tonnage to PM emissions calculated using the [[http://depts.washington.edu/nwfire/piles/][Piled Fuels Biomass and Emissions Calculator]] provided by the Washington State Department of Natural Resources. This calculator is based on the [[http://www.fs.fed.us/pnw/fera/research/smoke/consume/index.shtml][Consume]] fire behavior model published by the US Forest Service. The ratio of PM2.5 to unburned tonnage of biomass used below is src_python{return(0.008236/1.360178)}. Ratio of PM2.5 to consumed fuel is src_python{return(0.008236/1.224161)}.
+To estimate total biomass from PM2.5, I assume 90% consumption of biomass in piles and use the relationship of pile tonnage to PM emissions as calculated from the [[http://depts.washington.edu/nwfire/piles/][Piled Fuels Biomass and Emissions Calculator]] provided by the Washington State Department of Natural Resources. This calculator is based on the [[http://www.fs.fed.us/pnw/fera/research/smoke/consume/index.shtml][Consume]] fire behavior model published by the US Forest Service. The ratio of PM2.5 to unburned tonnage of biomass used below is src_python{return(0.008236/1.360178)}. Ratio of PM2.5 to consumed fuel is src_python{return(0.008236/1.224161)}.
 
 
 #+NAME:   tab:cap_pmbiomass2015
@@ -635,7 +632,7 @@ return(tabulate([list(row) for row in pmAnn[['YEAR','EICSOUN','co2_t','ch4_co2e'
 | 2015 | FOREST MANAGEMENT | 1.35081e+06 |      127424 |     248536 |             1.72677e+06 |
 
 
-*** Emissions from decomposition of un-utilized forest management residuals:
+*** Emissions from Decomposition of un-utilized forest management residuals:
 
 Un-utilized residual biomass not consumed in pile burns decomposes over
 time resulting in methane and carbon dioxide //inconsistent// emissions. To provide a
@@ -673,7 +670,7 @@ GWP_{CH_4} &= \text{Global warming potential of methane: 56}
 \end{align*}
 #+END_LaTeX
 
-** Emissions from non-commercial management residuals
+** Emissions of Residuals from non-commercial managenent Activity
 
 # Residues from non-commercial management activities are assumed to
 # be small in comparison with commercial logging residues. In addition, there is
