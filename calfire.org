@@ -434,7 +434,11 @@ For years after 1970, milling efficiency for year $x$ is calculated as:
  #+END_LaTeX
 
 *** Construction Residues
-To estimate annualized construction waste material, we apply the ratio of construction and demolition debris to finished wood products (citet:McKeever2004) to Board of Equalization (BOE) citet:??? roundwood harvest volumes. In 2002, construction debris was estimated as approximately 15% of the total wood used in construction. Of note is that the data from citeauthor:McKeever2004 is sparse and should be considered unreliable for years other than those for which it is reported. Furthermore, distinguishing demolition debris from wood produced annually from wood grown on California forestland is outside of the scope of this report. 
+To estimate annualized construction waste material, we apply the ratio of construction and demolition debris to finished wood products (citet:McKeever2004) to Board of Equalization (BOE) citet:??? roundwood harvest volumes. In 2002, construction debris was estimated as approximately 15% of the total wood used in construction. Of note is that the data from citeauthor:McKeever2004 is sparse and should be considered unreliable for years other than those for which it is reported. 
+
+*** Demolition Debris 
+Debris from wood produced from wood grown on California forestland is outside of the scope of this report.
+
 *** Harvested Wood Residue Summary
 The following Table ref:tab:me_and_lr presents ten year average estimates of logging and milling residuals, finished lumber, and construction debris based on Board of Equalization (BOE) roundwood harvest volumes.
 
@@ -531,20 +535,19 @@ The following Table ref:tab:me_and_lr presents ten year average estimates of log
  |          2003 |        2013 | 266.193 | 5.76584 | 126.488 | 139.705 | 20.9558 |
  |          2004 |        2014 | 262.901 | 6.99142 |  125.34 | 137.561 | 20.6341 |
 
-
 ** Emissions from Un-Utilized Residues
 label:sec:boe_lr_emiss
 
 Residuals not utilized in bioenergy applications or sent to a landfill eventually 
 produce emmisions through combustion or biological decomposition of the
 material over time. Most of these residues originate from logging activity.  
-To calculate CO2e emissions from un-utilized residues, I first estimate the total volume of biomass 
-pile burned in forests using the CARB estimate of PM2.5. Then, by comparing total volume of pile burned and bioenergy diverted biomass against the 
-total biomass volume from the Timber Products Output (TPO) database, I resolve the remaining biomass volume as emitted through decomposition.  
+To calculate \ac{CO2e} emissions from un-utilized residues, I first estimate the total volume of biomass 
+pile burned in forests using the CARB estimate of PM. Then, by comparing total volume of pile burned and bioenergy diverted biomass against the 
+total biomass volume from the \ac{TPO}, I resolve the remaining biomass volume as emitted through decomposition.  
 
 *** Estimate Pile-Burned Biomass Emissions from PM2.5: 
 
-To estimate total biomass from PM2.5, I assume 90% consumption of biomass in piles and use the relationship of pile tonnage to PM emissions as calculated from the [[http://depts.washington.edu/nwfire/piles/][Piled Fuels Biomass and Emissions Calculator]] provided by the Washington State Department of Natural Resources. This calculator is based on the [[http://www.fs.fed.us/pnw/fera/research/smoke/consume/index.shtml][Consume]] fire behavior model published by the US Forest Service. The ratio of PM2.5 to unburned tonnage of biomass used below is src_python{return(0.008236/1.360178)}. Ratio of PM2.5 to consumed fuel is src_python{return(0.008236/1.224161)}.
+To estimate total biomass from PM2.5, I assume 90% consumption of biomass in piles and use the relationship of pile tonnage to PM emissions as calculated from the [[http://depts.washington.edu/nwfire/piles/][Piled Fuels Biomass and Emissions Calculator]] provided by the Washington State Department of Natural Resources. This calculator is based on the [[http://www.fs.fed.us/pnw/fera/research/smoke/consume/index.shtml][Consume]] fire behavior model published by the US Forest Service. The ratio of PM to unburned tonnage of biomass used below is src_python{return(0.008236/1.360178)}. Ratio of PM2.5 to consumed fuel is src_python{return(0.008236/1.224161)}.
 
 
 #+NAME:   tab:cap_pmbiomass2015
@@ -563,13 +566,16 @@ select year,printf("%.2f","PM2_5"*365) "PM2.5 (t)", printf("%.2f","PM2_5"*365*(1
 
 Total emissions resulting from *pile burned* forest management residuals
 can then be derived for the two greenhouse gasses produced from pile
-burning (CO2, CH4) and from BC:
+burning (CO2, CH4) and from BC (Table ref:tab:emissions_pb).
 
 #+NAME: tab:emissions_pb
 #+BEGIN_SRC python :results raw :exports results
 import utils as ut
 import pandas as pd
 from tabulate import tabulate
+
+#GWP
+ch4 = 25
 
 #SQLite Database connection
 sqdb = ut.sqlitedb('fcat_biomass')
@@ -609,7 +615,7 @@ ch4t = lambda x: sp2bio(x,'CH4 (tons)')
 pmAnn['biomass_t']=pmAnn.an_pm25_av.apply(bioPm)
 pmAnn['co2_t'] = pmAnn.biomass_t.apply(co2t)
 pmAnn['ch4_t'] = pmAnn.biomass_t.apply(ch4t)
-pmAnn['ch4_co2e'] = pmAnn.ch4_t * 56
+pmAnn['ch4_co2e'] = pmAnn.ch4_t * ch4
 pmAnn['bc_co2e']= pmAnn.an_pm25_av.apply(ut.pm2bcgwpPiles)
 pmAnn['t_co2e']= pmAnn.co2_t + pmAnn.ch4_co2e + pmAnn.bc_co2e
 
@@ -619,17 +625,17 @@ return(tabulate([list(row) for row in pmAnn[['YEAR','EICSOUN','co2_t','ch4_co2e'
 #+RESULTS: tab:emissions_pb
 | Year | Emissions source  |     CO2 (t) | CH4 (tCO2e) | BC (tCO2e) | Pile Burn Total (tCO2e) |
 |------+-------------------+-------------+-------------+------------+-------------------------|
-| 2000 | FOREST MANAGEMENT | 1.34928e+06 |      127280 |     248255 |             1.72481e+06 |
-| 2005 | FOREST MANAGEMENT | 1.34928e+06 |      127280 |     248255 |             1.72481e+06 |
-| 2010 | FOREST MANAGEMENT | 1.34928e+06 |      127280 |     248255 |             1.72481e+06 |
-| 2012 | FOREST MANAGEMENT | 1.35002e+06 |      127349 |     248391 |             1.72576e+06 |
-| 2015 | FOREST MANAGEMENT | 1.35081e+06 |      127424 |     248536 |             1.72677e+06 |
+| 2000 | FOREST MANAGEMENT | 1.34928e+06 |     56821.3 |     248255 |             1.65436e+06 |
+| 2005 | FOREST MANAGEMENT | 1.34928e+06 |     56821.3 |     248255 |             1.65436e+06 |
+| 2010 | FOREST MANAGEMENT | 1.34928e+06 |     56821.3 |     248255 |             1.65436e+06 |
+| 2012 | FOREST MANAGEMENT | 1.35002e+06 |     56852.3 |     248391 |             1.65526e+06 |
+| 2015 | FOREST MANAGEMENT | 1.35081e+06 |     56885.7 |     248536 |             1.65623e+06 |
 
 
 *** Emissions from Decomposition of un-utilized forest management residuals:
 
 Un-utilized residual biomass not consumed in pile burns decomposes over
-time resulting in methane and carbon dioxide //inconsistent// emissions. To provide a
+time resulting in CH4  and CO2 emissions. To provide a
 full picture of the emissions from residual material produced from
 commercial timber harvesting in California, we must account for decomposition 
 of unutilized logging residuals left on-site that are not burned. To establish
@@ -707,21 +713,23 @@ and use text matching in the 'ACTIVITY' and 'METHOD' fields to remove
 any rows that contain reference to 'burning' or 'fire'. Finally, we
 remove all rows that that reference 'Biomass' in the method category as
 it is assumed that this means material was removed for bioenergy.I use a
-range of 10-35 BDT/acre to convert acres reported in FACTS to volume.
+range of 10-35 BDT/acre (mean 22.5) to convert acres reported in FACTS to volume.
 The following table presents descriptive statistics for estimates of
 residual unutilized wood biomass on an annual basis in million cubic
 feet.
 
-|         | nf\_n      | nf\_lr    | opriv\_lr   | fi\_lr    | opub\_lr   |
-|---------+------------+-----------+-------------+-----------+------------|
-| count   | 11         | 4         | 4           | 4         | 4          |
-| mean    | 12.0194    | 17.7      | 28.95       | 66.425    | 2.4        |
-| std     | 4.68948    | 5.07346   | 16.1593     | 6.07639   | 1.79444    |
-| min     | 2.37421    | 11.2      | 11.2        | 59.6      | 0.3        |
-| 25%     | 8.92407    | 15.025    | 19.525      | 62.225    | 1.275      |
-| 50%     | 13.3557    | 18.5      | 27.75       | 66.85     | 2.5        |
-| 75%     | 14.5349    | 21.175    | 37.175      | 71.05     | 3.625      |
-| max     | 17.8532    | 22.6      | 49.1        | 72.4      | 4.3        |
+#+NAME: tab:unutilized_lr
+|       |    NFNC |     NFC |       P |      FI |      OP |
+|-------+---------+---------+---------+---------+---------|
+| count |      11 |       4 |       4 |       4 |       4 |
+| mean  | 12.0194 |    17.7 |   28.95 |  66.425 |     2.4 |
+| std   | 4.68948 | 5.07346 | 16.1593 | 6.07639 | 1.79444 |
+| min   | 2.37421 |    11.2 |    11.2 |    59.6 |     0.3 |
+| 25%   | 8.92407 |  15.025 |  19.525 |  62.225 |   1.275 |
+| 50%   | 13.3557 |    18.5 |   27.75 |   66.85 |     2.5 |
+| 75%   | 14.5349 |  21.175 |  37.175 |   71.05 |   3.625 |
+| max   | 17.8532 |    22.6 |    49.1 |    72.4 |     4.3 |
+#+CAPTION: Unitilized logging residuals from forest management activities by ownership category. NFNC: Unburned, non-commercial management residuals from National Forest lands, NFC: Logging residuals generated from timber sales on National Forest lands, P: Logging residuals generated from timber sales on non-industrial private forest lands, FI: Logging residuals generated from timber sales on industrial private lands, OP:Logging residuals generated from timber sales on other public lands. 
 
 
 2. *Private industrial timber lands:* CalFIRE's
