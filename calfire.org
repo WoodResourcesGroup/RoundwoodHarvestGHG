@@ -329,7 +329,6 @@ estimation. The use of the COMSUME moel to predict pile buring emissions is like
 #+TBLFM: $1=vsum(@2..3)::@2$1=remote(co2e_piles,@2$3)::@3$1=remote(pm_vol,@3$4)/1000000
 #+CAPTION: Total Estimated \ac{CO2e} emissions from pile burning of forestry residuals.
 
-
 * Estimating Emissions Impact from Utilization of Harvested Wood
 Wood harvested from California's forests are utilized in a variety of construction,
 landscaping, and consumer products. During the manufacture of these products, this wood is fractionated 
@@ -340,11 +339,7 @@ through a multi-stage process of harvesting, processing, and utilization to resi
 + Construction Debris :: Fraction of wood used in construction or finished products that are not integratrated into its final form. These residuals are most commonly sent to a landfill.
 + Demolition :: Wood used in construction that has reached the end of its useful life. These residuals are most commonly sent to a landfill.
 
-////
-These biomass fates have widely variable time horizons for carbon return to the atmosphere and can greatly influence the net emissions impact attributed to the initial forest management activity. While wood products used in construction, finished products, or other stable environments may sequester carbon for a long period, residues sent to landfills or left in the woods as slash emit climate forcing gasses to the atmosphere. Some of these wood residues may be redirected towards alternative controlled combustion applications (i.e., pellet production, power and heat generation)to avoid emissions. To assess the full emissions impact of harvested wood in California, we estimate total emissions from wood residues and displacement impact of wood product applications. 
-//////
-Each category has multiple potential fates which can greatly influence the net emissions impact attributed to the initial forest management activity. While wood products used in construction or finished products may sequester carbon in a stable environment for a long period, residues sent to landfills or left in the woods as slash emit climate forcing gasses. These wood residues may be directed towards alternative product streams (i.e., engineered wood products, power and heat generation) with controlled combustion. The fate of each of these pools is determined by a highly dynamic political and economic system. To understand how policy decisions will impact the fate and subsequent climate impact of harvested wood products, a detailed process model is necessary. ref:wood_fates
-////////
+These biomass fates have widely variable time horizons for carbon return to the atmosphere which can greatly influence the net emissions impact attributed to the initial forest management activity. While wood products used in construction, finished products, or other stable environments may sequester carbon for a long period, residues sent to landfills or left in the woods as slash emit climate forcing gasses to the atmosphere. Some of these wood residues may be redirected towards alternative controlled combustion applications (i.e., pellet production, power and heat generation)to avoid emissions. To assess the full emissions impact of harvested wood in California, we estimate total emissions from wood residues and displacement impact of wood product applications. 
 
 Ultimately the fate of these pools are determined by a highly dynamic political and economic system. To understand how policy decisions will impact the fate and subsequent climate impact of harvested wood products, a detailed process model is necessary to track the distribution of harvested wood material. Figure ref:wood_fates
 
@@ -530,7 +525,6 @@ The following Table ref:tab:me_and_lr presents ten year average estimates of log
  |          2002 |        2012 | 266.945 | 5.00949 | 126.396 | 140.549 | 21.0823 |
  |          2003 |        2013 | 266.193 | 5.76584 | 126.488 | 139.705 | 20.9558 |
  |          2004 |        2014 | 262.901 | 6.99142 |  125.34 | 137.561 | 20.6341 |
-
 
 ** Emissions from Un-Utilized Residues
 label:sec:boe_lr_emiss
