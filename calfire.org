@@ -12,7 +12,7 @@
 #+LATEX_HEADER_EXTRA:\acrodef{GHG}{Greenhouse Gas}
 #+LATEX_HEADER_EXTRA:\acrodef{SLCP}{Short-Lived Climate Pollutants}
 #+LATEX_HEADER_EXTRA:\acrodef{CAP}{Criteria Air Pollutants}
-#+LATEX_HEADER_EXTRA:\acrodef{PM}{Particulate Matter}
+#+LATEX_HEADER_EXTRA:\acrodef{PM}{Particulate Matter 2.5 \mu m}
 #+LATEX_HEADER_EXTRA:\acrodef{NOX}{Oxides of Nitrogen}
 #+LATEX_HEADER_EXTRA:\acrodef{CO2e}{Carbon Dioxide Equivalents}
 #+LATEX_HEADER_EXTRA:\acrodef{CARB}{California Air Resources Board}
@@ -39,6 +39,17 @@
 
 
 \pagebreak
+
+\thispagestyle{empty}
+ 
+\listoffigures
+ 
+\listoftables
+ 
+\newpage
+ 
+\pagenumbering{arabic}
+
 * California Forest Management Emissions Profile
 
 Forest management activities in California produce logs for lumber markets while maintaining and enhancing forest health. In addition to merchantable logs, these harvest activities produce logging residuals that are either left in the stand to decompose, or pile burned as directed by forest practice rules ([[http://calfire.ca.gov/resource_mgt/downloads/2013_FP_Rulebook_with_Tech_RuleNo1.pdf][California Forest Practice Rules]], Article 7 §
@@ -62,8 +73,7 @@ The focus of this analysis is on deriving the net \ac{CO2e} emissions and emissi
    forest, and burned as a result of direct anthropogenic management
    activities.
 
-3. Establish life-cycle \ac{DF} for all
-   utilized wood and apply \ac{DF} to harvested wood to obtain an aggregate estimate to estimate emissions reductions from wood use.
+3. Applay life-cycle \ac{DF} for all utilized wood and apply \ac{DF} to harvested wood to obtain an aggregate estimate to estimate emissions reductions from wood use.
 
 ** Report Objectives
 
@@ -89,9 +99,9 @@ current forest management activities to reduce emissions.
   management residuals can be estimated and should be considered in
   any forest management emissions baseline.
 
-- Total emissions from pile burning of forest management residuals
+- Total annual emissions from pile burning of forest management residuals
   (including \ac{SLCP} and \ac{GHG} components) extrapolated from CARB emissions
-  inventory are estimated at *2.5 MTCO2e*
+  inventory are estimated at *2.5 MMTCO2e*
 
 - Wood harvested in California in 2012 resulted in avoided emissions of
   *2.29 MMTCO2e*
@@ -115,17 +125,17 @@ current forest management activities to reduce emissions.
   burns on National Forest System Lands are reported through PFIRS. However, California Air Quality Management
   Districts are not required to report emissions through this system at this time. Therefore, it is not possible to associate burns in the PFIRS with commercial harvest activities.
 
-- Brown or (\ac{OC}) carbon has stronger radiative absorption than \ac{BC} and is associated with biomas burning. Accouting for anthropogenic production of \ac{OC} whould be included in emissions baselines against which alternative utilization (energy) should be measured against.
+- Brown or \ac{OC} carbon has stronger radiative absorption than \ac{BC} and is associated with biomass burning. Accosting for anthropogenic production of \ac{OC} should be included in emissions baselines against which alternative utilization (energy) should be measured against.
 
 * Estimating CO2 Equivalent Emissions from In-Forest Biomass Combustion
 
 
-The \ac{CARB} reports on emissions from in-forest biomass combustion with current \ac{GHG} and \cap{CAP} [[http://www.arb.ca.gov/ei/ei.htm][emissions inventories]]. Both are necessary resources for establishing aggregate annual climate-forcing emissions (Figure ref:fig:burn_diag). 
+The \ac{CARB} reports on emissions from in-forest biomass combustion with current \ac{GHG} and \ac{CAP} [[http://www.arb.ca.gov/ei/ei.htm][emissions inventories]]. Both are necessary resources for establishing aggregate annual climate-forcing emissions (Figure ref:fig:burn_diag). 
 The GHG inventory captures
 gasses with radiative forcing properties including CO2 and CH4, but does not capture elemental
-carbon or black carbon (BC) emissions which also have strong radiative
+carbon or \ac{BC} emissions which also have strong radiative
 forcing properties (Table ref:tab:bc_gwp). The citet:CaliforniaAirResourcesBoard2015,CaliforniaAirResourcesBoard2016
-CAP report captures SLCP emissions from wildfire
+\ac{CAP} report captures \ac{SLCP} emissions from wildfire
 (src_python{return(0.66*122)} MMTCO2e) and prescribed fire
 (src_python{return(0.03*122)} MMTCO2e) from which black carbon emissions may be estimated. However, no reference in the CAP report is made to the source of these
 SLCP estimates. When viewed in aggregate, a comprehensive reporting of total climate impact from anthropogenic burning may be estimated. 
@@ -165,12 +175,31 @@ The citet:CaliforniaAirResourcesBoard2015,CaliforniaAirResourcesBoard2016
 (src_python{return(0.66*122)} MMTCO2e) and prescribed fire
 (src_python{return(0.03*122)} MMTCO2e) from which \ac{BC} emissions may be estimated. However, no reference in the \ac{CAP} report is made to the source of these
 SLCP estimates. When viewed in aggregate, a comprehensive estimate of total climate impact from anthropogenic burning may be made. 
+** Estimating Biomass Consumption from \ac{CARB} \ac{CAP} inventory.
 
-** Estimating /Black Carbon/ Emissions from Biomass Burning
+To estimate total biomass from PM2.5, I assume 90% consumption of biomass in piles and use the relationship of pile tonnage to PM emissions as calculated from the [[http://depts.washington.edu/nwfire/piles/][Piled Fuels Biomass and Emissions Calculator]] provided by the Washington State Department of Natural Resources. This calculator is based on the [[http://www.fs.fed.us/pnw/fera/research/smoke/consume/index.shtml][Consume]] fire behavior model published by the US Forest Service. The ratio of PM to unburned tonnage of biomass used below is src_python{return(0.008236/1.360178)}. Ratio of PM2.5 to consumed fuel is src_python{return(0.008236/1.224161)}.
 
 
-\acf{BC} is not directly reported by statewide emissions summaries.\ac{BC} is a fraction of the \ac{TC) component measured in particulate matter (PM 2.5). \ac{PM} emissions are published annually by \ac{CARB} ([[http://www.arb.ca.gov/ei/emissiondata.htm][Criteria air pollutant (CAP) emissions estimates]]). 
-By using the 2015 CAP emissions estimates shown in Table ref:arb_pm_ann with estimated ratios of 
+#+NAME:   tab:cap_pmbiomass2015
+#+BEGIN_SRC sqlite :db fcat_biomass.sqlite :colnames yes :exports results
+select year,printf("%.2f","PM2_5"*365) "PM2.5 (t)", printf("%.2f","PM2_5"*365*(1.360178/0.008263)) "Pile-Burned Biomass (t)" from cpe_allyears where eicsoun = 'FOREST MANAGEMENT';
+#+END_SRC
+#+CAPTION: Forest biomass burned in piles based on ARB-reported PM2.5 emissions in the 'Forest Management' category using a ratio of src_python{return(1.360178/0.008263)} ton biomass per ton PM2.5.
+#+RESULTS: tab:cap_pmbiomass2015
+| YEAR | PM2.5 (t) | Pile-Burned Biomass (t) |
+|------+-----------+-------------------------|
+| 2000 |   5474.31 |               901129.28 |
+| 2005 |   5474.31 |               901129.28 |
+| 2010 |   5474.31 |               901129.28 |
+| 2012 |    5477.3 |               901621.96 |
+| 2015 |   5480.51 |               902150.69 |
+
+
+** Estimating Black Carbon Emissions from Biomass Burning
+
+
+\acf{BC} is not directly reported by statewide emissions summaries.\ac{BC} is a fraction of the \ac{TC} component of \ac{PM}. \ac{PM} emissions are published annually by \ac{CARB} ([[http://www.arb.ca.gov/ei/emissiondata.htm][Criteria air pollutant (CAP) emissions estimates]]). 
+By using the 2015 CAP emissions estimates shown in Table ref:tab:arb_pm_ann with estimated ratios of 
 smoldering to flaming combustion for hand/machine piled burns, prescribed 
 natural fire and wildfire from citet:Ward1989, Black Carbon emissions
 can be calculated from PM
@@ -200,7 +229,7 @@ printf("%.2f", pm2_5*365) as 'PM 2.5 (t y^{-1})' from cpe_2015 WHERE eicsoun in 
 #+CAPTION: Emissions of PM 2.5 in 2015 as reported by CARB \label{tab:arb_pm_ann}
 
 
-Using the 2015 \ac{CAP} emissions estimates shown in Table ref:arb_pm_ann with estimated ratios of smoldering to flaming combustion for hand/machine piled burns, prescribed natural fire and wildfire from citet:Ward1989, \ac{BC} emissions can be estimated from PM 2.5 using equation eqref:eq-bc
+Using the 2015 \ac{CAP} emissions estimates shown in Table ref:tab:arb_pm_ann with estimated ratios of smoldering to flaming combustion for hand/machine piled burns, prescribed natural fire and wildfire from citet:Ward1989, \ac{BC} emissions can be estimated from PM 2.5 using equation eqref:eq-bc
 
 
 #+BEGIN_LaTeX
@@ -226,10 +255,16 @@ The ratio of smoldering to flaming combustion behavior for each biomass burning 
 ratio. To arrive at a rough estimate of \ac{BC} emissions based on PM2.5, ratios from  citet:Ward1989 and citet:Jenk1996 ratios in Table ref:tab:bc_pm are used herein.
 #+NAME:   tab:bc_pm
 #+BEGIN_SRC sqlite :db fcat_biomass.sqlite :colnames yes :exports results
-select source as 'Source', "Unnamed 0" as 'BC_f t^{-1} PM', tc_f_cv as 'TC_f^{Cv} t^{-1} PM', ec_f_cv as 'BC_f^{Cv} t^{-1} TC', "Unnamed 1" as 'BC_s t^{-1} PM2.5', tc_s_cv as 'TC_s^{Cv} t^{-1} PM',ec_s_cv as 'BC_s^{Cv} t^{-1} TC' from ec_ratios;
+select source as 'Source', 
+       "Unnamed 0" as 'BC_f t^{-1} PM',
+       "Unnamed 1" as 'BC_s t^{-1} PM'
+       tc_f_cv as 'TC_f^{Cv} t^{-1} PM',
+       ec_f_cv as 'BC_f^{Cv} t^{-1} TC', 
+       tc_s_cv as 'TC_s^{Cv} t^{-1} PM',
+       ec_s_cv as 'BC_s^{Cv} t^{-1} TC' from ec_ratios;
 
 #+END_SRC
-#+CAPTION: Factors used for calculating \ac{BC} emissions from the three primary combustion sources.\ac{BC}is a fraction of Total Carbon (TC) which is a fraction of total PM 2.5. Coefficients of variation (C_v) are reported here as well. \label{tab:bc_pm}
+#+CAPTION: Factors used for calculating \ac{BC} emissions from the three primary combustion sources. \ac{BC} is a fraction of \ac{TC} which is a fraction of total PM 2.5. Coefficients of variation (C_v) are reported here as well. \label{tab:bc_pm}
 #+RESULTS: tab:bc_pm
 
 | Source     | BC_f t^{-1} PM | TC_f^{Cv} t^{-1} PM | BC_f^{Cv} t^{-1} TC | BC_s t^{-1} PM2.5 | TC_s^{Cv} t^{-1} PM | BC_s^{Cv} t^{-1} TC |
@@ -240,37 +275,11 @@ select source as 'Source', "Unnamed 0" as 'BC_f t^{-1} PM', tc_f_cv as 'TC_f^{Cv
 
 
 
-We then estimate annual \ac{BC} emissions (Table ref:tab:carb_bc).
 
-
-#+NAME: tab:carb_bc
-#+BEGIN_SRC sqlite :db fcat_biomass.sqlite :colnames yes :exports results
-select eicsoun as Source, printf("%.2f", pm2_5*365) as 'PM2.5 (t y^{-1})', 
-printf("%.2f", case when eicsoun='ALL VEGETATION' then pm2_5*365 * (.05870124 + .0228641)
-when eicsoun = 'FOREST MANAGEMENT' then pm2_5*365 * (.046904 + .01624)
-when eicsoun = 'WILDLAND FIRE USE (WFU)' then pm2_5*365 * (.08016309 + .020944) end) as 'BC (t y^{-1})', 
-
-printf("%.2f", case when eicsoun='ALL VEGETATION' then pm2_5*365 * (.05870124 + .0228641)*3200
-when eicsoun = 'FOREST MANAGEMENT' then pm2_5*365 * (.046904 + .01624)*3200
-when eicsoun = 'WILDLAND FIRE USE (WFU)' then pm2_5*365 * (.08016309 + .020944)*3200 end) as 'CO2e (t y^{-1})'
-
- from cpe_2015 WHERE eicsoun in ('FOREST MANAGEMENT','WILDLAND FIRE USE (WFU)','ALL VEGETATION');
-#+END_SRC
-#+CAPTION: Annual black carbon emissions calculated from CARB volumes \label{tab:carb_bc}
-#+NAME: pm_vol
-#+RESULTS: tab:carb_bc
-| Source                  | PM 2.5 (t y^{-1}) | BC (t y^{-1}) | CO2e (t y^{-1}) |
-|-------------------------+-------------------+---------------+-----------------|
-| ALL VEGETATION          |         137630.15 |      11225.85 |     35922719.54 |
-| FOREST MANAGEMENT       |           5480.51 |        346.06 |      1107396.54 |
-| WILDLAND FIRE USE (WFU) |           6802.43 |        687.77 |      2200877.13 |
-
-
-
-
-Given the variance in \ac{BC} production from smoldering (\pm 49\%) and flaming (\pm 45\%) phases (Table ref:tab:bc_pm), actual emissions of \ac{BC}  may vary substantially depending on combustion. In addtion to these estimates cite:Chow2010 provides an alternative source for estimates of \ac{BC} and \ac{OC} emissions in the state in 2006. Further work is necessary to evaluate the impacts of \ac{OC} on the net \ac{CO2e} emissions from pile burning. cite:Pokhrel2016 estimated the absorptive properties of \ac{OC} to be 1.5 - 2.5 that of \ac{BC}. cite:Chow2010 estimated that on 2006 29,530 Mt of \ac{OC} was emitted from wildfires. 
+Given the variance in \ac{BC} production from smoldering (\pm 49%) and flaming (\pm 45%) phases (Table ref:tab:bc_pm), actual emissions of \ac{BC}  may vary substantially depending on combustion. In addtion to these estimates cite:Chow2010 provides an alternative source for estimates of \ac{BC} and \ac{OC} emissions in the state in 2006. Further work is necessary to evaluate the impacts of \ac{OC} on the net \ac{CO2e} emissions from pile burning. cite:Pokhrel2016 estimated the absorptive properties of \ac{OC} to be 1.5 - 2.5 that of \ac{BC}. cite:Chow2010 estimated that on 2006 29,530 Mt of \ac{OC} was emitted from wildfires. 
 
 # [[https://github.com/peteWT/fcat_biomass/blob/master/graphics/bc_prob_gwp.png?raw=true]]
+
 
 ** Estimating \ac{GHG} Emissions from Biomass Burning
    The \ac{CARB} GHG emissions inventory resolved to combustion source (piles, prescribed, etc.) for forests and rangelands has not been updated since 2004. To provide a comparable estimate of GHG emissions from pile burning we use the ratio of \ac{PM} to the net \ac{CO2e} emissions from all \ac{GHG} species produced from the Piled Fuels Eissions Calculator (CONSUME model equations) sources two approaches are taken. As \ac{PM} is reported in the \ac{CAP} for pile burning we can apply this ratio to estimate \ac{GHG} emissions for the same time period.
@@ -284,18 +293,7 @@ PM 2.5 to CO2 and to CH4 from the Piled Fuels Emissions Calculator. These ratios
 | Pile Biomass (t) | Consumed Biomass (t) | PM2.5 (t) | CO2 (t) | CH4 (t) |
 |------------------+----------------------+-----------+---------+---------|
 |         1.360178 |             1.224161 |  0.008263 |  2.0366 |  0.0034 |
-#+CAPTION: Ratios of Biomass to \ac{GHG} emissions from the Piled Fuels Emissions Calculator. \label{tab:pfe_calc}
-
-\begin{equation}
-     PM \Delta GHG= \frac{\mathrm{PM2.5}}{\mathrm{CO2} + \left(\mathrm{CH4} \times \mathrm{CH4}_{GWP}\right)}
-\end{equation}
-
-#+NAME: co2e_piles
-| 2015 PM2.5 (t) | PM \Delta GHG | 2015 \ac{GHG} MMTCO2e |
-|----------------+---------------+-----------------------|
-|        5480.51 |  3.8947021e-3 |             1.4071705 |
-#+TBLFM: $2=remote(pm_vol,@3$2)::$3=remote(pfe,@2$3)/(remote(pfe,@2$4)+(remote(pfe,@2$5)*25))::$4=(@2$2/@2$3)/1000000
-#+CAPTION: GHG emissions from pile burns in 2015 estimated from PM2.5 emissions in \ac{CAP} inventory.
+#+CAPTION: Ratios of biomass to \ac{GHG} emissions from the Piled Fuels Emissions Calculator. \label{tab:pfe_calc}
 
 \ac{GHG} emissions from *wildfire and prescribed fire* are difficult to estimate at present but the
 [[http://www.arb.ca.gov/cc/inventory/archive/tables/net_co2_flux_2007-11-19.pdf][\ac{CARB} \ac{GHG} emissions inventory]] provided estimates for years between 1994 and 2004 (Table ref:arb_ghg_2004).
@@ -312,21 +310,92 @@ select sc_cat as "Source Category", avg(mmtco2e) as "Average annual emissions 19
 | Timber harvest slash       |                           0.155266666666667 |
 
 ** Estimating Total Emissions from Biomass Burning
-To arrive at an estimate of total CO2 equivalent (CO2e) emissions for 2015, 
-we combine \ac{BC} emissions estimates from the \ac{CARB}
-Criteria Air Pollutant Emissions Inventory with GHG emissions estimates reported in the
-CARB GHG Emissions Inventory and the CONSUME model. The time discrepancy between the most recent GHG Emissions Inventory in 2004 and the current year is
-acknowledged as an irreconcilable source of uncertainty in this
-estimation. The use of the COMSUME moel to predict pile buring emissions is likely more reliable and as pile buring is a central focus of this analysis we confidently use the emissions estimated here for pile burning thourghout. Model-based estimation could be used to derive a ratio of \ac{GHG} to PM using the [[http://www.fs.fed.us/pnw/fera/research/smoke/consume/index.shtml][USFS CONSUME]] model. Overall, this analysis demonstrates that substantial emissions from forest management residuals have been reported by CARB emissions inventories and that such inventories could be utilized to establish a baseline condition (Table ref:tab:pile_summary).
+To arrive at an annual estimate of total CO2 equivalent (CO2e) emissions, we combine \ac{BC} emissions estimates from the \ac{CARB} \ac{CAP} Emissions Inventory with the  [[http://www.fs.fed.us/pnw/fera/research/smoke/consume/index.shtml][USFS CONSUME]] model combustion ratios. Overall, this analysis demonstrates that substantial emissions from forest management residuals have been reported by CARB emissions inventories and that such inventories could be utilized to establish a baseline condition for \ac{CO2e} emissions from forest management (Table ref:tab:pile_summary).
+
+Total emissions resulting from *pile burned* forest management residuals
+can then be derived for the two greenhouse gasses produced from pile
+burning (CO2, CH4) and from BC (Table ref:tab:arb_pm_ann).
+
+#+NAME: tab:emissions_pb
+#+BEGIN_SRC python :results raw :exports results
+import utils as ut
+import pandas as pd
+from tabulate import tabulate
+
+#GWP
+ch4 = 25
+
+#SQLite Database connection
+sqdb = ut.sqlitedb('fcat_biomass')
+
+# Emissions ratios frrom consume
+pfbec = pd.read_csv('fera_pile_cemissions.csv', header=1)
+
+#Emissions ratios for BC from PM2.5
+ward = ut.gData('13UQtRfNBSJ81PXxbYSnB2LrjHePNcvhJhrsxRBjHpoY', 475419971)
+
+pmAnn = pd.read_sql('''
+                        select year,
+                                eicsoun,
+                                "PM2_5"*365 an_pm25_av
+                        from cpe_allyears
+                        where eicsoun = 'FOREST MANAGEMENT';
+                    ''', sqdb['cx'])
+
+
+def pmSpRatio(sp):
+    """
+    calculate ratio of pm2.5 to species (CH4, Co2, biomass, etc.
+    """
+    return pfbec[sp]/pfbec['PM2.5 (tons)']
+
+def bioPm(pm):
+    """
+    calculate biomass from Consume ratio for PM2.5
+    """
+    return pm * (pfbec['Pile Biomass (tons)']/pfbec['PM2.5 (tons)'])
+
+#Calculate CO2 from biomass
+co2t = lambda x: x * pmSpRatio('CO2 (tons)')
+
+#Calculate CH4 from biomass
+ch4t = lambda x: x* pmSpRatio('CH4 (tons)')
+
+pmAnn['biomass_t']=pmAnn.an_pm25_av.apply(bioPm)
+pmAnn['co2_t'] = pmAnn.an_pm25_av.apply(co2t)
+pmAnn['ch4_t'] = pmAnn.an_pm25_av.apply(ch4t)
+pmAnn['ch4_co2e'] = pmAnn.ch4_t * ch4
+pmAnn['bc_co2e']= pmAnn.an_pm25_av.apply(ut.pm2bcPiles)
+pmAnn['bc_co2e_h']= pmAnn.an_pm25_av.apply(ut.pm2bcPiles, est='high')
+pmAnn['bc_co2e_l']= pmAnn.an_pm25_av.apply(ut.pm2bcPiles, est='low')
+#pmAnn['t_co2e']= pmAnn.co2_t + pmAnn.ch4_co2e + pmAnn.bc_co2e
+
+return(tabulate([list(row) for row in pmAnn[['YEAR','EICSOUN','co2_t','ch4_co2e','bc_co2e','bc_co2e_h','bc_co2e_l']].values], headers=['Year','Emissions source','CO2 (t)', 'CH4 (tCO2e)', 'BC (tCO2e)', 'BC-h (tCO2e)', 'BC-l (tCO2e)'], tablefmt = 'orgtbl'))
+#+END_SRC
+
+#+NAME: bc_emissions
+#+RESULTS: tab:emissions_pb
+| Year | Emissions source  |     CO2 (t) | CH4 (tCO2e) |  BC (tCO2e) | BC-h (tCO2e) | BC-l (tCO2e) |
+|------+-------------------+-------------+-------------+-------------+--------------+--------------|
+| 2000 | FOREST MANAGEMENT | 1.34928e+06 |     56821.3 | 6.21335e+06 |  7.18357e+06 |  5.31602e+06 |
+| 2005 | FOREST MANAGEMENT | 1.34928e+06 |     56821.3 | 6.21335e+06 |  7.18357e+06 |  5.31602e+06 |
+| 2010 | FOREST MANAGEMENT | 1.34928e+06 |     56821.3 | 6.21335e+06 |  7.18357e+06 |  5.31602e+06 |
+| 2012 | FOREST MANAGEMENT | 1.35002e+06 |     56852.3 | 6.21674e+06 |  7.18749e+06 |  5.31892e+06 |
+| 2015 | FOREST MANAGEMENT | 1.35081e+06 |     56885.7 | 6.22039e+06 |  7.19171e+06 |  5.32204e+06 |
+
+
+
 
 #+NAME: tab:pile_summary
-|    MMt CO2e | Source               |
-|------------+----------------------|
-|  1.4071705 | CO2e pile burning    |
-|  1.1073965 | CO2e BC pile burning |
-|------------+----------------------|
-| *2.514567* | *Total MMt CO2e*     |
-#+TBLFM: $1=vsum(@2..3)::@2$1=remote(co2e_piles,@2$3)::@3$1=remote(pm_vol,@3$4)/1000000
+|  MMt CO2e | Source                                   |
+|-----------+------------------------------------------|
+| 1.4065744 | \ac{CO2e} \ac{GHG} pile burning          |
+|   6.21335 | \ac{CO2e} \ac{BC}  pile burning          |
+|   7.18357 | \ac{CO2e} \ac{BC}  pile burning  -- high |
+|   5.31602 | \ac{CO2e} \ac{BC}  pile burning  -- high |
+|-----------+------------------------------------------|
+| 7.6199244 | *Total MMt CO2e*                         |
+#+TBLFM: $1=vsum(@2..3)::@2$1=(vmean(remote(bc_emissions,@2$3..@6$3))+vmean(remote(bc_emissions,@2$4..@6$4)))/1000000::@3$1=vmean(remote(bc_emissions,@3$5)/1000000::@4$1=vmean(remote(bc_emissions,@3$6)/1000000::@5$1=vmean(remote(bc_emissions,@3$7)/1000000
 #+CAPTION: Total Estimated \ac{CO2e} emissions from pile burning of forestry residuals.
 
 
@@ -340,18 +409,14 @@ through a multi-stage process of harvesting, processing, and utilization to resi
 + Construction Debris :: Fraction of wood used in construction or finished products that are not integratrated into its final form. These residuals are most commonly sent to a landfill.
 + Demolition :: Wood used in construction that has reached the end of its useful life. These residuals are most commonly sent to a landfill.
 
-////
-These biomass fates have widely variable time horizons for carbon return to the atmosphere and can greatly influence the net emissions impact attributed to the initial forest management activity. While wood products used in construction, finished products, or other stable environments may sequester carbon for a long period, residues sent to landfills or left in the woods as slash emit climate forcing gasses to the atmosphere. Some of these wood residues may be redirected towards alternative controlled combustion applications (i.e., pellet production, power and heat generation)to avoid emissions. To assess the full emissions impact of harvested wood in California, we estimate total emissions from wood residues and displacement impact of wood product applications. 
-//////
-Each category has multiple potential fates which can greatly influence the net emissions impact attributed to the initial forest management activity. While wood products used in construction or finished products may sequester carbon in a stable environment for a long period, residues sent to landfills or left in the woods as slash emit climate forcing gasses. These wood residues may be directed towards alternative product streams (i.e., engineered wood products, power and heat generation) with controlled combustion. The fate of each of these pools is determined by a highly dynamic political and economic system. To understand how policy decisions will impact the fate and subsequent climate impact of harvested wood products, a detailed process model is necessary. ref:wood_fates
-////////
+These biomass fates have widely variable time horizons for the return of fixed carbon to the atmosphere. The extent to to which harvested wood is utilized can greatly influence the net emissions impact attributed to the initial forest management activity. While wood products used in construction, finished products, or other stable environments may sequester carbon for a long period, residues sent to landfills or left in the woods as slash emit climate forcing gasses to the atmosphere. Some of these wood residues may be redirected towards alternative controlled combustion applications (i.e., pellet production, power and heat generation)to avoid emissions.
 
 Ultimately the fate of these pools are determined by a highly dynamic political and economic system. To understand how policy decisions will impact the fate and subsequent climate impact of harvested wood products, a detailed process model is necessary to track the distribution of harvested wood material. Figure ref:wood_fates
 
 # [[https://www.lucidchart.com/publicSegments/view/52a1774e-7722-4ebf-8e1a-e8fc6837bfee/image.png]] 
 
 ** Disposition of Harvested Wood in California.
-To provide a rough estimate of the fate of annually harvested roundwood material, we estimate the volume of wood biomass residing in Logging, Processing, and Construction 
+To provide a rough estimate of the fate of annually harvested roundwood material, we estimate the volume of wood biomass residing in logging, processing, and construction 
 residuals. To estimate current values, we apply known milling efficiency 
 improvements, logging utilization rates, and construction use efficiency to historical production volumes. 
 *** Logging Residues
@@ -370,7 +435,7 @@ improvements, logging utilization rates, and construction use efficiency to hist
  \end{align*}
  #+END_LaTeX
 
- For logging residue production factors between 1990 and 2004, we calculate logging residues by adjusting the logging residual ratio reported by citet:Morgan with the percent change in logging residual ratios estimated for Idaho by citet:Simmons2014. To reflect the uncertainty in the estimate provided by citet:Morgan, we calculate the logging residual using a randomly selected value from a normal probability distribution defined by the estimate and upper and lower bounds of the 95% confidence interval provided:
+ For logging residue production factors between 1990 and 2004, we calculate logging residues by adjusting the logging residual ratio reported by citet:Morgan with the percent change in logging residual ratios estimated for Idaho by citet:Simmons2014. To reflect the uncertainty in the estimate provided by citet:Morgan, we estimate the logging residual using a randomly selected value from a normal probability distribution defined by the estimate and upper and lower bounds of the 95% confidence interval provided:
 
  #+BEGIN_LaTeX
 
@@ -507,33 +572,33 @@ The following Table ref:tab:me_and_lr presents ten year average estimates of log
  #+RESULTS: tab:me_and_lr
  | 10-year start | 10-year end |      RW |      LR |      MR |      FL |      CD |
  |---------------+-------------+---------+---------+---------+---------+---------|
- |          1978 |        1988 | 681.701 | 35.8321 | 299.522 | 382.179 | 57.3269 |
- |          1979 |        1989 | 680.582 | 35.5686 | 300.229 | 380.353 | 57.0529 |
- |          1980 |        1990 | 681.083 | 33.4429 | 301.528 | 379.555 | 56.9333 |
- |          1981 |        1991 | 681.601 | 36.6856 | 302.612 | 378.989 | 56.8483 |
- |          1982 |        1992 | 686.631 | 29.0319 | 305.606 | 381.025 | 57.1538 |
- |          1983 |        1993 | 695.872 | 31.6858 | 310.422 | 385.451 | 57.8176 |
- |          1984 |        1994 | 678.459 | 34.6552 |   303.4 | 375.059 | 56.2589 |
- |          1985 |        1995 | 657.737 | 29.8443 | 294.892 | 362.845 | 54.4267 |
- |          1986 |        1996 | 631.918 | 32.9573 | 284.093 | 347.825 | 52.1738 |
- |          1987 |        1997 | 600.752 | 25.6276 | 270.919 | 329.833 | 49.4749 |
- |          1988 |        1998 | 560.495 | 28.4593 | 253.572 | 306.923 | 46.0384 |
- |          1989 |        1999 | 518.282 | 19.4761 | 235.308 | 282.975 | 42.4462 |
- |          1990 |        2000 | 477.206 | 21.5218 | 217.442 | 259.764 | 38.9645 |
- |          1991 |        2001 | 436.798 |  14.762 |  199.72 | 237.078 | 35.5618 |
- |          1992 |        2002 | 411.648 | 16.8726 | 188.838 |  222.81 | 33.4214 |
- |          1993 |        2003 | 389.756 | 12.1122 | 179.386 |  210.37 | 31.5555 |
- |          1994 |        2004 | 370.287 | 12.4844 | 171.013 | 199.274 | 29.8912 |
- |          1995 |        2005 | 360.411 | 11.7775 | 166.982 | 193.429 | 29.0143 |
- |          1996 |        2006 | 349.131 | 12.0067 | 162.271 |  186.86 | 28.0291 |
- |          1997 |        2007 | 338.319 | 7.73506 | 157.756 | 180.563 | 27.0845 |
- |          1998 |        2008 |  321.14 | 10.0114 | 150.231 | 170.909 | 25.6364 |
- |          1999 |        2009 | 299.649 | 8.85091 |  140.54 | 159.109 | 23.8663 |
- |          2000 |        2010 | 283.222 | 8.45002 | 133.256 | 149.966 | 22.4949 |
- |          2001 |        2011 | 271.892 | 7.18674 | 128.347 | 143.545 | 21.5318 |
- |          2002 |        2012 | 266.945 | 5.00949 | 126.396 | 140.549 | 21.0823 |
- |          2003 |        2013 | 266.193 | 5.76584 | 126.488 | 139.705 | 20.9558 |
- |          2004 |        2014 | 262.901 | 6.99142 |  125.34 | 137.561 | 20.6341 |
+ |          1978 |        1988 | 681.701 | 40.0872 | 299.522 | 382.179 | 57.3269 |
+ |          1979 |        1989 | 680.582 | 34.0226 | 300.229 | 380.353 | 57.0529 |
+ |          1980 |        1990 | 681.083 | 36.3756 | 301.528 | 379.555 | 56.9333 |
+ |          1981 |        1991 | 681.601 | 38.9963 | 302.612 | 378.989 | 56.8483 |
+ |          1982 |        1992 | 686.631 | 29.1842 | 305.606 | 381.025 | 57.1538 |
+ |          1983 |        1993 | 695.872 | 34.2389 | 310.422 | 385.451 | 57.8176 |
+ |          1984 |        1994 | 678.459 | 35.1708 |   303.4 | 375.059 | 56.2589 |
+ |          1985 |        1995 | 657.737 | 32.9349 | 294.892 | 362.845 | 54.4267 |
+ |          1986 |        1996 | 631.918 | 25.5867 | 284.093 | 347.825 | 52.1738 |
+ |          1987 |        1997 | 600.752 | 25.2551 | 270.919 | 329.833 | 49.4749 |
+ |          1988 |        1998 | 560.495 | 26.3426 | 253.572 | 306.923 | 46.0384 |
+ |          1989 |        1999 | 518.282 | 25.0711 | 235.308 | 282.975 | 42.4462 |
+ |          1990 |        2000 | 477.206 | 18.4443 | 217.442 | 259.764 | 38.9645 |
+ |          1991 |        2001 | 436.798 | 13.9483 |  199.72 | 237.078 | 35.5618 |
+ |          1992 |        2002 | 411.648 | 14.8967 | 188.838 |  222.81 | 33.4214 |
+ |          1993 |        2003 | 389.756 | 12.8787 | 179.386 |  210.37 | 31.5555 |
+ |          1994 |        2004 | 370.287 | 13.4732 | 171.013 | 199.274 | 29.8912 |
+ |          1995 |        2005 | 360.411 | 13.8487 | 166.982 | 193.429 | 29.0143 |
+ |          1996 |        2006 | 349.131 | 14.8376 | 162.271 |  186.86 | 28.0291 |
+ |          1997 |        2007 | 338.319 | 9.40894 | 157.756 | 180.563 | 27.0845 |
+ |          1998 |        2008 |  321.14 | 9.44626 | 150.231 | 170.909 | 25.6364 |
+ |          1999 |        2009 | 299.649 |  9.6585 |  140.54 | 159.109 | 23.8663 |
+ |          2000 |        2010 | 283.222 | 8.40612 | 133.256 | 149.966 | 22.4949 |
+ |          2001 |        2011 | 271.892 |  8.9218 | 128.347 | 143.545 | 21.5318 |
+ |          2002 |        2012 | 266.945 | 6.48472 | 126.396 | 140.549 | 21.0823 |
+ |          2003 |        2013 | 266.193 | 6.66778 | 126.488 | 139.705 | 20.9558 |
+ |          2004 |        2014 | 262.901 | 8.02183 |  125.34 | 137.561 | 20.6341 |
 
 ** Emissions from Un-Utilized Residues
 label:sec:boe_lr_emiss
@@ -602,7 +667,7 @@ def sp2bio(pm, species = 'PM2.5 (tons)'):
 
 def bioPm(pm):
     """
-    calculate biomass from Consume ratio fro PM2.5
+    calculate biomass from Consume ratio for PM2.5
     """
     return pm * (pfbec['Pile Biomass (tons)']/pfbec['PM2.5 (tons)'])
 
