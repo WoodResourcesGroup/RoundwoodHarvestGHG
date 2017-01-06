@@ -1,21 +1,19 @@
-% Created 2017-01-04 Wed 11:46
+% Created 2017-01-05 Thu 23:49
 \documentclass[a4paper]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{fixltx2e}
 \usepackage{graphicx}
+\usepackage{grffile}
 \usepackage{longtable}
-\usepackage{float}
 \usepackage{wrapfig}
 \usepackage{rotating}
 \usepackage[normalem]{ulem}
 \usepackage{amsmath}
 \usepackage{textcomp}
-\usepackage{marvosym}
-\usepackage{wasysym}
 \usepackage{amssymb}
+\usepackage{capt-of}
 \usepackage{hyperref}
-\tolerance=1000
 \usepackage{amssymb,amsmath}
 \usepackage{natbib}
 \usepackage[margin=2cm]{geometry}
@@ -51,68 +49,128 @@
 \acrodef{OC}{Organic Carbon}
 \author{Peter Tittmann, Ph.D.}
 \date{\today}
-\title{Estimating Black Carbon Emissions from Biomass Burning}
+\title{Emissions from Decomposition of un-utilized forest management residuals}
 \hypersetup{
-  pdfkeywords={},
-  pdfsubject={},
-  pdfcreator={Emacs 24.4.1 (Org mode 8.2.10)}}
+ pdfauthor={Peter Tittmann, Ph.D.},
+ pdftitle={Emissions from Decomposition of un-utilized forest management residuals},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 24.5.1 (Org mode 8.3.4)}, 
+ pdflang={English}}
 \begin{document}
 
 \maketitle
 \tableofcontents
 
-\acf{BC} is not directly reported by statewide emissions summaries.\ac{BC} is a fraction of the \ac{TC} component of \ac{PM2.5}. \ac{PM2.5} emissions are published annually by \ac{CARB} (\href{http://www.arb.ca.gov/ei/emissiondata.htm}{Criteria air pollutant (CAP) emissions estimates}). 
-By using the 2015 CAP emissions estimates shown in Table \ref{tab:arb_pm_ann} with estimated ratios of 
-smoldering to flaming combustion for hand/machine piled burns, prescribed 
-natural fire and wildfire from \citet{Ward1989}, Black Carbon emissions
-can be calculated from PM
-2.5 with Eq. \eqref{eq-bc}
+Un-utilized residual biomass not consumed in pile burns decomposes over
+time resulting in CH4  and CO2 emissions. To provide a
+full picture of the emissions from residual material produced from
+commercial timber harvesting in California, we must account for decomposition 
+of unutilized logging residuals left on-site that are not burned. 
 
+\begin{align*}
+LR_d &= LR - LR_{piles} - LR_{bio} \\
+\text{where:}\\
+LR_d &= \text{Logging residuals subject to anerobic decomposition} \\
+LR &= \text{Total logging residue reported by TPO}\\
+LR_{piles} &= \text{Logging residues combusted in anthropogenic pile burns}\\
+LR_{bio} &= \text{Logging residues used to produce bioenergy}
+\end{align*}
+To calculate the \ac{GHG} emissions from decomposition of piles, we use the
+following equation.
 
-\begin{center}
-\begin{tabular}{llr}
-Source (\ac{CARB} nomenclature) & Description & PM 2.5 (t y$^{\text{-1}}$)\\
-\hline
-ALL VEGETATION & Wildfire & 137630.15\\
-FOREST MANAGEMENT & Pile burning & 5480.51\\
-WILDLAND FIRE USE (WFU) & Prescribed natural fire & 6802.43\\
-\end{tabular}
-\end{center}
+\begin{align*}
+CO_2e_{decomp} &= \left(LR_d \times C_{LR} \times CO2_{ratio} \right) + \left(LR_d \times C_{LR} \times CH_4_{ratio}\times GWP_{CH_4}\right)\\
+\text{where:}\\
+CO_2e_{decomp} &= \text{Carbon dioxide equivalent emissions from decomposition of logging slash}\\
+C_{LR} &= \text{Carbon fraction of biomass: 0.5}\\
+CO2_{ratio} &= \text{Fraction of carbon released as } CO_2\text{: 0.61}\\
+CH_4_{ratio} &= \text{Fraction of carbon released as } CH_4\text{: 0.09}\\
+GWP_{CH_4} &= \text{Global warming potential of methane: 56}
+\end{align*}
 
-Using the 2015 \ac{CAP} emissions estimates shown in Table \ref{tab:arb_pm_ann} with estimated ratios of smoldering to flaming combustion for hand/machine piled burns, prescribed natural fire and wildfire from \citet{Ward1989}, \ac{BC} emissions can be estimated from PM 2.5 using equation \eqref{eq-bc}
+To establish the fraction of logging residue that is left to decompose, residues burned and used in bioenergy are subtracted from total logging residuals produced from roundwood harvest. \cite{Mciver2012} report bioenergy consumption in the state (Table \ref{tab:bio_vol}).
 
-
-\begin{align}
-BC &= \left( PM_{2.5} \times F \times TC_f \times BC_f\right) + \left( PM_{2.5} \times S \times TC_s \times BC_s\right) \label{eq-bc} \\
-\text{where:} \nonumber \\
-BC &= \text{Black Carbon (mass units)} \nonumber \\
-PM_{2.5} &= PM_{2.5} \text{ (mass units)} \nonumber \\
-F &= \text{Percent of combustion in flaming phase} \nonumber \\
-TC_f &= \text{Total Carbon fraction of } PM_{2.5} \text{ for flaming phase} \nonumber \\
-BC_f &= \text{Black Carbon fraction of Total Carbon for flaming phase} \nonumber \\
-S &= \text{Percent of combustion in smoldering phase} \nonumber \\
-TC_s &= \text{Total Carbon fraction of } PM_{2.5} \text{ for smoldering phase} \nonumber \\
-BC_s &= \text{Black Carbon fraction of Total Carbon for smoldering phase} \nonumber
-\end{align}
-
-
-
-
-The ratio of smoldering to flaming combustion behavior for each biomass burning scenario means that each has a different \ac{BC} $\Delta$ \ac{PM2.5}
-ratio. To arrive at a rough estimate of \ac{BC} emissions based on PM2.5, ratios from  \citet{Ward1989} and \citet{Jenk1996} ratios in Table \ref{tab:bc_pm} are used herein.
 \begin{table}[htb]
-\caption{Factors used for calculating \ac{BC} emissions from the three primary combustion sources. \ac{BC} is a fraction of \ac{TC} which is a fraction of total \ac{PM2.5}. Coefficients of variation (C$_{\text{v}}$) are reported here as well. \label{tab:bc_pm}}
 \centering
-\begin{tabular}{llrrrrr}
-combustion & context & TC t$^{\text{-1}}$ \ac{PM2.5} & TC$_{\text{Cv}}$ t$^{\text{-1}}$ \ac{PM2.5} & EC t$^{\text{-1}}$ TC & EC$_{\text{Cv}}$ t$^{\text{-1}}$ \ac{PM2.5} & OC t$^{\text{-1}}$ TC\\
+\begin{tabular}{rr}
+year & Percent of roundwood harvest used in bioenergy\\
 \hline
-f & p & 0.621 & 0.07 & 0.023 & 0.15 & 0.598\\
-f & wf & 0.608 & 0.09 & 0.1108 & 0.506 & 0.4976\\
-s & p & 0.587 & 0.03 & 0.02 & 0.41 & 0.5675\\
-s & wf & 0.641 & 0.08 & 0.045 & 0.29 & 0.59625\\
+2000 & 2.4\\
+2006 & 3.6\\
+2012 & 8.2\\
 \end{tabular}
+\caption{\% volume of wood diverted to Bioenergy use by year \label{tab:bio_vol}}
+
 \end{table}
 
-Given the variance in \ac{BC} production from smoldering (\textpm{} 49\%) and flaming (\textpm{} 45\%) phases (Table \ref{tab:bc_pm}), actual emissions of \ac{BC}  may vary substantially depending on combustion. In addtion to these estimates \cite{Chow2010} provides an alternative source for estimates of \ac{BC} and \ac{OC} emissions in the state in 2006. Further work is necessary to evaluate the impacts of \ac{OC} on the net \ac{CO2e} emissions from pile burning. \cite{Pokhrel2016} estimated the absorptive properties of \ac{OC} to be 1.5 - 2.5 that of \ac{BC}. \cite{Chow2010} estimated that on 2006 29,530 Mt of \ac{OC} was emitted from wildfires. 
-% Emacs 24.4.1 (Org mode 8.2.10)
+The availability of data for bioenergy consumption of logging residuals does not allow us to precisely estimate the consumption for years other than reported by \cite{Mciver2012}. In this analysis, for years that bioenergy consumption is reported, I use that value. As the states biomass energy infrastructure began to consume substantial amounts of residual in the early 1980's \citep{Morris2000}, we assume that the average consumption from the 3 years reported is representative annual consumption. For years before 1980, we assume no bioenergy consumption.  This approach is less than ideal as there has been a great deal of variability in the appetite for logging residuals from biomass power plants. Un-utilized logging residues are estimated from logging residuals not used in bioenergy (Table \ref{tab:unused_lr}). These results are based on a normal probability distribution for logging residual generation from roundwood harvest. This is one of several factors contributing to instances where bioenergy consumption is greater than logging residues  produced. Other factors include:
+
+\begin{itemize}
+\item Lack of temporal resolution in bioenergy consumption
+\item Consumption by biomass power plants of in-woods residuals produced from forest management that did not result in commercial roundwood harvest
+\end{itemize}
+
+
+\begin{table}[htb]
+\centering
+\begin{tabular}{rrrr}
+Year & Logging Residues & Bioenergy & Unutilized Logging Residuals\\
+\hline
+1978 & 1.56564 & 0 & 1.56564\\
+1979 & 1.2689 & 0 & 1.2689\\
+1980 & 0.756188 & 0.348909 & 0.40728\\
+1981 & 0.556558 & 0.294654 & 0.261904\\
+1982 & 0.320001 & 0.255616 & 0.064385\\
+1983 & 1.19463 & 0.370302 & 0.824331\\
+1984 & 1.28008 & 0.391033 & 0.889043\\
+1985 & 0.834831 & 0.421028 & 0.413803\\
+1986 & 1.34222 & 0.470321 & 0.871901\\
+1987 & 1.80944 & 0.496235 & 1.3132\\
+1988 & 0.275234 & 0.514982 & -0.239748\\
+1989 & 1.27182 & 0.487854 & 0.78397\\
+1990 & 1.19944 & 0.443414 & 0.756022\\
+1991 & 0.641766 & 0.352327 & 0.289439\\
+1992 & 0.564071 & 0.327846 & 0.236225\\
+1993 & 0.532689 & 0.316598 & 0.216091\\
+1994 & 0.571306 & 0.255396 & 0.31591\\
+1995 & 0.249442 & 0.254293 & -0.004851\\
+1996 & 0.300928 & 0.250654 & 0.0502744\\
+1997 & 0.3554 & 0.264659 & 0.0907408\\
+1998 & 0.186836 & 0.230584 & -0.0437481\\
+1999 & 0.20601 & 0.236429 & -0.0304188\\
+2000 & 0.447945 & 0.109927 & 0.338018\\
+2001 & 0.234992 & 0.17677 & 0.0582215\\
+2002 & 0.357945 & 0.186364 & 0.171581\\
+2003 & 0.29514 & 0.183387 & 0.111754\\
+2004 & 0.155414 & 0.188128 & -0.0327142\\
+2005 & 0.250076 & 0.190224 & 0.0598525\\
+2006 & 0.225896 & 0.136793 & 0.0891028\\
+2007 & 0.167812 & 0.179306 & -0.0114946\\
+2008 & 0.161299 & 0.151297 & 0.0100027\\
+2009 & 0.078976 & 0.088771 & -0.009795\\
+2010 & 0.150674 & 0.128029 & 0.022645\\
+2011 & 0.133867 & 0.142034 & -0.00816644\\
+2012 & 0.190052 & 0.249688 & -0.0596362\\
+2013 & 0.172895 & 0.181402 & -0.00850613\\
+2014 & 0.158662 & 0.161662 & -0.00300087\\
+\end{tabular}
+\caption{Probabilistic disposition of logging residuals from roundwood harvest in CA. Volume in million bone-dry tons.}
+
+\end{table}
+
+To estimate the emissions from decomposition of logging residuals that are not burned, an estimate of consumption of biomass in pile burns would be necessary. In theory, the \ac{CARB} \ac(CAP\} inventory could provide an estimate using the ratio of \ac{PM} to biomass consumed. However the \ac{CARB}-derived pile burn estimate far exceeds the volume of logging residuals from the \ac{BOE} historical harvest data (Table \ref{tab:pile_bio_comparison})
+
+\begin{table}[htb]
+\centering
+\begin{tabular}{rr}
+\ac{CARB} estimate (BDT) & \ac{BOE} estimate (BDT)\\
+\hline
+901423.23 & 553110.26\\
+\end{tabular}
+\caption{Comparison of annual pile-burned biomass from forestry by \ac{CARB} with \ac{BOE}-derived estimate of loggin residuals produced from timber harvest.}
+
+\end{table}
+
+This is likely due to in part to the fact that the \ac{CARB} estimate includes non-commercial forest management activity.
 \end{document}
