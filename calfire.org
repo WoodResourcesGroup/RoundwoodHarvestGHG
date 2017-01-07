@@ -9,6 +9,8 @@
 #+LaTeX_HEADER: \usepackage{fancyhdr} %For headers and footers
 #+LaTeX_HEADER: \pagestyle{fancy} %For headers and footers
 #+LATEX_HEADER: \usepackage{acronym}
+#+LATEX_HEADER: \usepackage{fontspec}
+#+LATEX_HEADER_EXTRA: \setmainfont{FreightSans Pro}
 #+LATEX_HEADER_EXTRA:\acrodef{GHG}{Greenhouse Gas}
 #+LATEX_HEADER_EXTRA:\acrodef{SLCP}{Short-Lived Climate Pollutants}
 #+LATEX_HEADER_EXTRA:\acrodef{CAP}{Criteria Air Pollutants}
@@ -36,6 +38,7 @@
 #+LaTeX_HEADER: \cfoot{}
 #+LaTex_HEADER: \setlength{\parskip}{1em}
 #+LaTeX_HEADER: \rfoot{\thepage\ of \pageref{LastPage}}
+
 
 
 \pagebreak
@@ -99,6 +102,9 @@ current forest management activities to reduce emissions.
   management residuals can be estimated and should be considered in
   any forest management emissions baseline.
 
+- Average annual emissions from pile burning of logging residuals from roundwood harvesting
+  (including \ac{SLCP} and \ac{GHG} components) extrapolated from \ac{BOE} historical harvest data between 2000 and 2015 are estimated at *0.57 MMTCO2e*
+
 - Total annual emissions from pile burning of forest management residuals
   (including \ac{SLCP} and \ac{GHG} components) extrapolated from CARB emissions
   inventory are estimated at *2.5 MMTCO2e*
@@ -106,15 +112,9 @@ current forest management activities to reduce emissions.
 - Wood harvested in California in 2012 resulted in avoided emissions of
   *2.29 MMTCO2e*
 
-- Logging residuals not used in bioenergy production contributed annual
-  emissions of:
-  - *XXX MMTCO2e* resulting from anthropogenic burning of logging residuals
+- Timber harvest producing roundwood including emissions from pile burning of logging residuals results in a net emissions reduction of *1.93 MMTCO2e*
 
-  - *XXX MMTCO2e* resulting from decomposition of logging residuals left
-    unburned
-
-- Un-utilized slash from non-commercial management activities on
-  National Forest System lands contributed emissions of XXX MMTCO2e
+- Un-utilized slash from non-commercial management activities on National Forest System lands contributed emissions of *XXX MMTCO2e*
 
 - Forest Inventory and Analysis re-sample data has been used in the
   southeast to quantify removals resulting from non-commercial
@@ -175,7 +175,8 @@ The citet:CaliforniaAirResourcesBoard2015,CaliforniaAirResourcesBoard2016
 (src_python{return(0.66*122)} MMTCO2e) and prescribed fire
 (src_python{return(0.03*122)} MMTCO2e) from which \ac{BC} emissions may be estimated. However, no reference in the \ac{CAP} report is made to the source of these
 SLCP estimates. When viewed in aggregate, a comprehensive estimate of total climate impact from anthropogenic burning may be made. 
-** Estimating Biomass Consumption from \ac{CARB} \ac{CAP} inventory.
+
+** Estimating biomass combustion from 'Forest Management' using the \ac{CARB} \ac{CAP} inventory.
 
 To estimate total biomass from \ac{PM2.5}, I assume 90% consumption of biomass in piles and use the relationship of pile tonnage to PM emissions as calculated from the [[http://depts.washington.edu/nwfire/piles/][Piled Fuels Biomass and Emissions Calculator]] provided by the Washington State Department of Natural Resources (Table ref:pfbec). This calculator is based on the [[http://www.fs.fed.us/pnw/fera/research/smoke/consume/index.shtml][Consume]] fire behavior model published by the US Forest Service. 
 
@@ -207,15 +208,13 @@ return(tabulate([list(row) for row in pfbec[items].values], headers=items, table
 The ratio of \ac{PM2.5} to unburned tonnage used in this report are found in Table ref:tab:pm_ratios. 
 
 #+CAPTION: Ratio of piled biomass \ac{PM2.5} used in this report. label:tab:pm_ratios
-| Ratio                  |     Value |
-|------------------------+-----------|
+| Ratio                     |     Value |
+|---------------------------+-----------|
 | \ac{PM2.5} \Delta Biomass | 164.60932 |
 #+TBLFM: @2$2=remote(pfbec,@2$2)/remote(pfbec,@2$4)
 
 
 Using these ratios we then estimate biomass consumed based on reported \ac{PM2.5} emissions in the \ac{CARB} \ac{CAP} inventory (Table ref:tab:cap_biomass)
-
-
 
 #+NAME:   tab:cap_pmbiomass2015
 #+BEGIN_SRC sqlite :db fcat_biomass.sqlite :colnames yes :exports results
@@ -231,9 +230,98 @@ select year,printf("%.2f","PM2_5"*365) "PM2.5 (t)", printf("%.2f","PM2_5"*365*(1
 | 2012 |    5477.3 |               901621.96 |
 | 2015 |   5480.51 |               902150.69 |
 
+** Estimating biomass combustion from using the \ac{CARB} \ac{CAP} inventory.
+The estimate of biomass consumed in 'Forest 'Management' using this methodology far exceeds the total volume of biomass residuals produced from commercial timber harvesting in the state. Using the \ac{BOE} historical harvest data, logging residual production rates for commercial timber harvest from cite:Morgan and bioenergy consumption from cite:Mciver2012 (Table ref:tab:bio_vol) we can estimate the volume of logging residuals produced.
+
+#+NAME: bar
+#+BEGIN_SRC sqlite :db fcat_biomass.sqlite :colnames yes :exports results
+select "index" as year,
+       Bioenergy as "Percent of roundwood harvest used in bioenergy"
+from mciver_bio
+where "Bioenergy" is not null;
+#+END_SRC
+
+#+CAPTION: % volume of wood diverted to Bioenergy use by year \label{tab:bio_vol}
+#+RESULTS: bar
+| year | Percent of roundwood harvest used in bioenergy |
+|------+------------------------------------------------|
+| 2000 |                                            2.4 |
+| 2006 |                                            3.6 |
+| 2012 |                                            8.2 |
+
+The availability of data for bioenergy consumption of logging residuals does not allow us to precisely estimate the consumption for years other than reported by cite:Mciver2012. In this analysis, for years that bioenergy consumption is reported, I use that value. As the states biomass energy infrastructure began to consume substantial amounts of residual in the early 1980's citep:Morris2000, we assume that the average consumption from the 3 years reported is representative annual consumption. For years before 1980, we assume no bioenergy consumption.  This approach is less than ideal as there has been a great deal of variability in the appetite for logging residuals from biomass power plants. Un-utilized logging residues are estimated from logging residuals not used in bioenergy (Table ref:tab:unused_lr). These results are based on a normal probability distribution defined by an estimate (0.0615 cf logging residuals per cf of growing-stock removals) and a range (\pm 0.00229 cf/cf) at the 95% confidence interval for logging residual generation from roundwood harvest. This is one of several factors contributing to instances where bioenergy consumption is greater than logging residues  produced. Other factors include:
+
++ Lack of temporal resolution in bioenergy consumption
++ Consumption by biomass power plants of in-woods residuals produced from forest management that did not result in commercial roundwood harvest
+
+
+#+NAME: tab:unused_lr
+#+BEGIN_SRC python :results raw :exports results
+import pandas as pd
+import utils as ut
+from tabulate import tabulate
+
+wood_density = ut.constants['wDens']['value']
+mt2lbs = 2204.62  # lbs/metric ton
+sqdb = ut.sqlitedb()
+sqdb['cx'].create_function('log_res', 2, ut.lr)
+
+lr = pd.read_sql_query('select year, total_mmbf/{0} totalmcf, log_res(year, total_mmbf/{0}) logres_mcf from boe'.format(ut.mmbf2mcf),
+                       sqdb['cx'])
+
+lr['lr_mbdt'] = lr['logres_mcf'] * wood_density / mt2lbs
+lr['tBioe_mbdt'] = lr['totalmcf']* lr['year'].apply(ut.bioPct) *wood_density / mt2lbs
+lr['lr_unutilized'] = lr['lr_mbdt']-lr['tBioe_mbdt']
+lr.to_sql('lr_un', sqdb['cx'], if_exists = 'replace')
+showcolumns=['year','lr_mbdt','tBioe_mbdt', 'lr_unutilized']
+return(tabulate([list(row) for row in lr[showcolumns].values], headers=['Year','Logging Residues','Bioenergy','Unutilized Logging Residuals'], tablefmt = 'orgtbl'))
+#+END_SRC
+#+ATTR_LaTeX: \longtable
+#+CAPTION: Probabilistic disposition of logging residuals from roundwood harvest in CA. Volume in million bone-dry tons.  
+#+RESULTS: tab:unused_lr
+| Year | Logging Residues | Bioenergy | Unutilized Logging Residuals |
+|------+------------------+-----------+------------------------------|
+| 1978 |          1.30095 |         0 |                      1.30095 |
+| 1979 |        0.0585309 |         0 |                    0.0585309 |
+| 1980 |         0.458728 |  0.348909 |                     0.109819 |
+| 1981 |           0.5861 |  0.294654 |                     0.291446 |
+| 1982 |         0.474519 |  0.255616 |                     0.218903 |
+| 1983 |          1.19354 |  0.370302 |                     0.823238 |
+| 1984 |         0.951765 |  0.391033 |                     0.560732 |
+| 1985 |          1.31912 |  0.421028 |                     0.898092 |
+| 1986 |          1.11167 |  0.470321 |                     0.641351 |
+| 1987 |         0.842042 |  0.496235 |                     0.345807 |
+| 1988 |         0.601367 |  0.514982 |                    0.0863847 |
+| 1989 |          1.03686 |  0.487854 |                      0.54901 |
+| 1990 |          1.08897 |  0.443414 |                     0.645556 |
+| 1991 |          1.05167 |  0.352327 |                     0.699341 |
+| 1992 |         0.824893 |  0.327846 |                     0.497047 |
+| 1993 |         0.787983 |  0.316598 |                     0.471385 |
+| 1994 |         0.641195 |  0.255396 |                     0.385799 |
+| 1995 |          0.55756 |  0.254293 |                     0.303267 |
+| 1996 |          0.41068 |  0.250654 |                     0.160026 |
+| 1997 |         0.423072 |  0.264659 |                     0.158413 |
+| 1998 |         0.222745 |  0.230584 |                  -0.00783889 |
+| 1999 |         0.176955 |  0.236429 |                   -0.0594733 |
+| 2000 |         0.363598 |  0.109927 |                     0.253672 |
+| 2001 |         0.283905 |   0.17677 |                     0.107135 |
+| 2002 |         0.301036 |  0.186364 |                     0.114672 |
+| 2003 |         0.274753 |  0.183387 |                    0.0913665 |
+| 2004 |         0.180825 |  0.188128 |                  -0.00730354 |
+| 2005 |         0.256487 |  0.190224 |                     0.066263 |
+| 2006 |         0.300147 |  0.136793 |                     0.163353 |
+| 2007 |         0.120752 |  0.179306 |                    -0.058554 |
+| 2008 |         0.211075 |  0.151297 |                    0.0597787 |
+| 2009 |        0.0990515 |  0.088771 |                    0.0102805 |
+| 2010 |         0.142185 |  0.128029 |                    0.0141567 |
+| 2011 |         0.145133 |  0.142034 |                    0.0030994 |
+| 2012 |         0.215804 |  0.249688 |                   -0.0338835 |
+| 2013 |          0.22961 |  0.181402 |                    0.0482086 |
+| 2014 |         0.162424 |  0.161662 |                  0.000761788 |
+
+In the absence of empirical data reflecting the actual combustion of logging residuals and considering that in much of the states timber producing region tree-length or log-length yarding methods are used which do not result in accumulation of logging residuals at a landing as is the case with whole-tree yarding, we might assume 50% of the logging residuals not used in bioenergy would be burned in open piles per California Forest Practice Rules. 
 
 ** Estimating Black Carbon Emissions from Biomass Burning
-
 
 \acf{BC} is not directly reported by statewide emissions summaries.\ac{BC} is a fraction of the \ac{TC} component of \ac{PM2.5}. \ac{PM2.5} emissions are published annually by \ac{CARB} ([[http://www.arb.ca.gov/ei/emissiondata.htm][Criteria air pollutant (CAP) emissions estimates]]). 
 By using the 2015 CAP emissions estimates shown in Table ref:tab:arb_pm_ann with estimated ratios of 
@@ -253,7 +341,7 @@ case when eicsoun = 'ALL VEGETATION'
      when eicsoun = 'WILDLAND FIRE USE (WFU)'
      then 'Prescribed natural fire'
 end as 'Description',
-printf("%.2f", pm2_5*365) as 'PM 2.5 (t y^{-1})' from cpe_2015 WHERE eicsoun in ('FOREST MANAGEMENT','WILDLAND FIRE USE (WFU)','ALL VEGETATION');
+printf("%.2f", pm2_5*365) as '\ac{PM2.5} (t y^{-1})' from cpe_2015 WHERE eicsoun in ('FOREST MANAGEMENT','WILDLAND FIRE USE (WFU)','ALL VEGETATION');
 #+END_SRC
 
 #+RESULTS: tab:arb_pm_ann
@@ -409,6 +497,7 @@ return(tabulate([list(row) for row in pmAnn[['YEAR','EICSOUN','co2_t','ch4_co2e'
 #+END_SRC
 
 #+NAME: bc_emissions
+#+CAPTION: Emissions of \ac{SLCP} and \ac{GHG} from the 'Forest Management' \ac{CAP} \ac{PM2.5} emissions inventory. label:tab:ghg_slcp
 #+RESULTS: tab:emissions_pb
 | Year | Emissions source  |     CO2 (t) | CH4 (tCO2e) |  BC (tCO2e) | BC-h (tCO2e) | BC-l (tCO2e) |
 |------+-------------------+-------------+-------------+-------------+--------------+--------------|
@@ -418,22 +507,80 @@ return(tabulate([list(row) for row in pmAnn[['YEAR','EICSOUN','co2_t','ch4_co2e'
 | 2012 | FOREST MANAGEMENT | 1.35002e+06 |     63674.6 | 6.21674e+06 |  7.18749e+06 |  5.31892e+06 |
 | 2015 | FOREST MANAGEMENT | 1.35081e+06 |       63712 | 6.22039e+06 |  7.19171e+06 |  5.32204e+06 |
 
-The total \ac{CO2e} emissions from pile burning forestry residuals as reported by \ac{CARB} are shown in Table ref:tab:pile_summary 
+Table ref:tab:ghg_slcp reflects emissions from all biomass combustion meeting the definition of 'Forest Management'. It us useful in addition to understand the contribution that logging residuals from commercial timber harvesting make to this total.
+
+#+BEGIN_SRC python :results raw :exports results
+import utils as ut
+import pandas as pd
+from tabulate import tabulate
+
+# Fraction of unused LR that is burned
+lrCfrac = [0.25, 0.5, 0.75]
+
+bio2PM = 164.60932
+#SQLite Database connection
+sqdb = ut.sqlitedb('fcat_biomass')
+
+# Emissions ratios frrom consume
+pfbec = pd.read_csv('fera_pile_cemissions.csv', header=1)
+
+#Emissions ratios for BC from PM2.5
+ward = ut.gData('13UQtRfNBSJ81PXxbYSnB2LrjHePNcvhJhrsxRBjHpoY', 475419971)
+
+lrAnn = pd.read_sql('select avg(lr_unutilized)*1e6*{0} biomass_t from lr_un union select avg(lr_unutilized)*1e6*{1} biomass_t from lr_un union select avg(lr_unutilized)*1e6*{2} biomass_t from lr_un where year > 2000'.format(lrCfrac[0], lrCfrac[1], lrCfrac[2]), sqdb['cx'])
+
+lrAnn['lrfrac'] = lrCfrac
+def pmSpRatio(sp):
+    """
+    calculate ratio of pm2.5 to species (CH4, Co2, biomass, etc.
+    """
+    return pfbec[sp]/pfbec['PM2.5 (tons)']
+
+
+#Calculate CO2 from biomass
+co2t = lambda x: x * pmSpRatio('CO2 (tons)')
+
+#Calculate CH4 from biomass
+ch4t = lambda x: x* pmSpRatio('CH4 (tons)')
+
+lrAnn['an_pm25_av']=lrAnn['biomass_t'] / bio2PM
+lrAnn['co2_t'] = lrAnn.an_pm25_av.apply(co2t)
+lrAnn['ch4_t'] = lrAnn.an_pm25_av.apply(ch4t)
+lrAnn['ch4_co2e'] = lrAnn.ch4_t * ut.ch4GWP
+lrAnn['bc_co2e']= lrAnn.an_pm25_av.apply(ut.pm2bcPiles)
+lrAnn['bc_co2e_h']= lrAnn.an_pm25_av.apply(ut.pm2bcPiles, est='high')
+lrAnn['bc_co2e_l']= lrAnn.an_pm25_av.apply(ut.pm2bcPiles, est='low')
+lrAnn['lr_co2e_total']=  lrAnn['co2_t'] + lrAnn['ch4_co2e'] + lrAnn['bc_co2e']
+
+return(tabulate([list(row) for row in lrAnn[['lrfrac','biomass_t','an_pm25_av','co2_t','ch4_co2e','bc_co2e','lr_co2e_total']].values], headers=['% burned','LR burned (MBDT)','PM2.5 (t)', 'CO2 (t)', 'CH4 (tCO2e)', 'BC (tCO2e)', 'Total \ac{CO2e}'], tablefmt = 'orgtbl'))
+#+END_SRC
+#+NAME: rw_lr_burning
+#+CAPTION: Three emissions scenarios for pile burning of logging residuals from timber harvesting based on average annual harvest (2000 - 2015).
+#+RESULTS:
+| % burned | LR burned (MBDT) | PM2.5 (t) | CO2 (t) | CH4 (tCO2e) | BC (tCO2e) | Total c{CO2e} |
+|----------+------------------+-----------+---------+-------------+------------+-----------------|
+|     0.25 |          31035.8 |   188.542 | 46470.9 |     2191.83 |     213995 |          262658 |
+|      0.5 |          67370.2 |   409.273 |  100876 |     4757.88 |     464526 |          570159 |
+|     0.75 |           134740 |   818.547 |  201751 |     9515.76 |     929052 |     1.14032e+06 |
+
+
+The total \ac{CO2e} emissions from pile burning forestry residuals as reported by \ac{CARB} and pile burning logging residuals from roundwood harvesting from \ac{BOE} historical data are shown in Table ref:tab:pile_summary.
 
 
 #+NAME: tab:pile_summary
 |  MMt CO2e | Source                                   |
 |-----------+------------------------------------------|
-| 1.4065744 | \ac{CO2e} \ac{GHG} pile burning          |
+| 1.4133952 | \ac{CO2e} \ac{GHG} pile burning          |
 |   6.21335 | \ac{CO2e} \ac{BC}  pile burning          |
 |   7.18357 | \ac{CO2e} \ac{BC}  pile burning  -- high |
 |   5.31602 | \ac{CO2e} \ac{BC}  pile burning  -- high |
 |-----------+------------------------------------------|
-| 7.6199244 | *Total MMt CO2e*                         |
-#+TBLFM: $1=vsum(@2..3)::@2$1=(vmean(remote(bc_emissions,@2$3..@6$3))+vmean(remote(bc_emissions,@2$4..@6$4)))/1000000::@3$1=vmean(remote(bc_emissions,@3$5)/1000000::@4$1=vmean(remote(bc_emissions,@3$6)/1000000::@5$1=vmean(remote(bc_emissions,@3$7)/1000000
+| 7.6199244 | *Total MMt CO2e -- Forest Management*    |
+|    929052 | *Total MMt CO2e -- Timber Harvesting*    |
+#+TBLFM: $1=vsum(@2..3)::@2$1=(vmean(remote(bc_emissions,@2$3..@6$3))+vmean(remote(bc_emissions,@2$4..@6$4)))/1000000::@3$1=vmean(remote(bc_emissions,@3$5)/1000000::@4$1=vmean(remote(bc_emissions,@3$6)/1000000::@5$1=vmean(remote(bc_emissions,@3$7)/1000000::@7$1=remote(rw_lr_burning,@3$6)
 #+CAPTION: Total annual \ac{CO2e} emissions estimate from pile burning of forestry residuals.
 
-These emissions are substantial and represent a significant opportunity to increase emissions reduction already realized from forestry. Ensuring that piled biomass from forest management activities are chipped and used in energy applications could eliminate up to 83% (7.18 MMT \ac{CO2e}) of these emissions. 
+These emissions are substantial and represent a significant opportunity to increase emissions reduction already realized from forestry. Ensuring that piled biomass from forest management activities are chipped and used in energy applications could eliminate up to 83% (7.18 MMT \ac{CO2e}) of these emissions. It is important to note, however, that this estimate derived from the \ac{CAP} inventory implies that more than twice the total volume of logging residuals produced from commercial roundwood harvesting was burned in the context described by 'Forest Management' in the \ac{AP} inventory. While some of the difference here can be explained by the burning of residuals produced from non-commercial management activities, it is unlikely that the the full compliment of burned residuals from non-commercial activity is approximately the same as the total volume of loggin residuals produced from commercial roundwood harvest. As the \ac{CAP} inventory is based on reporting from local air districts it would seem that the margin of error in the \ac{CAP} estimate of \ac{PM2.5} emissions could be substantial.
 
 * Estimating Emissions Impact from Utilization of Harvested Wood
 Wood harvested from California's forests are utilized in a variety of construction,
@@ -656,94 +803,7 @@ To calculate \ac{CO2e} emissions from unutilized residues, I first estimate the 
 # \end{align*}
 # #+END_LaTeX
 
-To establish the fraction of logging residue that is left to decompose, one needs to know the volume of residues burned and used in bioenergy. This can then be subtracted from total logging residuals produced from roundwood harvest. cite:Mciver2012 report bioenergy consumption in the state (Table ref:tab:bio_vol).
-
-#+NAME: bar
-#+BEGIN_SRC sqlite :db fcat_biomass.sqlite :colnames yes :exports results
-select "index" as year,
-       Bioenergy as "Percent of roundwood harvest used in bioenergy"
-from mciver_bio
-where "Bioenergy" is not null;
-#+END_SRC
-
-#+CAPTION: % volume of wood diverted to Bioenergy use by year \label{tab:bio_vol}
-#+RESULTS: bar
-| year | Percent of roundwood harvest used in bioenergy |
-|------+------------------------------------------------|
-| 2000 |                                            2.4 |
-| 2006 |                                            3.6 |
-| 2012 |                                            8.2 |
-
-The availability of data for bioenergy consumption of logging residuals does not allow us to precisely estimate the consumption for years other than reported by cite:Mciver2012. In this analysis, for years that bioenergy consumption is reported, I use that value. As the states biomass energy infrastructure began to consume substantial amounts of residual in the early 1980's citep:Morris2000, we assume that the average consumption from the 3 years reported is representative annual consumption. For years before 1980, we assume no bioenergy consumption.  This approach is less than ideal as there has been a great deal of variability in the appetite for logging residuals from biomass power plants. Un-utilized logging residues are estimated from logging residuals not used in bioenergy (Table ref:tab:unused_lr). These results are based on a normal probability distribution for logging residual generation from roundwood harvest. This is one of several factors contributing to instances where bioenergy consumption is greater than logging residues  produced. Other factors include:
-
-+ Lack of temporal resolution in bioenergy consumption
-+ Consumption by biomass power plants of in-woods residuals produced from forest management that did not result in commercial roundwood harvest
-
-
-#+NAME: tab:unused_lr
-#+BEGIN_SRC python :results raw :exports results
-import pandas as pd
-import utils as ut
-from tabulate import tabulate
-
-wood_density = ut.constants['wDens']['value']
-mt2lbs = 2204.62  # lbs/metric ton
-sqdb = ut.sqlitedb()
-sqdb['cx'].create_function('log_res', 2, ut.lr)
-
-lr = pd.read_sql_query('select year, total_mmbf/{0} totalmcf, log_res(year, total_mmbf/{0}) logres_mcf from boe'.format(ut.mmbf2mcf),
-                       sqdb['cx'])
-
-lr['lr_mbdt'] = lr['logres_mcf'] * wood_density / mt2lbs
-lr['tBioe_mbdt'] = lr['totalmcf']* lr['year'].apply(ut.bioPct) *wood_density / mt2lbs
-lr['lr_unutilized'] = lr['lr_mbdt']-lr['tBioe_mbdt']
-lr.to_sql('lr_un', sqdb['cx'], if_exists = 'replace')
-showcolumns=['year','lr_mbdt','tBioe_mbdt', 'lr_unutilized']
-return(tabulate([list(row) for row in lr[showcolumns].values], headers=['Year','Logging Residues','Bioenergy','Unutilized Logging Residuals'], tablefmt = 'orgtbl'))
-#+END_SRC
-#+ATTR_LaTeX: \longtable
-#+CAPTION: Probabilistic disposition of logging residuals from roundwood harvest in CA. Volume in million bone-dry tons.  
-#+RESULTS: tab:unused_lr
-| Year | Logging Residues | Bioenergy | Unutilized Logging Residuals |
-|------+------------------+-----------+------------------------------|
-| 1978 |         0.946767 |         0 |                     0.946767 |
-| 1979 |         0.257273 |         0 |                     0.257273 |
-| 1980 |         0.922491 |  0.348909 |                     0.573583 |
-| 1981 |         0.509241 |  0.294654 |                     0.214587 |
-| 1982 |         0.436573 |  0.255616 |                     0.180957 |
-| 1983 |          0.80284 |  0.370302 |                     0.432538 |
-| 1984 |          0.91375 |  0.391033 |                     0.522717 |
-| 1985 |          1.07657 |  0.421028 |                     0.655541 |
-| 1986 |          1.47043 |  0.470321 |                      1.00011 |
-| 1987 |          0.89411 |  0.496235 |                     0.397875 |
-| 1988 |         0.521673 |  0.514982 |                   0.00669099 |
-| 1989 |         0.920053 |  0.487854 |                     0.432199 |
-| 1990 |         0.684848 |  0.443414 |                     0.241434 |
-| 1991 |         0.528647 |  0.352327 |                      0.17632 |
-| 1992 |         0.393545 |  0.327846 |                     0.065699 |
-| 1993 |         0.830488 |  0.316598 |                     0.513889 |
-| 1994 |         0.781454 |  0.255396 |                     0.526059 |
-| 1995 |         0.405259 |  0.254293 |                     0.150965 |
-| 1996 |          0.41664 |  0.250654 |                     0.165986 |
-| 1997 |         0.555749 |  0.264659 |                      0.29109 |
-| 1998 |          0.42721 |  0.230584 |                     0.196626 |
-| 1999 |         0.296668 |  0.236429 |                     0.060239 |
-| 2000 |         0.327853 |  0.109927 |                     0.217926 |
-| 2001 |         0.249063 |   0.17677 |                    0.0722932 |
-| 2002 |         0.145403 |  0.186364 |                   -0.0409605 |
-| 2003 |         0.329366 |  0.183387 |                     0.145979 |
-| 2004 |         0.232373 |  0.188128 |                    0.0442444 |
-| 2005 |         0.169071 |  0.190224 |                   -0.0211521 |
-| 2006 |         0.165163 |  0.136793 |                    0.0283701 |
-| 2007 |         0.264258 |  0.179306 |                    0.0849521 |
-| 2008 |        0.0428086 |  0.151297 |                    -0.108488 |
-| 2009 |         0.122793 |  0.088771 |                    0.0340216 |
-| 2010 |         0.103776 |  0.128029 |                   -0.0242528 |
-| 2011 |         0.172437 |  0.142034 |                     0.030403 |
-| 2012 |        0.0931882 |  0.249688 |                      -0.1565 |
-| 2013 |         0.237158 |  0.181402 |                    0.0557561 |
-| 2014 |         0.104268 |  0.161662 |                   -0.0573946 |
-
+To establish the fraction of logging residue that is left to decompose, one needs to know the volume of residues burned and used in bioenergy. 
 To estimate the emissions from decomposition of logging residuals that are not burned, an estimate of consumption of biomass in pile burns would be necessary. In theory, the \ac{CARB} \ac(CAP} inventory could provide an estimate using the ratio of \ac{PM} to biomass consumed. However the \ac{CARB}-derived pile burn estimate far exceeds the volume of logging residuals from the \ac{BOE} historical harvest data (Table ref:tab:pile_bio_comparison)
 
 #+NAME:   tab:pile_bio_comparison
