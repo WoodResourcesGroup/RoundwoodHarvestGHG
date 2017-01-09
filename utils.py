@@ -252,3 +252,15 @@ def bioPct(year):
         return 0
     else:
         return np.mean([bd[i]['biopct'] for i in bd.keys()])
+
+
+def sumBDT(ac, maxbdt=35, minbdt=10):
+    """
+    Calculates a probabilistic estimate of
+    BDT produced from a given acre of treated USFS land
+    """
+    av = (maxbdt + minbdt)/2
+    stdev = (float(maxbdt) - float(minbdt))/4
+    d_frac = (ac-np.floor(ac))*np.random.normal(av, stdev, 1).clip(min=0)[0]
+    t_bdt = np.sum(np.random.normal(av, stdev, np.floor(ac)).clip(min=0))
+    return d_frac+t_bdt
